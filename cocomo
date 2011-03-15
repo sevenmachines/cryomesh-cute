@@ -1,0 +1,50 @@
+Have a non-directory at the top, so creating directory top_dir
+Adding /home/niall/Projects/Eclipse/cryomesh-cute/src//CoreTestsDefaults.cpp to top_dir
+Adding /home/niall/Projects/Eclipse/cryomesh-cute/src//CoreTestsDefaults.h to top_dir
+Adding /home/niall/Projects/Eclipse/cryomesh-cute/src//ICuteSuite.h to top_dir
+Adding /home/niall/Projects/Eclipse/cryomesh-cute/src//Test.cpp to top_dir
+Adding /home/niall/Projects/Eclipse/cryomesh-cute/src//TestTemplates.h to top_dir
+Adding /home/niall/Projects/Eclipse/cryomesh-cute/src//UseCasesTest.cpp to top_dir
+Adding /home/niall/Projects/Eclipse/cryomesh-cute/src//UseCasesTest.h to top_dir
+Creating filelist for common
+Creating filelist for components
+Creating filelist for dataobjects
+Creating filelist for spacial
+Creating filelist for state
+Creating filelist for structures
+Categorizing files.
+Finding a working MD5 command....
+Found a working MD5 command.
+Computing results.
+
+
+SLOC	Directory	SLOC-by-Language (Sorted)
+1299    state           cpp=1299
+1137    components      cpp=1137
+739     common          cpp=739
+306     top_dir         cpp=306
+286     structures      cpp=286
+202     spacial         cpp=202
+64      dataobjects     cpp=64
+
+
+Totals grouped by language (dominant language first):
+cpp:           4033 (100.00%)
+
+
+
+
+Total Physical Source Lines of Code (SLOC)                = 4,033
+Development Effort Estimate, Person-Years (Person-Months) = 0.86 (10.38)
+ (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
+Schedule Estimate, Years (Months)                         = 0.51 (6.08)
+ (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
+Estimated Average Number of Developers (Effort/Schedule)  = 1.71
+Total Estimated Cost to Develop                           = $ 116,829
+ (average salary = $56,286/year, overhead = 2.40).
+SLOCCount, Copyright (C) 2001-2004 David A. Wheeler
+SLOCCount is Open Source Software/Free Software, licensed under the GNU GPL.
+SLOCCount comes with ABSOLUTELY NO WARRANTY, and you are welcome to
+redistribute it under certain conditions as specified by the GNU GPL license;
+see the documentation for details.
+Please credit this data as "generated using David A. Wheeler's 'SLOCCount'."

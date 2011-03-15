@@ -1,0 +1,54 @@
+2011-03-13  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/components/ImpulseCollectionTest.cpp (ImpulseCollectionTest::testClear): Fix tests to work now impulses initialise to zero rather than now
+
+2011-03-11  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/components/NodeTest.cpp (NodeTest::testUpdateImpulses): Update test to reflect new defaulting of impulse creation start time to 0 instead of now
+	(NodeTest::testAddImpulse): New test for add to make impulse time is properly set to add-time + original start time
+
+2011-03-04  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/common/MathsTest.cpp (MathsTest::testGetRandomValue): test random bool
+
+2011-03-03  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/dataobjects/DataObjectTest.h (DataObjectTest): New tests
+
+2011-02-05  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/common/SimpleCollectionTest.cpp (SimpleCollectionTest): Tests for initialiser list and list add/remove functions 
+
+2011-02-04  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/common/ConnectorTest.cpp (ConnectorTest::testListConnectDisconnect): Test collection and initialiser list connects and disconnects
+
+2011-02-03  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/components/NodeTest.h (NodeTest): Added tests
+
+2011-02-02  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/components/ImpulseTest.cpp (ImpulseTest::testOperators): Fixed += operator
+	(ImpulseTest::testActiveCycles): done
+
+2011-02-01  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/components/ImpulseTest.cpp (ImpulseTest::testActivityCreation): all activity indexes are valued now, no zero endpoints
+	(ImpulseTest::testActivityCreation): all activity indexes are valued now, no zero endpoints
+	(ImpulseTest::testActivityMaxMin): all activity indexes are valued now, no zero endpoints
+	* src/components/ImpulseCollectionTest.cpp (ImpulseCollectionTest::testGetActivity): Done
+
+2011-01-28  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/components/ImpulseTest.cpp (ImpulseTest::testActivityCreation): Added
+	* src/common/SimpleCollectionTest.cpp (SimpleCollectionTest::testGetValueAt): Added
+	(SimpleCollectionTest::testInverseReverse): Added
+
+2011-01-26  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/components/ImpulseCollectionTest.cpp (ImpulseCollectionTest::testClear): Partial
+
+2011-01-19  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/common/ConnectableTest.h (ConnectableTest): Implemented ConnectorTest
