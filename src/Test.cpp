@@ -2,6 +2,9 @@
 #include "ide_listener.h"
 #include "cute_runner.h"
 
+//manager
+#include "manager/DatabaseManagerTest.h"
+
 //spacial
 #include "spacial/SphericalPointTest.h"
 #include "spacial/PointTest.h"
@@ -38,6 +41,10 @@
 #include "structures/FibreTest.h"
 
 using namespace cryomesh;
+
+void runManagerSuite() {
+	manager::DatabaseManagerTest::runSuite();
+}
 
 void runGeneralSuite() {
 	UseCasesTest::runSuite();
@@ -84,16 +91,17 @@ void runStructuresSuite() {
 int main() {
 	/**
 	 * DISABLED
+	 runStateSuite();
+	 runCommonSuite();
 
+	 runStructuresSuite();
+	 runDataObjectsSuite();
+	 runSpacialSuite();
+	 runGeneralSuite();
+	 runComponentsSuite();
 	 */
-	runStateSuite();
-	runCommonSuite();
 
-	runStructuresSuite();
-	runDataObjectsSuite();
-	runSpacialSuite();
-	//runGeneralSuite();
-	runComponentsSuite();
+	runManagerSuite();
 	return 0;
 }
 
