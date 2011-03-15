@@ -28,14 +28,13 @@ void DatabaseObjectsTest::testCreateInsertNode() {
 	node->setActivity(0.5);
 	common::TimeKeeper::getTimeKeeper().update();
 	node->update();
-	unsigned long int id = node->getID();
 	double x = node->getPosition().getX();
 	double y = node->getPosition().getY();
 	double z = node->getPosition().getZ();
 	double activity = node->getActivity();
 	unsigned int cycle = common::TimeKeeper::getTimeKeeper().getCycle().toULInt();
 
-	std::string id_str = NodeDatabaseObject::toString<unsigned long int>(id);
+	std::string id_str = node->getUUIDString();
 	std::string x_str = NodeDatabaseObject::toString<double>(x);
 	std::string y_str = NodeDatabaseObject::toString<double>(y);
 	std::string z_str = NodeDatabaseObject::toString<double>(z);
