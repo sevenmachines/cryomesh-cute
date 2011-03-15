@@ -4,6 +4,7 @@
 
 //manager
 #include "manager/DatabaseManagerTest.h"
+#include "manager/DatabaseObjectsTest.h"
 
 //spacial
 #include "spacial/SphericalPointTest.h"
@@ -44,6 +45,7 @@ using namespace cryomesh;
 
 void runManagerSuite() {
 	manager::DatabaseManagerTest::runSuite();
+	manager::DatabaseObjectsTest::runSuite();
 }
 
 void runGeneralSuite() {
