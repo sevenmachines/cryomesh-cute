@@ -456,8 +456,8 @@ void ImpulseCollectionTest::testDataObjects() {
 	// test objects are automatically refreshed
 	ImpulseCollection impcoll;
 	impcoll.enableLogging(true);
-	boost::shared_ptr<Impulse> imp1 = Impulse::getRandomImpulse();
-	boost::shared_ptr<Impulse> imp2 = Impulse::getRandomImpulse();
+	boost::shared_ptr<Impulse> imp1 = Impulse::getRandom();
+	boost::shared_ptr<Impulse> imp2 = Impulse::getRandom();
 
 	//test
 	double ave0 = 0;

@@ -23,9 +23,10 @@ MathsTest::~MathsTest() {
 void MathsTest::runSuite() {
 	cute::suite s;
 	s.push_back(CUTE(MathsTest::testGetRandomValue));
-	cute::ide_listener lis;
+cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "MathsTest");
 }
+
 
 void MathsTest::testGetRandomValue() {
 	srand( time(NULL));

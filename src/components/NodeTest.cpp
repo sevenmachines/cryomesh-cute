@@ -348,11 +348,11 @@ void NodeTest::testAddActivity() {
 }
 
 void NodeTest::testDataObject() {
-	boost::shared_ptr<Impulse> imp1 = Impulse::getRandomImpulse();
-	boost::shared_ptr<Impulse> imp2 = Impulse::getRandomImpulse();
-	boost::shared_ptr<Impulse> imp3 = Impulse::getRandomImpulse();
-	boost::shared_ptr<Impulse> imp4 = Impulse::getRandomImpulse();
-	boost::shared_ptr<Impulse> imp5 = Impulse::getRandomImpulse();
+	boost::shared_ptr<Impulse> imp1 = Impulse::getRandom();
+	boost::shared_ptr<Impulse> imp2 = Impulse::getRandom();
+	boost::shared_ptr<Impulse> imp3 = Impulse::getRandom();
+	boost::shared_ptr<Impulse> imp4 = Impulse::getRandom();
+	boost::shared_ptr<Impulse> imp5 = Impulse::getRandom();
 	boost::shared_ptr<Node> node(new Node);
 	ASSERT(imp1!=0);
 	ASSERT(imp2!=0);

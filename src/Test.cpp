@@ -24,6 +24,7 @@
 #include "common/MathsTest.h"
 #include "common/ContainersTest.h"
 #include "common/KeyStoreTest.h"
+#include "common/CycleTest.h"
 
 //components
 #include "components/NodeTest.h"
@@ -70,6 +71,7 @@ void runCommonSuite() {
 	common::MathsTest::runSuite();
 	common::ContainersTest::runSuite();
 	common::KeyStoreTest::runSuite();
+	common::CycleTest::runSuite();
 }
 
 void runComponentsSuite() {
@@ -94,7 +96,6 @@ int main() {
 	/**
 	 * DISABLED
 	 runStateSuite();
-	 runCommonSuite();
 
 	 runStructuresSuite();
 	 runDataObjectsSuite();
@@ -104,6 +105,7 @@ int main() {
 	 */
 
 	runManagerSuite();
+	runCommonSuite();
 	return 0;
 }
 

@@ -22,7 +22,7 @@ public:
 	virtual ~ContainersTest(){}
 	static void runSuite();
 	static void testCompare() ;
-
+	static void testDeleteByComparison();
 	static void testAdd();
 protected:
 	ContainersTest(){}

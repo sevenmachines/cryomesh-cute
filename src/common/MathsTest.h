@@ -23,6 +23,7 @@ public:
 	virtual ~MathsTest();
 	static void runSuite();
 	static void testGetRandomValue();
+
 };
 
 }
