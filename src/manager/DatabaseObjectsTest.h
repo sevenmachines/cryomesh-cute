@@ -22,6 +22,7 @@ public:
 	static void runSuite();
 	static void testCreateInsertNode();
 	static void testCreateInsertConnection();
+	static void testCreateFromDatabaseEntry();
 };
 
 }

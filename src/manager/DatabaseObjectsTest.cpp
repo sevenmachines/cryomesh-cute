@@ -21,7 +21,8 @@ void DatabaseObjectsTest::runSuite() {
 	cute::suite s;
 	s.push_back(CUTE(DatabaseObjectsTest::testCreateInsertNode));
 	s.push_back(CUTE(DatabaseObjectsTest::testCreateInsertConnection));
-	cute::ide_listener lis;
+	s.push_back(CUTE(DatabaseObjectsTest::testCreateFromDatabaseEntry));
+cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "DatabaseObjectsTest");
 }
 
@@ -92,6 +93,10 @@ void DatabaseObjectsTest::testCreateInsertConnection() {
 	std::string exp_str = ss.str();
 
 	ASSERT_EQUAL( exp_str, con1->getDatabaseObject()->getInsert("connectionsTable"));
+}
+
+void DatabaseObjectsTest::testCreateFromDatabaseEntry(){
+	ASSERTM("TODO", false);
 }
 }//NAMESPACE
 

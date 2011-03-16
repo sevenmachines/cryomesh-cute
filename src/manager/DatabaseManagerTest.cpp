@@ -88,6 +88,8 @@ void DatabaseManagerTest::testCommands() {
 
 	common::TimeKeeper::getTimeKeeper().update();
 
+	ASSERTM("TODO: Test update functions", false);
+	ASSERTM("TODO: Test delete functions", false);
 	//	dbm.selectNodes();
 	//dbm.selectConnections();
 	//	dbm.printHistory(std::cout, 10);

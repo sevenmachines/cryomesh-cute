@@ -1,3 +1,8 @@
+2011-03-16  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/common/ContainersTest.cpp (ContainersTest::testDeleteByComparison): Add tests
+	* src/common/CycleTest.h (CycleTest): Implement cycle tests
+
 2011-03-15  SevenMachines  <SevenMachines@yahoo.co.uk>
 
 	* src/manager/DatabaseObjectsTest.cpp (DatabaseObjectsTest::testCreateInsertNode): test for uuid string and not int id
