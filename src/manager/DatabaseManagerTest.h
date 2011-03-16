@@ -9,15 +9,18 @@
 #define DATABASEMANAGERTEST_H_
 
 #include "ICuteSuite.h"
-
+#include "manager/DatabaseManager.h"
 namespace cryomesh {
 
 namespace manager {
 
 class DatabaseManagerTest {
 public:
-	DatabaseManagerTest(){}
-	virtual ~DatabaseManagerTest(){}
+	DatabaseManagerTest() {
+	}
+	virtual ~DatabaseManagerTest() {
+	}
+	static void printCount(DatabaseManager & dbm);
 
 	static void runSuite();
 	static void testCreation();

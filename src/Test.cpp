@@ -96,7 +96,7 @@ int main() {
 	/**
 	 * DISABLED
 	 runStateSuite();
-
+	 runCommonSuite();
 	 runStructuresSuite();
 	 runDataObjectsSuite();
 	 runSpacialSuite();
@@ -105,7 +105,6 @@ int main() {
 	 */
 
 	runManagerSuite();
-	runCommonSuite();
 	return 0;
 }
 

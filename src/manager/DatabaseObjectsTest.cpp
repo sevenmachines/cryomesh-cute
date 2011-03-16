@@ -49,9 +49,9 @@ void DatabaseObjectsTest::testCreateInsertNode() {
 	ss << " values (" << "\'" << id_str << "\'" << ", " << x_str << ", " << y_str << ", " << z_str << ", " << cycle_str
 			<< ", " << activity_str << ");";
 
-	std::cout << "DatabaseObjectsTest::testCreateInsertNode: " << "" << std::endl;
-	std::cout << ss.str() << std::endl;
-	std::cout << node->getDatabaseObject()->getInsert("nodesTable") << std::endl;
+	//std::cout << "DatabaseObjectsTest::testCreateInsertNode: " << "" << std::endl;
+	//	std::cout << ss.str() << std::endl;
+	//	std::cout << node->getDatabaseObject()->getInsert("nodesTable") << std::endl;
 	std::string exp_str = ss.str();
 
 	ASSERT_EQUAL( exp_str, node->getDatabaseObject()->getInsert("nodesTable"));
@@ -81,14 +81,14 @@ void DatabaseObjectsTest::testCreateInsertConnection() {
 
 	std::stringstream ss;
 	ss << "insert into " << "connectionsTable" << " (" << ConnectionDatabaseObject::ID_TAG << ", "
-			<< ConnectionDatabaseObject::INPUT_ID_TAG << ", " << ConnectionDatabaseObject::OUTPUT_ID_TAG << ", " << ConnectionDatabaseObject::CYCLE_TAG << ", "
-			<< ConnectionDatabaseObject::IMPULSE_COUNT_TAG << ") ";
-	ss << " values (" << "\'" << id_str << "\'" << ", " << in_id_str << ", " << out_id_str  << ", " << cycle_str
-			<< ", " << impulse_count_str << ");";
+			<< ConnectionDatabaseObject::INPUT_ID_TAG << ", " << ConnectionDatabaseObject::OUTPUT_ID_TAG << ", "
+			<< ConnectionDatabaseObject::CYCLE_TAG << ", " << ConnectionDatabaseObject::IMPULSE_COUNT_TAG << ") ";
+	ss << " values (" << "\'" << id_str << "\'" << ", " << "\'" << in_id_str << "\'" << ", " << "\'" << out_id_str
+			<< "\'" << ", " << cycle_str << ", " << impulse_count_str << ");";
 
-	std::cout << "DatabaseObjectsTest::testCreateInsertConnection: " << "" << std::endl;
-	std::cout << ss.str() << std::endl;
-	std::cout << con1->getDatabaseObject()->getInsert("connectionsTable") << std::endl;
+	//std::cout << "DatabaseObjectsTest::testCreateInsertConnection: " << "" << std::endl;
+	//	std::cout << ss.str() << std::endl;
+	//	std::cout << con1->getDatabaseObject()->getInsert("connectionsTable") << std::endl;
 	std::string exp_str = ss.str();
 
 	ASSERT_EQUAL( exp_str, con1->getDatabaseObject()->getInsert("connectionsTable"));
