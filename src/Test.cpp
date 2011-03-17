@@ -45,8 +45,8 @@
 using namespace cryomesh;
 
 void runManagerSuite() {
-	manager::DatabaseManagerTest::runSuite();
 	manager::DatabaseObjectsTest::runSuite();
+	manager::DatabaseManagerTest::runSuite();
 }
 
 void runGeneralSuite() {
