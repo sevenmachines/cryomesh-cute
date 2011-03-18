@@ -10,6 +10,7 @@
 #include "components/Node.h"
 #include "components/Connection.h"
 #include "manager/ConnectionDatabaseObject.h"
+#include "manager/DatabaseManager.h"
 
 using namespace cryomesh::components;
 
@@ -22,7 +23,7 @@ void DatabaseObjectsTest::runSuite() {
 	s.push_back(CUTE(DatabaseObjectsTest::testCreateInsertNode));
 	s.push_back(CUTE(DatabaseObjectsTest::testCreateInsertConnection));
 	s.push_back(CUTE(DatabaseObjectsTest::testCreateFromDatabaseEntry));
-cute::ide_listener lis;
+	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "DatabaseObjectsTest");
 }
 
@@ -95,8 +96,91 @@ void DatabaseObjectsTest::testCreateInsertConnection() {
 	ASSERT_EQUAL( exp_str, con1->getDatabaseObject()->getInsert("connectionsTable"));
 }
 
-void DatabaseObjectsTest::testCreateFromDatabaseEntry(){
-	ASSERTM("TODO", false);
+void DatabaseObjectsTest::testCreateFromDatabaseEntry() {
+	DatabaseManager dbm;
+	boost::shared_ptr<components::Node> node = components::Node::getRandom();
+	boost::shared_ptr<components::Node> node1 = components::Node::getRandom();
+	boost::shared_ptr<components::Node> node2 = components::Node::getRandom();
+	node->setActivity(-1);
+	node1->setActivity(1);
+	node2->setActivity(2);
+	node->update();
+	boost::shared_ptr<components::Connection> con1(new components::Connection);
+	boost::shared_ptr<components::Connection> con2(new components::Connection);
+	con2->getMutableConnector().connectInput(node1);
+	con2->getMutableConnector().connectOutput(node2);
+	node1->getMutableConnector().connectOutput(con2);
+	node2->getMutableConnector().connectInput(con2);
+	node->setActivity(0.5);
+	node->update();
+
+	dbm.insertNode(*(node->getDatabaseObject()));
+	dbm.insertConnection(*(con2->getDatabaseObject()));
+
+	//node
+	{
+		std::stringstream ss;
+		ss << "id=" << "'";
+		std::string node_entry = dbm.selectNode(node->getUUIDString(), common::TimeKeeper::getTimeKeeper().getCycle());
+		NodeDatabaseObject ndo(node_entry);
+
+		//get value
+		{
+			spacial::Point point = ndo.getPoint();
+			double point_x = point.getX();
+			double point_y = point.getY();
+			double point_z = point.getZ();
+			std::string id = ndo.getUUID();
+			double activity = ndo.getActivity();
+			common::Cycle cycle = ndo.getCycle();
+
+			std::string exp_id = node->getUUIDString();
+			spacial::Point exp_point = node->getPosition();
+			double exp_point_x = exp_point.getX();
+			double exp_point_y = exp_point.getY();
+			double exp_point_z = exp_point.getZ();
+			common::Cycle exp_cycle = common::TimeKeeper::getTimeKeeper().getCycle();
+			double exp_activity = node->getActivity();
+
+			ASSERT_EQUAL(exp_id, id);
+			ASSERT_EQUAL_DELTA(exp_point_x, point_x, 0.0001);
+			ASSERT_EQUAL_DELTA(exp_point_y, point_y, 0.0001);
+			ASSERT_EQUAL_DELTA(exp_point_z, point_z, 0.0001);
+			ASSERT_EQUAL_DELTA(exp_activity, activity, 0.0001);
+			ASSERT_EQUAL(exp_cycle, cycle);
+		}
+	}
+
+	//connection
+	{
+		std::stringstream ss;
+		ss << "id=" << "'";
+		std::string connection_entry = dbm.selectConnection(con2->getUUIDString(),
+				common::TimeKeeper::getTimeKeeper().getCycle());
+		ConnectionDatabaseObject cdo(connection_entry);
+
+		//get value
+		{
+			std::string id = cdo.getUUID();
+			std::string inputid = cdo.getInputNodeUUID();
+			std::string outputid = cdo.getOutputNodeUUID();
+			int impulse_count = cdo.getImpulseCount();
+			common::Cycle cycle = cdo.getCycle();
+
+			std::string exp_id = con2->getUUIDString();
+			std::string exp_inputid = con2->getConnector().getInputs().begin()->second->getUUIDString();
+			std::string exp_outputid = con2->getConnector().getOutputs().begin()->second->getUUIDString();
+			int exp_impulse_count = con2->getImpulses().getSize();
+			common::Cycle exp_cycle = common::TimeKeeper::getTimeKeeper().getCycle();
+
+			ASSERT_EQUAL(exp_id, id);
+			ASSERT_EQUAL(exp_inputid, inputid);
+			ASSERT_EQUAL(exp_outputid, outputid);
+			ASSERT_EQUAL(exp_impulse_count, impulse_count);
+			ASSERT_EQUAL(exp_cycle, cycle);
+		}
+	}
+
 }
 }//NAMESPACE
 
