@@ -88,10 +88,17 @@ void DatabaseManagerTest::testCommands() {
 	ASSERT_EQUAL(2, dbm.countNodes());
 	ASSERT_EQUAL(2, dbm.countConnections());
 	common::TimeKeeper::getTimeKeeper().update();
+	dbm.insertConnection(*(con2->getDatabaseObject()));
+	ASSERT_EQUAL(2, dbm.countNodes());
+	ASSERT_EQUAL(3, dbm.countConnections());
 
-	dbm.insertNode(*(node2->getDatabaseObject()));
+	dbm.insertNode(*(node1->getDatabaseObject()));
 	ASSERT_EQUAL(3, dbm.countNodes());
-	ASSERT_EQUAL(2, dbm.countConnections());
+	ASSERT_EQUAL(3, dbm.countConnections());
+	common::TimeKeeper::getTimeKeeper().update();
+	dbm.insertNode(*(node2->getDatabaseObject()));
+	ASSERT_EQUAL(4, dbm.countNodes());
+	ASSERT_EQUAL(3, dbm.countConnections());
 
 	//get value
 	{
@@ -110,7 +117,7 @@ void DatabaseManagerTest::testCommands() {
 		std::stringstream exp_z;
 		exp_z << node1->getPosition().getZ();
 		std::stringstream exp_cycle;
-		exp_cycle << 5;
+		exp_cycle << common::TimeKeeper::getTimeKeeper().getCycle() - 2;
 		std::stringstream exp_activity;
 		exp_activity << node1->getActivity();
 
@@ -119,6 +126,7 @@ void DatabaseManagerTest::testCommands() {
 		ASSERT_EQUAL(exp_y.str(), y);
 		ASSERT_EQUAL(exp_z.str(), z);
 		ASSERT_EQUAL_DELTA(atof(exp_activity.str().c_str()), atof(activity.c_str()), 0.0001);
+		//	ASSERT_EQUAL(160, common::TimeKeeper::getTimeKeeper().getCycle().toLInt());
 		ASSERT_EQUAL(exp_cycle.str(), cycle);
 	}
 
@@ -139,14 +147,14 @@ void DatabaseManagerTest::testCommands() {
 			ss << "id=" << "\'" << node1->getUUIDString() << "\'";
 			dbm.deleteNodes(ss.str());
 			ASSERT_EQUAL(2, dbm.countNodes());
-			ASSERT_EQUAL(2, dbm.countConnections());
+			ASSERT_EQUAL(3, dbm.countConnections());
 		}
 
 		//connection
 		{
 			dbm.deleteConnection(con1->getUUIDString());
 			ASSERT_EQUAL(2, dbm.countNodes());
-			ASSERT_EQUAL(1, dbm.countConnections());
+			ASSERT_EQUAL(2, dbm.countConnections());
 		}
 	}
 
@@ -154,7 +162,9 @@ void DatabaseManagerTest::testCommands() {
 	{
 		dbm.selectNodes();
 		dbm.selectConnections();
-		dbm.deleteAllByCycle(6, -1);
+		long int now = common::TimeKeeper::getTimeKeeper().getCycle().toLInt();
+		dbm.deleteAllByCycle(now, -1);
+		//ASSERT_EQUAL(common::TimeKeeper::getTimeKeeper().getCycle(), common::Cycle(6));
 		ASSERT_EQUAL(1, dbm.countNodes());
 		ASSERT_EQUAL(0, dbm.countConnections());
 	}
