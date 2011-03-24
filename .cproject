@@ -27,6 +27,7 @@
 								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.2028620780" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.88057406" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-cute/cute}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh}&quot;"/>
@@ -55,6 +56,7 @@
 							<tool command="/usr/bin/g++-4.5" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.1300126422" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.paths.229070894" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh/Debug}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common/Debug}&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.1548985285" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cryomesh"/>
@@ -62,6 +64,7 @@
 									<listOptionValue builtIn="false" value="gmpxx"/>
 									<listOptionValue builtIn="false" value="gmp"/>
 									<listOptionValue builtIn="false" value="sqlite3"/>
+									<listOptionValue builtIn="false" value="cryomesh-common"/>
 								</option>
 								<option id="gnu.cpp.link.option.flags.1432157459" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-std=c++0x " valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1816955136" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
@@ -75,6 +78,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-cute/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common/src}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.544206062" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
@@ -697,6 +701,7 @@
 								<option id="gnu.cpp.compiler.exe.release.option.debugging.level.1205329278" name="Debug Level" superClass="gnu.cpp.compiler.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.2065243971" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-cute/cute}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh}&quot;"/>
 								</option>
@@ -723,6 +728,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.145453329" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
 								<option id="gnu.cpp.link.option.paths.620434862" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh/Release}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common/Release}&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.1982372503" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cryomesh"/>
@@ -730,6 +736,7 @@
 									<listOptionValue builtIn="false" value="gmpxx"/>
 									<listOptionValue builtIn="false" value="gmp"/>
 									<listOptionValue builtIn="false" value="sqlite3"/>
+									<listOptionValue builtIn="false" value="cryomesh-common"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1775958234" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -742,6 +749,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-cute/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common/src}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.994517190" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
@@ -1364,6 +1372,7 @@
 								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.1678380952" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1996615701" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-cute/cute}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh}&quot;"/>
@@ -1394,6 +1403,7 @@
 							<tool command="/usr/bin/g++-4.5" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.401330370" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.paths.1140169311" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh/Gcov}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common/Debug}&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.509339926" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cryomesh"/>
@@ -1401,6 +1411,7 @@
 									<listOptionValue builtIn="false" value="gmpxx"/>
 									<listOptionValue builtIn="false" value="gmp"/>
 									<listOptionValue builtIn="false" value="sqlite3"/>
+									<listOptionValue builtIn="false" value="cryomesh-common"/>
 								</option>
 								<option id="gnu.cpp.link.option.flags.1983670905" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-std=c++0x -fprofile-arcs -ftest-coverage" valueType="string"/>
 								<option id="gnu.cpp.link.option.debugging.prof.1397159713" name="Generate prof information (-p)" superClass="gnu.cpp.link.option.debugging.prof" value="true" valueType="boolean"/>
@@ -1416,6 +1427,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-cute/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common/src}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1037561692" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>

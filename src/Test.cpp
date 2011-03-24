@@ -6,10 +6,6 @@
 #include "manager/DatabaseManagerTest.h"
 #include "manager/DatabaseObjectsTest.h"
 
-//spacial
-#include "spacial/SphericalPointTest.h"
-#include "spacial/PointTest.h"
-
 //state
 #include "state/BinaryStringTest.h"
 #include "state/PatternChannelTest.h"
@@ -19,11 +15,6 @@
 // common
 #include "common/ConnectorTest.h"
 #include "common/TimeKeeperTest.h"
-#include "common/SimpleCollectionTest.h"
-#include "common/MiscTest.h"
-#include "common/MathsTest.h"
-#include "common/ContainersTest.h"
-#include "common/KeyStoreTest.h"
 #include "common/CycleTest.h"
 
 //components
@@ -53,10 +44,6 @@ void runGeneralSuite() {
 	UseCasesTest::runSuite();
 }
 
-void runSpacialSuite() {
-	spacial::SphericalPointTest::runSuite();
-	spacial::PointTest::runSuite();
-}
 void runStateSuite() {
 	state::BinaryStringTest::runSuite();
 	state::PatternChannelTest::runSuite();
@@ -66,11 +53,11 @@ void runStateSuite() {
 void runCommonSuite() {
 	common::ConnectorTest::runSuite();
 	common::TimeKeeperTest::runSuite();
-	common::SimpleCollectionTest::runSuite();
-	common::MiscTest::runSuite();
-	common::MathsTest::runSuite();
-	common::ContainersTest::runSuite();
-	common::KeyStoreTest::runSuite();
+//	common::SimpleCollectionTest::runSuite();
+//	common::MiscTest::runSuite();
+//	common::MathsTest::runSuite();
+//	common::ContainersTest::runSuite();
+//	common::KeyStoreTest::runSuite();
 	common::CycleTest::runSuite();
 }
 
@@ -101,7 +88,6 @@ int main() {
 	runCommonSuite();
 	runStructuresSuite();
 	runDataObjectsSuite();
-	runSpacialSuite();
 	runComponentsSuite();
 
 	runManagerSuite();
