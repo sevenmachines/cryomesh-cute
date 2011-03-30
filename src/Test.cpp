@@ -5,6 +5,7 @@
 //manager
 #include "manager/DatabaseManagerTest.h"
 #include "manager/DatabaseObjectsTest.h"
+#include "manager/CreatorTest.h"
 
 //state
 #include "state/BinaryStringTest.h"
@@ -38,6 +39,7 @@ using namespace cryomesh;
 void runManagerSuite() {
 	manager::DatabaseObjectsTest::runSuite();
 	manager::DatabaseManagerTest::runSuite();
+	manager::CreatorTest::runSuite();
 }
 
 void runGeneralSuite() {
@@ -53,11 +55,11 @@ void runStateSuite() {
 void runCommonSuite() {
 	common::ConnectorTest::runSuite();
 	common::TimeKeeperTest::runSuite();
-//	common::SimpleCollectionTest::runSuite();
-//	common::MiscTest::runSuite();
-//	common::MathsTest::runSuite();
-//	common::ContainersTest::runSuite();
-//	common::KeyStoreTest::runSuite();
+	//	common::SimpleCollectionTest::runSuite();
+	//	common::MiscTest::runSuite();
+	//	common::MathsTest::runSuite();
+	//	common::ContainersTest::runSuite();
+	//	common::KeyStoreTest::runSuite();
 	common::CycleTest::runSuite();
 }
 
@@ -83,13 +85,12 @@ int main() {
 	/**
 	 * DISABLED
 	 runGeneralSuite();
+	 runStateSuite();
+	 runCommonSuite();
+	 runStructuresSuite();
+	 runDataObjectsSuite();
+	 runComponentsSuite();
 	 */
-	runStateSuite();
-	runCommonSuite();
-	runStructuresSuite();
-	runDataObjectsSuite();
-	runComponentsSuite();
-
 	runManagerSuite();
 	return 0;
 }
