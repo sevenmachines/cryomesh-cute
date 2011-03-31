@@ -34,8 +34,16 @@
 #include "structures/BundleTest.h"
 #include "structures/FibreTest.h"
 
+//utilities
+#include "utilities/SequencerChannelsTest.h"
+#include "utilities/SequencerGenericTest.h"
+
 using namespace cryomesh;
 
+void runUtilitiesSuite() {
+	utilities::SequencerGenericTest::runSuite();
+	utilities::SequencerChannelsTest::runSuite();
+}
 void runManagerSuite() {
 	manager::DatabaseObjectsTest::runSuite();
 	manager::DatabaseManagerTest::runSuite();
@@ -92,6 +100,7 @@ int main() {
 	 runComponentsSuite();
 	 */
 	runManagerSuite();
+	runUtilitiesSuite();
 	return 0;
 }
 
