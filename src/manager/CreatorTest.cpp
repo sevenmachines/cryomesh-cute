@@ -14,18 +14,32 @@ namespace cryomesh {
 
 namespace manager {
 
-const std::string CreatorTest::CONFIG_FILE = "Data/example.config";
+const std::string CreatorTest::CONFIG_FILE = "Data/test1.config";
+const std::string CreatorTest::NULL_CONFIG_FILE = "Data/null.config";
 
 void CreatorTest::runSuite() {
 	cute::suite s;
 	s.push_back(CUTE(CreatorTest::testCheckConfigEntry));
 	s.push_back(CUTE(CreatorTest::testCheckConfigStructure));
+	s.push_back(CUTE(CreatorTest::testCreation));
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "CreatorTest");
 }
 
-void CreatorTest::testCheckConfigEntry() {
+void CreatorTest::testCreation() {
 	Creator creator(CreatorTest::CONFIG_FILE);
+	boost::shared_ptr< structures::Bundle > bundle = creator.getBundle();
+	ASSERT(bundle !=0);
+	//3 clusters
+	int cluster_count = bundle->getClusters().getSize();
+	ASSERT_EQUAL(3, cluster_count);
+
+	// 3 interconnecting fibres plus 1 primary in and 1 primary out
+	int fibre_count = bundle->getFibres().getSize();
+	ASSERT_EQUAL(5, fibre_count);
+}
+void CreatorTest::testCheckConfigEntry() {
+	Creator creator(CreatorTest::NULL_CONFIG_FILE);
 
 	// good entry, 3 option entry
 	{

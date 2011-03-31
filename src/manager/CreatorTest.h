@@ -19,10 +19,12 @@ public:
 	CreatorTest();
 	virtual ~CreatorTest();
 	static void runSuite();
+	static void testCreation();
 	static void testCheckConfigEntry();
 	static void testCheckConfigStructure();
 
 	static const std::string CONFIG_FILE;
+	static const std::string NULL_CONFIG_FILE;
 
 };
 
