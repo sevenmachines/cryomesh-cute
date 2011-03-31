@@ -16,6 +16,8 @@ void BundleTest::runSuite() {
 	cute::suite s;
 	s.push_back(CUTE( BundleTest::testCreateConnect));
 	s.push_back(CUTE( BundleTest::testPropagation));
+	s.push_back(CUTE( BundleTest::testLoadData));
+	s.push_back(CUTE( BundleTest::testConnectPatternChannels));
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "BundleTest");
 }
@@ -104,17 +106,17 @@ void BundleTest::testPropagation() {
 		}
 
 	}
-//	std::cout << "BundleTest::testPropagation: " << "" << std::endl;
+	//	std::cout << "BundleTest::testPropagation: " << "" << std::endl;
 	//std::cout << bun << std::endl;
 	// propogate
 	{
 		const int MAX_PROPS = 10;
 		for (int i = 0; i < MAX_PROPS; i++) {
-		//	std::cout<<"BundleTest::testPropagation: "<<i<<std::endl;
+			//	std::cout<<"BundleTest::testPropagation: "<<i<<std::endl;
 			fibrein->trigger(0.5);
-bun.update();
-		//	std::cout << "BundleTest::testPropagation: " << "" << std::endl;
-		//	std::cout << bun << std::endl;
+			bun.update();
+			//	std::cout << "BundleTest::testPropagation: " << "" << std::endl;
+			//	std::cout << bun << std::endl;
 
 		}
 	}
@@ -125,6 +127,68 @@ bun.update();
 	ASSERTM("TODO", false);
 }
 
-}
+void BundleTest::testLoadData() {
+	// data file is 3 in/outs of 3x2
+	const std::string DATAFILE = "TestData/sequences_3x2x3.xml";
+
+	const int FIBRE_SZ = 10;
+	const int CLUSTER1_SZ = 10;
+	const int CLUSTER2_SZ = 20;
+	const int CLUSTER1_CONNECTIVITY = 20;
+	const int CLUSTER2_CONNECTIVITY = 40;
+
+	// cluster1->fibre1->cluster2
+	Bundle bun;
+	boost::shared_ptr<Cluster> cluster1 = bun.createCluster(CLUSTER1_SZ, CLUSTER1_CONNECTIVITY);
+	boost::shared_ptr<Cluster> cluster2 = bun.createCluster(CLUSTER2_SZ, CLUSTER2_CONNECTIVITY);
+	boost::shared_ptr<Fibre> fibre1 = bun.connectCluster(cluster1->getUUID(), cluster2->getUUID(), FIBRE_SZ);
+
+	bun.loadChannels(DATAFILE);
+
+	ASSERT_EQUAL(3, bun.getInputChannelsMap().getSize());
+	ASSERT_EQUAL(3, bun.getOutputChannelsMap().getSize());
 
 }
+
+void BundleTest::testConnectPatternChannels() {
+	// data file is 3 in/outs of 3x2
+	const std::string DATAFILE = "TestData/sequences_3x2x3.xml";
+
+	const int FIBRE_SZ = 10;
+	const int CLUSTER1_SZ = 10;
+	const int CLUSTER2_SZ = 20;
+	const int CLUSTER1_CONNECTIVITY = 20;
+	const int CLUSTER2_CONNECTIVITY = 40;
+
+	// cluster1->fibre1->cluster2
+	Bundle bun;
+	boost::shared_ptr<Cluster> cluster1 = bun.createCluster(CLUSTER1_SZ, CLUSTER1_CONNECTIVITY);
+	boost::shared_ptr<Cluster> cluster2 = bun.createCluster(CLUSTER2_SZ, CLUSTER2_CONNECTIVITY);
+	boost::shared_ptr<Fibre> fibre1 = bun.connectCluster(cluster1->getUUID(), cluster2->getUUID(), FIBRE_SZ);
+
+	bun.loadChannels(DATAFILE);
+
+	ASSERT_EQUAL(3, bun.getInputChannelsMap().getSize());
+	ASSERT_EQUAL(3, bun.getOutputChannelsMap().getSize());
+
+	// inrefs channels are 1, 2 3
+
+	// get the 3 input channel ids
+
+	// connect to the 2 clusters
+
+	// check total
+		ASSERT_EQUAL(3, bun.getFibrePatternChannelMap().size());
+
+	//our ref channels are 1001, 1002, 1003
+	// get the 3 input channel ids
+
+	// connect to the 2 clusters
+
+	// check total
+	ASSERT_EQUAL(6, bun.getFibrePatternChannelMap().size());
+
+}
+}//NAMESPACE
+
+}//NAMESPACE

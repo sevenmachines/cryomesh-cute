@@ -23,6 +23,8 @@ public:
 
 	static void testCreateConnect();
 	static void testPropagation();
+	static void testLoadData();
+	static void testConnectPatternChannels();
 };
 
 }

@@ -34,23 +34,19 @@ void CreatorTest::testCreation() {
 	int cluster_count = bundle->getClusters().getSize();
 	ASSERT_EQUAL(3, cluster_count);
 
-	// 3 interconnecting fibres plus 1 primary in and 1 primary out
+	// 3 interconnecting fibres
 	int fibre_count = bundle->getFibres().getSize();
-	ASSERT_EQUAL(5, fibre_count);
+	ASSERT_EQUAL(3, fibre_count);
+
+	// test connecting to loaded pattern channels
+	ASSERTM("TODO: test connecting to loaded pattern channels", false);
 }
 void CreatorTest::testCheckConfigEntry() {
 	Creator creator(CreatorTest::NULL_CONFIG_FILE);
 
-	// good entry, 3 option entry
+	// good entry, 2 option entry
 	{
-		std::string entry_str = "create-cluster id=1 size=100 connectivity=10";
-		config::ConfigEntry entry(entry_str);
-		ASSERT(creator.checkConfigEntry(entry) == true);
-	}
-
-	// good entry, 1 option entry
-	{
-		std::string entry_str = "set-primary-out id=4";
+		std::string entry_str = "connect-primary-input id=1 outputid=1";
 		config::ConfigEntry entry(entry_str);
 		ASSERT(creator.checkConfigEntry(entry) == true);
 	}
@@ -63,7 +59,7 @@ void CreatorTest::testCheckConfigEntry() {
 	}
 	// bad entry, no options
 	{
-		std::string entry_str = "set-primary-out";
+		std::string entry_str = "connect-primary-input";
 		config::ConfigEntry entry(entry_str);
 		ASSERT(creator.checkConfigEntry(entry) == false);
 	}

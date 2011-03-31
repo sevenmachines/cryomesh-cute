@@ -95,12 +95,11 @@ int main() {
 	 runGeneralSuite();
 	 runStateSuite();
 	 runCommonSuite();
-	 runStructuresSuite();
 	 runDataObjectsSuite();
 	 runComponentsSuite();
-	 */
+	 runUtilitiesSuite();*/
+	runStructuresSuite();
 	runManagerSuite();
-	runUtilitiesSuite();
 	return 0;
 }
 
