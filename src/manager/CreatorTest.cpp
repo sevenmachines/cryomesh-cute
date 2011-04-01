@@ -86,8 +86,27 @@ void CreatorTest::testCheckConfigEntry() {
 }
 
 void CreatorTest::testCheckConfigStructure() {
-	ASSERTM("TODO", false);
+	Creator creator(CreatorTest::CONFIG_FILE);
+	// good
+	{
+		config::ConfigTranslator translator(CreatorTest::CONFIG_FILE);
+		bool success = creator.checkConfigStructure(translator.getEntries());
+		ASSERT(success == true);
+	}
 
+	// bad, no cluster create
+	{
+		config::ConfigTranslator translator("Data/test-noclustercreate");
+		bool success = creator.checkConfigStructure(translator.getEntries());
+		ASSERT(success == false);
+	}
+
+	// bad, no loaddata
+	{
+		config::ConfigTranslator translator("Data/test-noloaddata");
+		bool success = creator.checkConfigStructure(translator.getEntries());
+		ASSERT(success == false);
+	}
 }
 
 }//NAMESPACE
