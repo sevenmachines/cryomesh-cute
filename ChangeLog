@@ -1,3 +1,7 @@
+2011-04-01  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/manager/CreatorTest.cpp (CreatorTest::testCreation): Check for correct data loading and connection
+
 2011-03-18  SevenMachines  <SevenMachines@yahoo.co.uk>
 
 	* src/manager/DatabaseManagerTest.cpp (DatabaseManagerTest::testCommands): Fix up timings 

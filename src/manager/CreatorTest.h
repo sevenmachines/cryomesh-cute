@@ -25,6 +25,7 @@ public:
 
 	static const std::string CONFIG_FILE;
 	static const std::string NULL_CONFIG_FILE;
+	static const std::string DATAFILE;
 
 };
 
