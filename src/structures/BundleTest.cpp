@@ -172,21 +172,66 @@ void BundleTest::testConnectPatternChannels() {
 	ASSERT_EQUAL(3, bun.getOutputChannelsMap().getSize());
 
 	// inrefs channels are 1, 2 3
-
+	boost::uuids::uuid inchan1;
+	boost::uuids::uuid inchan2;
+	boost::uuids::uuid inchan3;
 	// get the 3 input channel ids
+	{
+		std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator it_input_channels_map =
+				bun.getInputChannelsMap().begin();
+		const std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator
+				it_input_channels_map_end = bun.getInputChannelsMap().end();
+		ASSERT_EQUAL(3, bun.getInputChannelsMap().getSize());
+		inchan1 = it_input_channels_map->first;
+		++it_input_channels_map;
+		inchan2 = it_input_channels_map->first;
+		++it_input_channels_map;
+		inchan3 = it_input_channels_map->first;
+	}
 
 	// connect to the 2 clusters
+	boost::shared_ptr<Fibre> fibrein1 = bun.connectPrimaryInputCluster(inchan1, cluster1->getUUID());
+	boost::shared_ptr<Fibre> fibrein2 = bun.connectPrimaryInputCluster(inchan2, cluster1->getUUID());
+	boost::shared_ptr<Fibre> fibrein3 = bun.connectPrimaryInputCluster(inchan3, cluster2->getUUID());
 
 	// check total
-		ASSERT_EQUAL(3, bun.getFibrePatternChannelMap().size());
+	ASSERT_EQUAL(3, bun.getFibrePatternChannelMap().size());
 
 	//our ref channels are 1001, 1002, 1003
 	// get the 3 input channel ids
+	boost::uuids::uuid outchan1;
+	boost::uuids::uuid outchan2;
+	boost::uuids::uuid outchan3;
+	// get the 3 output channel ids
+	{
+		std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator it_output_channels_map =
+				bun.getOutputChannelsMap().begin();
+		const std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator
+				it_output_channels_map_end = bun.getOutputChannelsMap().end();
+		ASSERT_EQUAL(3, bun.getOutputChannelsMap().getSize());
+		outchan1 = it_output_channels_map->first;
+		++it_output_channels_map;
+		outchan2 = it_output_channels_map->first;
+		++it_output_channels_map;
+		outchan3 = it_output_channels_map->first;
+	}
 
 	// connect to the 2 clusters
+	boost::shared_ptr<Fibre> fibreout1 = bun.connectPrimaryOutputCluster(outchan1, cluster1->getUUID());
+	boost::shared_ptr<Fibre> fibreout2 = bun.connectPrimaryOutputCluster(outchan2, cluster2->getUUID());
+	boost::shared_ptr<Fibre> fibreout3 = bun.connectPrimaryOutputCluster(outchan2, cluster2->getUUID());
 
 	// check total
 	ASSERT_EQUAL(6, bun.getFibrePatternChannelMap().size());
+
+	// check fibres are all connected
+	ASSERT(fibrein1->isConnected(cluster1) == Fibre::OutputCluster );
+	ASSERT(fibrein2->isConnected(cluster1)== Fibre::OutputCluster );
+	ASSERT(fibrein3->isConnected(cluster2)== Fibre::OutputCluster );
+
+	ASSERT(fibreout1->isConnected(cluster1)== Fibre::InputCluster );
+	ASSERT(fibreout2->isConnected(cluster2)== Fibre::InputCluster );
+	ASSERT(fibreout3->isConnected(cluster2)== Fibre::InputCluster );
 
 }
 }//NAMESPACE
