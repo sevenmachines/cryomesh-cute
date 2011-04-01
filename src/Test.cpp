@@ -97,9 +97,9 @@ int main() {
 	 runCommonSuite();
 	 runDataObjectsSuite();
 	 runComponentsSuite();
+	 runManagerSuite();
 	 runUtilitiesSuite();*/
 	runStructuresSuite();
-	runManagerSuite();
 	return 0;
 }
 

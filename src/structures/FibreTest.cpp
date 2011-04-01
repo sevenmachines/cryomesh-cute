@@ -17,7 +17,8 @@ void FibreTest::runSuite() {
 	cute::suite s;
 	s.push_back(CUTE( FibreTest::testCreation));
 	s.push_back(CUTE( FibreTest::testTrigger));
-	cute::ide_listener lis;
+	s.push_back(CUTE( FibreTest::testGetInputNodesPattern));
+cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "FibreTest");
 }
 
@@ -180,7 +181,7 @@ void FibreTest::testTrigger() {
 
 		boost::shared_ptr<Cluster> cluster1(new Cluster(10, 1));
 		boost::shared_ptr<Cluster> cluster2(new Cluster(20, 2));
-		boost::shared_ptr< Fibre > fibre( new Fibre(cluster1, cluster2, WIDTH));
+		boost::shared_ptr<Fibre> fibre(new Fibre(cluster1, cluster2, WIDTH));
 		fibre->trigger(expected_pat);
 		const state::Pattern actual_pattern(fibre->getConnections().getActivityPattern()->toPlusBooleanString());
 		ASSERT_EQUAL(expected_pat, actual_pattern);
@@ -192,9 +193,9 @@ void FibreTest::testTrigger() {
 
 		boost::shared_ptr<Cluster> cluster1(new Cluster(10, 1));
 		boost::shared_ptr<Cluster> cluster2(new Cluster(20, 2));
-		boost::shared_ptr< Fibre > fibre( new Fibre(cluster1, cluster2, WIDTH));
+		boost::shared_ptr<Fibre> fibre(new Fibre(cluster1, cluster2, WIDTH));
 		fibre->trigger();
-		const state::Pattern actual_pattern (fibre->getConnections().getActivityPattern()->toPlusBooleanString());
+		const state::Pattern actual_pattern(fibre->getConnections().getActivityPattern()->toPlusBooleanString());
 		const state::Pattern expected_pat("1111111111");
 		ASSERT_EQUAL(expected_pat, actual_pattern);
 	}
@@ -205,6 +206,9 @@ void FibreTest::testTrigger() {
 	}
 }
 
+void FibreTest::testGetInputNodesPattern() {
+	ASSERTM("TODO", false);
+}
 }//NAMESPACE
 
 }//NAMESPACE

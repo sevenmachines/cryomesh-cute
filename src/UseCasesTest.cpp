@@ -227,7 +227,9 @@ void UseCasesTest::testFullCycle() {
 	boost::shared_ptr<Fibre> fibre23 = bundle.connectCluster(cluster2->getUUID(), cluster3->getUUID(), FIBRE_WIDTH);
 	boost::shared_ptr<Fibre> fibre13 = bundle.connectCluster(cluster1->getUUID(), cluster3->getUUID(), FIBRE_WIDTH);
 	boost::shared_ptr<Fibre> fibre3out = bundle.connectPrimaryOutputCluster(cluster3->getUUID(), FIBRE_WIDTH);
-	ASSERT_EQUAL(5, bundle.getFibres().getSize());
+	ASSERT_EQUAL(3, bundle.getFibres().getSize());
+	ASSERT_EQUAL(1, bundle.getInputFibres().getSize());
+	ASSERT_EQUAL(1, bundle.getOutputFibres().getSize());
 
 	ASSERT_EQUAL(Fibre::OutputCluster, fibre1in->isConnected(cluster1) );
 	ASSERT_EQUAL(Fibre::InputCluster, fibre12->isConnected(cluster1) );
