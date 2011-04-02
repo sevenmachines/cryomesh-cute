@@ -8,6 +8,9 @@
 #include "FibreTest.h"
 #include "structures/Fibre.h"
 #include "structures/Cluster.h"
+#include "manager/Creator.h"
+#include "components/Node.h"
+#include "state/Pattern.h"
 
 namespace cryomesh {
 
@@ -17,8 +20,8 @@ void FibreTest::runSuite() {
 	cute::suite s;
 	s.push_back(CUTE( FibreTest::testCreation));
 	s.push_back(CUTE( FibreTest::testTrigger));
-	s.push_back(CUTE( FibreTest::testGetInputNodesPattern));
-cute::ide_listener lis;
+	s.push_back(CUTE( FibreTest::testGetNodesPattern));
+	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "FibreTest");
 }
 
@@ -183,6 +186,7 @@ void FibreTest::testTrigger() {
 		boost::shared_ptr<Cluster> cluster2(new Cluster(20, 2));
 		boost::shared_ptr<Fibre> fibre(new Fibre(cluster1, cluster2, WIDTH));
 		fibre->trigger(expected_pat);
+		// fibre->getMutableConnections().update();
 		const state::Pattern actual_pattern(fibre->getConnections().getActivityPattern()->toPlusBooleanString());
 		ASSERT_EQUAL(expected_pat, actual_pattern);
 	}
@@ -206,8 +210,62 @@ void FibreTest::testTrigger() {
 	}
 }
 
-void FibreTest::testGetInputNodesPattern() {
-	ASSERTM("TODO", false);
+void FibreTest::testGetNodesPattern() {
+	const int WIDTH = 3;
+	boost::shared_ptr<Cluster> cluster1(new Cluster(10, 1));
+	boost::shared_ptr<Cluster> cluster2(new Cluster(20, 2));
+	boost::shared_ptr<Fibre> fibre(new Fibre(cluster1, cluster2, WIDTH));
+
+	ASSERT(fibre != 0);
+	boost::shared_ptr<state::Pattern> empty_pattern(new state::Pattern("000"));
+	boost::shared_ptr<state::Pattern> exp_pattern(new state::Pattern("101"));
+	// test input nodes pattern setting
+	{
+		// set the  fibres input nodes to force fire a pattern
+		fibre->forceFireInputNodes(*exp_pattern);
+		//	std::cout<<"FibreTest::testGetNodesPattern: "<<*cluster1<<std::endl;
+		// update to actual fire nodes
+		common::TimeKeeper::getTimeKeeper().update();
+		cluster1->update();
+		//std::cout<<"FibreTest::testGetNodesPattern: "<<*cluster1<<std::endl;
+		// get the actual fibre firing pattern
+		boost::shared_ptr<state::Pattern> act_pattern = fibre->getInputNodesPattern();
+		// should be the same as the forced node firing pattern
+		std::cout << "FibreTest::testGetINodesPattern: " << "exp: " << *exp_pattern << "\tact: " << *act_pattern
+				<< std::endl;
+		ASSERT(*exp_pattern== *act_pattern);
+		// update again
+		common::TimeKeeper::getTimeKeeper().update();
+		cluster1->update();
+		// fibre firing pattern should be zeroed
+		boost::shared_ptr<state::Pattern> end_pattern = fibre->getInputNodesPattern();
+		std::cout << "FibreTest::testGetINodesPattern: " << "end: " << *end_pattern << std::endl;
+		ASSERT(*empty_pattern == *end_pattern);
+	}
+
+	// test input nodes pattern setting
+	{
+		// set the  fibres input nodes to force fire a pattern
+		fibre->forceFireOutputNodes(*exp_pattern);
+		//std::cout<<"FibreTest::testGetNodesPattern: "<<*cluster2<<std::endl;
+		// update to actual fire nodes
+		common::TimeKeeper::getTimeKeeper().update();
+		cluster1->update();
+		//std::cout<<"FibreTest::testGetNodesPattern: "<<*cluster2<<std::endl;
+		// get the actual fibre firing pattern
+		boost::shared_ptr<state::Pattern> act_pattern = fibre->getOutputNodesPattern();
+		// should be the same as the forced node firing pattern
+		std::cout << "FibreTest::testGetINodesPattern: " << "exp: " << *exp_pattern << "\tact: " << *act_pattern
+				<< std::endl;
+		ASSERT(*exp_pattern== *act_pattern);
+		// update again
+		common::TimeKeeper::getTimeKeeper().update();
+		cluster1->update();
+		// fibre firing pattern should be zeroed
+		boost::shared_ptr<state::Pattern> end_pattern = fibre->getInputNodesPattern();
+		std::cout << "FibreTest::testGetINodesPattern: " << "end: " << *end_pattern << std::endl;
+		ASSERT(*empty_pattern == *end_pattern);
+	}
 }
 }//NAMESPACE
 

@@ -22,7 +22,7 @@ public:
 	static void runSuite();
 	static void testCreation();
 	static void testTrigger() ;
-	static void testGetInputNodesPattern();
+	static void testGetNodesPattern();
 };
 
 }

@@ -31,6 +31,7 @@ void NodeTest::runSuite() {
 	s.push_back(CUTE(NodeTest::testDataObject));
 	s.push_back(CUTE(NodeTest::testSpacialSettings));
 	s.push_back(CUTE(NodeTest::testAddImpulse));
+	s.push_back(CUTE(NodeTest::testForceFire));
 
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "NodeTest");
@@ -61,15 +62,15 @@ void NodeTest::testUpdateImpulses() {
 		//			<< std::endl;
 		//	std::cout << *node1 << std::endl;
 		//std::cout << "NodeTest::testUpdateImpulses: " << "imp1: " << "(" << imp1->getFirstActiveCycle().toLInt() << ","
-	//			<< imp1->getLastActiveCycle().toLInt() << ")" << std::endl;
+		//			<< imp1->getLastActiveCycle().toLInt() << ")" << std::endl;
 
 		for (int i = 0; i < LENGTH1 + DELAY2 + 5; i++) {
 			tk.update();
 			if (i == 1) {
 				node1->addImpulse(imp2);
-		//		std::cout << "NodeTest::testUpdateImpulses: " << "imp2: " << "("
-			//			<< imp2->getFirstActiveCycle().toLInt() << "," << imp2->getLastActiveCycle().toLInt() << ")"
-		//				<< std::endl;
+				//		std::cout << "NodeTest::testUpdateImpulses: " << "imp2: " << "("
+				//			<< imp2->getFirstActiveCycle().toLInt() << "," << imp2->getLastActiveCycle().toLInt() << ")"
+				//				<< std::endl;
 			}
 			//	std::cout << "NodeTest::testUpdateImpulses: " << i << ": " << "cycle: " << tk.getCycle().toLInt() << std::endl;
 			node1->update();
@@ -88,7 +89,7 @@ void NodeTest::testUpdateImpulses() {
 	}
 
 	//check  fire
-//	std::cout << "NodeTest::testUpdateImpulses: " << "########### FIRE ###########" << std::endl;
+	//	std::cout << "NodeTest::testUpdateImpulses: " << "########### FIRE ###########" << std::endl;
 	{
 		{
 			common::TimeKeeper & tk = common::TimeKeeper::getTimeKeeper();
@@ -112,16 +113,16 @@ void NodeTest::testUpdateImpulses() {
 				tk.update();
 				if (i == 1) {
 					node1->addImpulse(imp2);
-				//	std::cout << "NodeTest::testUpdateImpulses: " << "imp2: " << "("
-				//			<< imp2->getFirstActiveCycle().toLInt() << "," << imp2->getLastActiveCycle().toLInt()
-			//				<< ")" << std::endl;
+					//	std::cout << "NodeTest::testUpdateImpulses: " << "imp2: " << "("
+					//			<< imp2->getFirstActiveCycle().toLInt() << "," << imp2->getLastActiveCycle().toLInt()
+					//				<< ")" << std::endl;
 				}
 				//	std::cout << "NodeTest::testUpdateImpulses: " << i << ": " << "cycle: " << tk.getCycle().toLInt() << std::endl;
 				node1->update();
 				int sz = node1->getImpulses().getSize();
 				if (i < 1) {
 					ASSERT_EQUAL(1, sz);
-				} else if (i < 2 &&i>=1) {
+				} else if (i < 2 && i >= 1) {
 					ASSERT_EQUAL(2, sz);
 				} else {
 					//imp2 is dropped
@@ -340,7 +341,7 @@ void NodeTest::testAddActivity() {
 	common::TimeKeeper & tk = common::TimeKeeper::getTimeKeeper();
 	NodeTest nt;
 	// over egg
-	for ( int i = 0; i < Node::MAX_ACTIVITIES_LENGTH + 10; i++) {
+	for (int i = 0; i < Node::MAX_ACTIVITIES_LENGTH + 10; i++) {
 		nt.addActivity(tk.getCycle() + i, 1);
 	}
 	ASSERT_EQUAL(Node::MAX_ACTIVITIES_LENGTH, nt.getActivities().size());
@@ -456,6 +457,33 @@ void NodeTest::testAddImpulse() {
 		ASSERT_EQUAL(now+BASE_DELAY3, start);
 	}
 }
+
+void NodeTest::testForceFire() {
+	common::Cycle start_cycle = common::TimeKeeper::getTimeKeeper().getCycle();
+	std::cout << "NodeTest::testForceFire: " << "start time: " << start_cycle << std::endl;
+	boost::shared_ptr<Node> node1 = Node::getRandom();
+	node1->setDebug(true);
+	std::cout << "NodeTest::testForceFire: " << *node1 << std::endl;
+	ASSERT(node1->getLastActivationState() == None);
+	node1->forceFire();
+	double act1 = node1->getActivity();
+
+	common::TimeKeeper::getTimeKeeper().update();
+	node1->update();
+	std::cout << "NodeTest::testForceFire: " << *node1 << std::endl;
+	common::Cycle cycle1_cycle = common::TimeKeeper::getTimeKeeper().getCycle();
+	std::cout << "NodeTest::testForceFire: " << "cycle1 time: " << cycle1_cycle << std::endl;
+	double act2 = node1->getActivity();
+	std::cout << "NodeTest::testForceFire: " << "act1:" << act1 << " act2:" << act2 << std::endl;
+	bool to_fire = (node1->getLastActivationState() == Positive) || (node1->getLastActivationState() == Negative);
+	ASSERT(to_fire);
+
+	common::TimeKeeper::getTimeKeeper().update();
+	node1->update();
+	ASSERT_EQUAL(None, node1->getLastActivationState());
+
+}
+
 boost::shared_ptr<Node> NodeTest::getDefaultNode() {
 	boost::shared_ptr<Connection> con_in1(new Connection);
 	boost::shared_ptr<Connection> con_in2(new Connection);

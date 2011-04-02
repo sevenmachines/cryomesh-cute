@@ -40,6 +40,8 @@ public:
 	 */
 	static void testSpacialSettings();
 
+	static void testForceFire();
+
 	static boost::shared_ptr< Node > getDefaultNode();
 };
 

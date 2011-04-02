@@ -85,8 +85,8 @@ void runDataObjectsSuite() {
 
 void runStructuresSuite() {
 	structures::ClusterTest::runSuite();
-	structures::FibreTest::runSuite();
 	structures::BundleTest::runSuite();
+	structures::FibreTest::runSuite();
 }
 
 int main() {
@@ -96,9 +96,9 @@ int main() {
 	 runStateSuite();
 	 runCommonSuite();
 	 runDataObjectsSuite();
-	 runComponentsSuite();
 	 runManagerSuite();
 	 runUtilitiesSuite();*/
+	runComponentsSuite();
 	runStructuresSuite();
 	return 0;
 }

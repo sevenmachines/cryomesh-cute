@@ -1,6 +1,6 @@
 2011-04-01  SevenMachines  <SevenMachines@yahoo.co.uk>
 
-	* src/UseCasesTest.cpp (UseCasesTest::testFullCycle): change so that primaries are seperate from other fibres
+	* src/UseCasesTest.cpp (UseCasesTest::testFullCycle): change so that primaries are separate from other fibres
 	* src/manager/CreatorTest.cpp (CreatorTest::testCreation): Check for correct data loading and connection
 	(CreatorTest::testCheckConfigStructure): Basic config structure check tests
 
