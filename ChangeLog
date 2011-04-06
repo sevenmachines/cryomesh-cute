@@ -1,5 +1,7 @@
 2011-04-06  SevenMachines  <SevenMachines@yahoo.co.uk>
 
+	* src/manager/DatabaseObjectsTest.cpp (DatabaseObjectsTest::testCreateInsertPattern): New test for generating sql command from pattern
+	(DatabaseObjectsTest::testCreatePatternFromDatabaseEntry): New test
 	* src/structures/FibreTest.cpp (FibreTest::testCountConnections): New test
 
 2011-04-01  SevenMachines  <SevenMachines@yahoo.co.uk>

@@ -39,12 +39,14 @@ void DatabaseManagerTest::testCreation() {
 	}
 
 	// default
+	// dont do this, unneeded
+	/*
 	{
 		DatabaseManager dbm("test.db");
 		ASSERT(dbm.isDatabaseAccessable() == true);
 		std::ifstream ifs("test.db");
 		ASSERT(ifs.is_open());
-	}
+	}*/
 }
 
 void DatabaseManagerTest::testCommands() {

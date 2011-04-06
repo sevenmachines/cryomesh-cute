@@ -14,15 +14,21 @@ namespace cryomesh {
 
 namespace manager {
 
-class DatabaseObjectsTest : public ICuteSuite{
+class DatabaseObjectsTest: public ICuteSuite {
 public:
-	DatabaseObjectsTest(){}
-	virtual ~DatabaseObjectsTest(){}
+	DatabaseObjectsTest() {
+	}
+	virtual ~DatabaseObjectsTest() {
+	}
 
 	static void runSuite();
 	static void testCreateInsertNode();
 	static void testCreateInsertConnection();
-	static void testCreateFromDatabaseEntry();
+	static void testCreateInsertPattern();
+	static void testCreateConnectionFromDatabaseEntry();
+	static void testCreateNodeFromDatabaseEntry();
+	static void testCreatePatternFromDatabaseEntry();
+
 };
 
 }
