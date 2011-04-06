@@ -21,6 +21,7 @@ void FibreTest::runSuite() {
 	s.push_back(CUTE( FibreTest::testCreation));
 	s.push_back(CUTE( FibreTest::testTrigger));
 	s.push_back(CUTE( FibreTest::testGetNodesPattern));
+	s.push_back(CUTE( FibreTest::testCountConnections));
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "FibreTest");
 }
@@ -186,6 +187,10 @@ void FibreTest::testTrigger() {
 		boost::shared_ptr<Cluster> cluster2(new Cluster(20, 2));
 		boost::shared_ptr<Fibre> fibre(new Fibre(cluster1, cluster2, WIDTH));
 		fibre->trigger(expected_pat);
+		common::TimeKeeper::getTimeKeeper().update();
+		//cluster1->update();
+		//cluster2->update();
+		//fibre->update();
 		// fibre->getMutableConnections().update();
 		const state::Pattern actual_pattern(fibre->getConnections().getActivityPattern()->toPlusBooleanString());
 		ASSERT_EQUAL(expected_pat, actual_pattern);
@@ -267,6 +272,56 @@ void FibreTest::testGetNodesPattern() {
 		ASSERT(*empty_pattern == *end_pattern);
 	}
 }
+
+void FibreTest::testCountConnections() {
+	const int WIDTH = 3;
+	// simple intermediate
+	{
+		std::map<boost::uuids::uuid, boost::shared_ptr<Cluster> > clusters;
+		boost::shared_ptr<Cluster> cluster1(new Cluster(10, 1));
+		boost::shared_ptr<Cluster> cluster2(new Cluster(20, 2));
+		clusters[cluster1->getUUID()] = cluster1;
+		clusters[cluster2->getUUID()] = cluster2;
+
+		boost::shared_ptr<Fibre> fibre(new Fibre(cluster1, cluster2, WIDTH));
+		std::pair<int, int> concount = fibre->countConnections(clusters);
+
+		ASSERT_EQUAL(1, concount.first);
+		ASSERT_EQUAL(1, concount.second);
+	}
+
+	// input
+	{
+		std::map<boost::uuids::uuid, boost::shared_ptr<Cluster> > clusters;
+		boost::shared_ptr<Cluster> cluster1(new Cluster(10, 1));
+		boost::shared_ptr<Cluster> cluster2(new Cluster(20, 2));
+		clusters[cluster1->getUUID()] = cluster1;
+		clusters[cluster2->getUUID()] = cluster2;
+
+		boost::shared_ptr<Fibre> fibre(new Fibre(cluster1, Fibre::PrimaryInputFibre, WIDTH));
+		std::pair<int, int> concount = fibre->countConnections(clusters);
+
+		ASSERT_EQUAL(0, concount.first);
+		ASSERT_EQUAL(1, concount.second);
+	}
+
+	// output
+	{
+		std::map<boost::uuids::uuid, boost::shared_ptr<Cluster> > clusters;
+		boost::shared_ptr<Cluster> cluster1(new Cluster(10, 1));
+		boost::shared_ptr<Cluster> cluster2(new Cluster(20, 2));
+		clusters[cluster1->getUUID()] = cluster1;
+		clusters[cluster2->getUUID()] = cluster2;
+
+		boost::shared_ptr<Fibre> fibre(new Fibre(cluster2, Fibre::PrimaryOutputFibre, WIDTH));
+		std::pair<int, int> concount = fibre->countConnections(clusters);
+
+		ASSERT_EQUAL(1, concount.first);
+		ASSERT_EQUAL(0, concount.second);
+	}
+
+}
+
 }//NAMESPACE
 
 }//NAMESPACE

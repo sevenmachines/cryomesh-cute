@@ -18,6 +18,7 @@ void BundleTest::runSuite() {
 	s.push_back(CUTE( BundleTest::testPropagation));
 	s.push_back(CUTE( BundleTest::testLoadData));
 	s.push_back(CUTE( BundleTest::testConnectPatternChannels));
+	s.push_back(CUTE( BundleTest::testCheckStructure));
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "BundleTest");
 }
@@ -234,6 +235,31 @@ void BundleTest::testConnectPatternChannels() {
 	ASSERT(fibreout3->isConnected(cluster2)== Fibre::InputCluster );
 
 }
+
+void BundleTest::testCheckStructure() {
+	// cluster1->fibre1->cluster2
+	Bundle bun;
+	boost::shared_ptr<Cluster> cluster1 = bun.createCluster(1, 1);
+	boost::shared_ptr<Cluster> cluster2 = bun.createCluster(2, 1);
+	boost::shared_ptr<Cluster> cluster3 = bun.createCluster(3, 1);
+	boost::shared_ptr<Fibre> fibre1 = bun.connectCluster(cluster1->getUUID(), cluster2->getUUID(), 2);
+	boost::shared_ptr<Fibre> fibre2 = bun.connectCluster(cluster2->getUUID(), cluster3->getUUID(), 2);
+
+	// check good structure
+	{
+		bool good = bun.checkFibreStructure();
+		ASSERT(good);
+	}
+
+	// disconnect 1 to break this
+	{
+		fibre1->getMutableConnector().disconnectAllInputs();
+		bool good = bun.checkFibreStructure();
+		ASSERT(!good);
+	}
+	ASSERTM("TODO: Test channel structure", false);
+}
+
 }//NAMESPACE
 
 }//NAMESPACE

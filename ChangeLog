@@ -1,3 +1,7 @@
+2011-04-06  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/structures/FibreTest.cpp (FibreTest::testCountConnections): New test
+
 2011-04-01  SevenMachines  <SevenMachines@yahoo.co.uk>
 
 	* src/UseCasesTest.cpp (UseCasesTest::testFullCycle): change so that primaries are separate from other fibres

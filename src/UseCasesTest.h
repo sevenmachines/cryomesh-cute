@@ -35,6 +35,8 @@ public:
 	 * Test a full cycle run
 	 */
 	static void testFullCycle();
+
+	static void testBasicFullSystem();
 protected:
 	UseCasesTest(){}
 

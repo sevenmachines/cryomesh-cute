@@ -92,14 +92,15 @@ void runStructuresSuite() {
 int main() {
 	/**
 	 * DISABLED
-	 runGeneralSuite();
 	 runStateSuite();
-	 runCommonSuite();
-	 runDataObjectsSuite();
-	 runManagerSuite();
-	 runUtilitiesSuite();*/
+	runCommonSuite();
+	runDataObjectsSuite();
+	runManagerSuite();
+	runUtilitiesSuite();
 	runComponentsSuite();
+	*/
 	runStructuresSuite();
+	//runGeneralSuite();
 	return 0;
 }
 

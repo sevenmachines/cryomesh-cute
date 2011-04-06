@@ -25,6 +25,7 @@ public:
 	static void testPropagation();
 	static void testLoadData();
 	static void testConnectPatternChannels();
+	static void testCheckStructure();
 };
 
 }

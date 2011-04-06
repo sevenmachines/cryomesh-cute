@@ -23,6 +23,8 @@ public:
 	static void testCreation();
 	static void testTrigger() ;
 	static void testGetNodesPattern();
+	static void testCountConnections();
+
 };
 
 }
