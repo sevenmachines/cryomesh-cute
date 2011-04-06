@@ -98,9 +98,9 @@ int main() {
 	runManagerSuite();
 	runUtilitiesSuite();
 	runComponentsSuite();
+		runStructuresSuite();
 	*/
-	runStructuresSuite();
-	//runGeneralSuite();
+	runGeneralSuite();
 	return 0;
 }
 

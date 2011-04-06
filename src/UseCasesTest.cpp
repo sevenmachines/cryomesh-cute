@@ -295,6 +295,11 @@ void UseCasesTest::testBasicFullSystem() {
 		ASSERT_EQUAL(3, input_channels_map_count);
 		ASSERT_EQUAL(3, output_channels_map_count);
 	}
+
+	for (int i = 0; i< 100; i++) {
+		bundle->update();
+		std::cout<<*(bundle->getStatistician())<<std::endl;
+	}
 	ASSERTM("TODO", false);
 }
 }//NAMESPACE
