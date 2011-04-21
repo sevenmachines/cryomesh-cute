@@ -29,7 +29,7 @@ public:
 	static void testGetSetCurrentActivity();
 	static void testAddActivity();
 	static void testAddImpulse();
-
+	static void testIsPrimary();
 	/**
 	 * Test data objects usage
 	 */
@@ -42,7 +42,9 @@ public:
 
 	static void testForceFire();
 
-	static boost::shared_ptr< Node > getDefaultNode();
+	static boost::shared_ptr<Node> getDefaultNode();
+	template<class T>
+	static bool checkConnectionCount(const boost::shared_ptr<T> obj, const int expected_in, const int expected_out);
 };
 
 }

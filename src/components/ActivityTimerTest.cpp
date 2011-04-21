@@ -24,8 +24,8 @@ void ActivityTimerTest::testdistanceTimer() {
 	boost::shared_ptr<ActivityTimerDistance> act_timer = ActivityTimerDistance::getRandom();
 	ASSERT (act_timer->getDelay()>ActivityTimerDistance::MIN_DISTANCE);
 	ASSERT (act_timer->getDelay() <ActivityTimerDistance::MAX_DISTANCE);
-	ASSERT (act_timer->getDecrement()>ActivityTimerDistance::MIN_DECREMENT);
-	ASSERT (act_timer->getDecrement() <ActivityTimerDistance::MAX_DECREMENT);
+	ASSERT (act_timer->getDecrement()>ActivityTimerDistance::MIN_DECREMENT_FRACTION *ActivityTimerDistance::MAX_DISTANCE);
+	ASSERT (act_timer->getDecrement() <ActivityTimerDistance::MAX_DECREMENT_FRACTION * ActivityTimerDistance::MAX_DISTANCE);
 
 	double pre_delay = act_timer->getDelay();
 	//test decrement

@@ -22,7 +22,7 @@ public:
 	static void runSuite();
 	static void testCreationConnection();
 	static void testUpdate();
-
+	static void testImpulsePropagation();
 };
 
 }

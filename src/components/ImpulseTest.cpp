@@ -26,6 +26,7 @@ void ImpulseTest::runSuite() {
 	s.push_back(CUTE(ImpulseTest::testActiveCycles));
 	s.push_back(CUTE(ImpulseTest::testOperators));
 	s.push_back(CUTE(ImpulseTest::testIsActive));
+	s.push_back(CUTE(ImpulseTest::testRandom));
 
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "ImpulseTest");
@@ -241,6 +242,10 @@ void ImpulseTest::testIsActive() {
 		ASSERT(obj1.isActive(12));
 	}
 
+}
+
+void ImpulseTest::testRandom(){
+	ASSERTM("TODO", false);
 }
 }//NAMESPACE
 

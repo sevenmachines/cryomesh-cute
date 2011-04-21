@@ -22,8 +22,144 @@ void FibreTest::runSuite() {
 	s.push_back(CUTE( FibreTest::testTrigger));
 	s.push_back(CUTE( FibreTest::testGetNodesPattern));
 	s.push_back(CUTE( FibreTest::testCountConnections));
+	s.push_back(CUTE( FibreTest::testImpulsePropagation));
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "FibreTest");
+}
+
+void FibreTest::testImpulsePropagation() {
+	//create start nodes and end nodes
+	const int WIDTH = 1;
+	const boost::shared_ptr<state::Pattern> full_pat(new state::Pattern("1"));
+	const boost::shared_ptr<state::Pattern> null_pat(new state::Pattern("0"));
+	boost::shared_ptr<Cluster> cluster1(new Cluster(10, 1));
+	boost::shared_ptr<Cluster> cluster2(new Cluster(20, 2));
+	boost::shared_ptr<Fibre> fibre(new Fibre(cluster1, cluster2, 1));
+
+	boost::shared_ptr<components::Node> node1 = fibre->getInputNodes().begin()->second;
+	boost::shared_ptr<components::Node> node2 = fibre->getOutputNodes().begin()->second;
+	boost::shared_ptr<components::Connection> connection1 = fibre->getConnections().getCollection().begin()->second;
+
+	ASSERT(node1 !=0);
+	ASSERT(node2 !=0);
+	ASSERT(connection1 !=0);
+
+	node1->setDebug(true);
+	node2->setDebug(true);
+	connection1->setDebug(true);
+
+	node1->addImpulse(components::Impulse::getTriggerImpulse());
+
+	std::cout << "FibreTest::testImpulsePropagation: " << "NODE1 " <<"cycle: "<<common::TimeKeeper::getTimeKeeper().getCycle()<< std::endl << *node1 << std::endl << std::endl;
+	std::cout << "FibreTest::testImpulsePropagation: " << "NODE2 " <<"cycle: "<<common::TimeKeeper::getTimeKeeper().getCycle()<< std::endl << *node2 << std::endl << std::endl;
+	// check start structure
+	{
+		int node1_inputs = node1->getConnector().getInputs().size();
+		int node1_outputs = node1->getConnector().getOutputs().size();
+		int node2_inputs = node2->getConnector().getInputs().size();
+		int node2_outputs = node2->getConnector().getOutputs().size();
+
+		int connection_inputs = connection1->getConnector().getInputs().size();
+		int connection_outputs = connection1->getConnector().getOutputs().size();
+
+		ASSERT(node1_outputs>0);
+		ASSERT(node2_inputs>0);
+		ASSERT_EQUAL(1, connection_inputs);
+		ASSERT_EQUAL(1, connection_outputs);
+	}
+	// check start state
+	{
+		ASSERT_EQUAL(false, node1->isTriggered());
+		ASSERT_EQUAL(true,node1->isActive());
+		ASSERT_EQUAL(true,node1->isLive());
+		ASSERT_EQUAL(false, node2->isTriggered());
+		ASSERT_EQUAL(false,node2->isActive());
+		ASSERT_EQUAL(false,node2->isLive());
+		ASSERT_EQUAL(0, connection1->getImpulses().getSize());
+		ASSERT_EQUAL(*null_pat, *(fibre->getInputNodesPattern()));
+		ASSERT_EQUAL(*null_pat, *(fibre->getOutputNodesPattern()));
+
+	}
+	common::TimeKeeper::getTimeKeeper().update();
+	node1->update();
+	//std::cout << "ConnectionTest::testImpulsePropagation: 2" << *node1 << std::endl;
+
+	// check  state
+	{
+		ASSERT_EQUAL(true, node1->isTriggered());
+		ASSERT_EQUAL(false,node1->isActive());
+		ASSERT_EQUAL(false,node1->isLive());
+		ASSERT_EQUAL(false, node2->isTriggered());
+		ASSERT_EQUAL(false,node2->isActive());
+		ASSERT_EQUAL(false,node2->isLive());
+		ASSERT_EQUAL(1, connection1->getImpulses().getSize());
+		ASSERT_EQUAL(*full_pat, *(fibre->getInputNodesPattern()));
+		ASSERT_EQUAL(*null_pat, *(fibre->getOutputNodesPattern()));
+
+	}
+	common::TimeKeeper::getTimeKeeper().update();
+	node1->update();
+	//std::cout << "ConnectionTest::testImpulsePropagation: 3" << *node1 << std::endl;
+
+	{
+		ASSERT_EQUAL(false, node1->isTriggered());
+		ASSERT_EQUAL(false,node1->isActive());
+		ASSERT_EQUAL(false,node1->isLive());
+		ASSERT_EQUAL(false, node2->isTriggered());
+		ASSERT_EQUAL(false,node2->isActive());
+		ASSERT_EQUAL(false,node2->isLive());
+		ASSERT_EQUAL(1, connection1->getImpulses().getSize());
+		ASSERT_EQUAL(*null_pat, *(fibre->getInputNodesPattern()));
+		ASSERT_EQUAL(*null_pat, *(fibre->getOutputNodesPattern()));
+
+	}
+
+	// update until we pass on the connections impulse
+	bool impulse_propagated = false;
+	int count_limit = 1000;
+	while (impulse_propagated == false && count_limit > 0) {
+		common::TimeKeeper::getTimeKeeper().update();
+		connection1->update();
+		node1->update();
+		node2->update();
+		if (connection1->getImpulses().getSize() < 1) {
+			impulse_propagated = true;
+			std::cout << "ConnectionTest::testImpulsePropagation: " << "NODE2: "<<"cycle: "<<common::TimeKeeper::getTimeKeeper().getCycle()<<std::endl<<*node2 << std::endl;
+			ASSERT_EQUAL(1, node2->getImpulses().getSize());
+
+			// adjust for delay
+			boost::shared_ptr< components::Impulse > node2_imp = node2->getImpulses().begin()->second;
+			int count =0;
+			int delay = node2_imp->getActivityDelay();
+			while (common::TimeKeeper::getTimeKeeper().getCycle()<node2_imp->getFirstActiveCycle()){
+				common::TimeKeeper::getTimeKeeper().update();
+				++count;
+			}
+
+			ASSERT_EQUAL(count, delay);
+			ASSERT_EQUAL(false, node2->isTriggered());
+			ASSERT_EQUAL(true,node2->isActive());
+			ASSERT_EQUAL(true,node2->isLive());
+
+		} else {
+			ASSERT_EQUAL(false, node1->isTriggered());
+			ASSERT_EQUAL(false,node1->isActive());
+			ASSERT_EQUAL(false,node1->isLive());
+			ASSERT_EQUAL(false, node2->isTriggered());
+			ASSERT_EQUAL(false,node2->isActive());
+			ASSERT_EQUAL(false,node2->isLive());
+			ASSERT_EQUAL(*null_pat, *(fibre->getInputNodesPattern()));
+			ASSERT_EQUAL(*null_pat, *(fibre->getOutputNodesPattern()));
+
+		}
+		--count_limit;
+	}
+	common::TimeKeeper::getTimeKeeper().update();
+		node1->update();
+		ASSERT_EQUAL(1, node2->getImpulses().getSize());
+			ASSERT_EQUAL(false, node2->isTriggered());
+			ASSERT_EQUAL(true,node2->isActive());
+			ASSERT_EQUAL(true,node2->isLive());
 }
 
 void FibreTest::testCreation() {
@@ -190,10 +326,10 @@ void FibreTest::testTrigger() {
 		common::TimeKeeper::getTimeKeeper().update();
 		//cluster1->update();
 		//cluster2->update();
-		//fibre->update();
+		fibre->update();
 		// fibre->getMutableConnections().update();
-		const state::Pattern actual_pattern(fibre->getConnections().getActivityPattern()->toPlusBooleanString());
-		ASSERT_EQUAL(expected_pat, actual_pattern);
+		const boost::shared_ptr<state::Pattern> actual_pattern = fibre->getOutputNodesPattern();
+		ASSERT_EQUAL(expected_pat, *actual_pattern);
 	}
 
 	// trigger a full blow out

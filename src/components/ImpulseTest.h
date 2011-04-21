@@ -51,6 +51,7 @@ public:
 	 */
 	static void testIsActive();
 
+	static void testRandom();
 };
 
 }

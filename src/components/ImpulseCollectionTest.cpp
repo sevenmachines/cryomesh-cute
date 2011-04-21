@@ -442,7 +442,7 @@ void ImpulseCollectionTest::testClearActiveCycles() {
 	{
 		// none active 9
 		{
-			obj1.clearActiveImpulses(7, 10);
+			obj1.clearActiveImpulses(8, 11);
 			// check size
 			{
 				int sz = obj1.getCollection().size();

@@ -23,7 +23,6 @@
 #include "components/ConnectionTest.h"
 #include "components/ImpulseCollectionTest.h"
 #include "components/ImpulseTest.h"
-#include "UseCasesTest.h"
 #include "components/ActivityTimerTest.h"
 
 // dataobjects
@@ -38,6 +37,11 @@
 #include "utilities/SequencerChannelsTest.h"
 #include "utilities/SequencerGenericTest.h"
 
+// use cases
+#include "usecases/CycleTests.h"
+#include "usecases/PropagationTests.h"
+#include "usecases/FullSystemTests.h"
+#include "usecases/MinimumNodeSystemTest.h"
 using namespace cryomesh;
 
 void runUtilitiesSuite() {
@@ -50,8 +54,11 @@ void runManagerSuite() {
 	manager::CreatorTest::runSuite();
 }
 
-void runGeneralSuite() {
-	UseCasesTest::runSuite();
+void runUseCasesSuite() {
+	//usecases::CycleTests::runSuite();
+	//usecases::PropagationTests::runSuite();
+	//usecases::FullSystemTests::runSuite();
+	usecases::MinimumNodeSystemTest::runSuite();
 }
 
 void runStateSuite() {
@@ -74,9 +81,9 @@ void runCommonSuite() {
 void runComponentsSuite() {
 	components::ImpulseCollectionTest::runSuite();
 	components::ImpulseTest::runSuite();
-	components::ConnectionTest::runSuite();
 	components::ActivityTimerTest::runSuite();
 	components::NodeTest::runSuite();
+	components::ConnectionTest::runSuite();
 }
 
 void runDataObjectsSuite() {
@@ -92,15 +99,17 @@ void runStructuresSuite() {
 int main() {
 	/**
 	 * DISABLED
+	 *
 	 runStateSuite();
 	 runCommonSuite();
 	 runDataObjectsSuite();
 	 runUtilitiesSuite();
-	 runComponentsSuite();
+	 runManagerSuite();
 	 runStructuresSuite();
-	 runGeneralSuite();
+	 	runComponentsSuite();
 	 */
-	runManagerSuite();
+	runUseCasesSuite();
+
 	return 0;
 }
 

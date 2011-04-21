@@ -32,6 +32,7 @@ void NodeTest::runSuite() {
 	s.push_back(CUTE(NodeTest::testSpacialSettings));
 	s.push_back(CUTE(NodeTest::testAddImpulse));
 	s.push_back(CUTE(NodeTest::testForceFire));
+	s.push_back(CUTE(NodeTest::testIsPrimary));
 
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "NodeTest");
@@ -243,7 +244,8 @@ void NodeTest::testCheckActivation() {
 		//	std::cout << node1->getImpulses() << std::endl;
 		Node::ActivationState act_state;
 
-		act_state = node1->checkActivationState();
+		node1->update();
+		act_state = node1->getLastActivationState();
 		bool statenone = (Node::None == act_state);
 		ASSERT(statenone);
 
@@ -254,7 +256,8 @@ void NodeTest::testCheckActivation() {
 			//	std::cout << "NodeTest::testCheckActivation: " << "time:" << tk.getCycle().toLInt() << "act: "
 			//			<< node1->updateActivity() << std::endl;
 		}
-		act_state = node1->checkActivationState();
+		node1->update();
+		act_state = node1->getLastActivationState();
 		statenone = (Node::None == act_state);
 		ASSERT(statenone);
 
@@ -265,7 +268,8 @@ void NodeTest::testCheckActivation() {
 			//	std::cout << "NodeTest::testCheckActivation: " << "time:" << tk.getCycle().toLInt() << "act: "
 			//			<< node1->updateActivity() << std::endl;
 		}
-		act_state = node1->checkActivationState();
+		node1->update();
+		act_state = node1->getLastActivationState();
 		bool statepos = (Node::Positive == act_state);
 		ASSERT(statepos);
 	}
@@ -282,7 +286,8 @@ void NodeTest::testCheckActivation() {
 		//	std::cout << "NodeTest::testCheckActivation: " << "impulses:" << std::endl;
 		//	std::cout << node1->getImpulses() << std::endl;
 		Node::ActivationState act_state;
-		act_state = node1->checkActivationState();
+		node1->update();
+		act_state = node1->getLastActivationState();
 
 		bool statenone = (Node::None == act_state);
 		ASSERT(statenone);
@@ -293,7 +298,8 @@ void NodeTest::testCheckActivation() {
 			//	std::cout << "NodeTest::testCheckActivation: " << "time:" << tk.getCycle().toLInt() << "act: "
 			//			<< node1->updateActivity() << std::endl;
 		}
-		act_state = node1->checkActivationState();
+		node1->update();
+		act_state = node1->getLastActivationState();
 
 		statenone = (Node::None == act_state);
 		ASSERT(statenone);
@@ -304,7 +310,8 @@ void NodeTest::testCheckActivation() {
 			//		std::cout << "NodeTest::testCheckActivation: " << "time:" << tk.getCycle().toLInt() << " act: "
 			//			<< node1->updateActivity() << std::endl;
 		}
-		act_state = node1->checkActivationState();
+		node1->update();
+		act_state = node1->getLastActivationState();
 		bool stateneg = (Node::Negative == act_state);
 		ASSERT(stateneg);
 	}
@@ -446,7 +453,7 @@ void NodeTest::testAddImpulse() {
 
 	// with delay
 	const common::Cycle BASE_DELAY3(3);
-	boost::shared_ptr<Impulse> imp3(new Impulse(5, 2, BASE_DELAY3));
+	boost::shared_ptr<Impulse> imp3(new Impulse(5, 2, 3));
 	{
 		for (int i = 0; i < DELAY3; i++) {
 			common::TimeKeeper::getTimeKeeper().update();
@@ -484,6 +491,67 @@ void NodeTest::testForceFire() {
 
 }
 
+void NodeTest::testIsPrimary() {
+	// As primary in, node1
+	{
+		boost::shared_ptr<Connection> con1(new Connection);
+		boost::shared_ptr<Connection> con2(new Connection);
+		boost::shared_ptr<Node> node1 = Node::getRandom();
+		boost::shared_ptr<Node> node2 = Node::getRandom();
+		node1->connectInput(con1);
+		node1->connectOutput(con2);
+		node2->connectInput(con2);
+		con1->connectOutput(node1);
+		con2->connectInput(node1);
+		con2->connectOutput(node2);
+
+		ASSERT(checkConnectionCount<Connection>(con1,0,1));
+		ASSERT(checkConnectionCount<Connection>(con2,1,1));
+		ASSERT(node1->isPrimaryInputAttachedNode() == true);
+		ASSERT(node1->isPrimaryOutputAttachedNode() == false);
+	}
+
+	// As primary out, node2
+	{
+		boost::shared_ptr<Connection> con1(new Connection);
+		boost::shared_ptr<Connection> con2(new Connection);
+		boost::shared_ptr<Node> node1 = Node::getRandom();
+		boost::shared_ptr<Node> node2 = Node::getRandom();
+		node1->connectOutput(con1);
+		node2->connectInput(con1);
+		node2->connectOutput(con2);
+		con1->connectInput(node1);
+		con1->connectOutput(node2);
+		con2->connectInput(node2);
+		ASSERT(checkConnectionCount<Connection>(con1,1,1));
+		ASSERT(checkConnectionCount<Connection>(con2,1,0));
+		ASSERT(node2->isPrimaryInputAttachedNode() == false);
+		ASSERT(node2->isPrimaryOutputAttachedNode() == true);
+
+	}
+
+	// As neither, node2
+	{
+		boost::shared_ptr<Connection> con1(new Connection);
+		boost::shared_ptr<Connection> con2(new Connection);
+		boost::shared_ptr<Node> node1 = Node::getRandom();
+		boost::shared_ptr<Node> node2 = Node::getRandom();
+		boost::shared_ptr<Node> node3 = Node::getRandom();
+		node1->connectOutput(con1);
+		node2->connectInput(con1);
+		node2->connectOutput(con2);
+		node3->connectInput(con2);
+		con1->connectInput(node1);
+		con1->connectOutput(node2);
+		con2->connectInput(node2);
+		con2->connectOutput(node3);
+
+		ASSERT(node3->isPrimaryInputAttachedNode() == false);
+		ASSERT(node3->isPrimaryOutputAttachedNode() == false);
+	}
+
+}
+
 boost::shared_ptr<Node> NodeTest::getDefaultNode() {
 	boost::shared_ptr<Connection> con_in1(new Connection);
 	boost::shared_ptr<Connection> con_in2(new Connection);
@@ -503,5 +571,26 @@ boost::shared_ptr<Node> NodeTest::getDefaultNode() {
 	return node1;
 
 }
+
+template<class T>
+bool NodeTest::checkConnectionCount(const boost::shared_ptr<T> obj, const int expected_in, const int expected_out) {
+	bool success = true;
+	int in_count = obj->getConnector().getInputs().size();
+	int out_count = obj->getConnector().getOutputs().size();
+	if (in_count != expected_in) {
+		success = false;
+		std::cout << "NodeTest::checkConnectionCount: " << "Input Mismatch: exp : " << expected_in << " actual: "
+				<< in_count << std::endl;
+	}
+
+	if (out_count != expected_out) {
+		success = false;
+		std::cout << "NodeTest::checkConnectionCount: " << "Output Mismatch: exp : " << expected_out << " actual: "
+				<< out_count << std::endl;
+	}
+
+	return success;
+}
+
 } // namespace
 } // namespace

@@ -1,24 +1,31 @@
-#include "UseCasesTest.h"
+/*
+ * Propagation.cpp
+ *
+ *  Created on: 21 Apr 2011
+ *      Author: "SevenMachines <SevenMachines@yahoo.co.uk>"
+ */
 
+#include "PropagationTests.h"
 #include "structures/Bundle.h"
 #include "components/Node.h"
 #include "components/Connection.h"
 #include "manager/CryoManager.h"
 
+
 using namespace cryomesh::components;
 using namespace cryomesh::structures;
-
 namespace cryomesh {
-void UseCasesTest::runSuite() {
+
+namespace usecases {
+
+void PropagationTests::runSuite() {
 	cute::suite s;
-	//s.push_back(CUTE(UseCasesTest::testPropagation));
-	//s.push_back(CUTE(UseCasesTest::testFullCycle));
-	s.push_back(CUTE(UseCasesTest::testBasicFullSystem));
+	s.push_back(CUTE(PropagationTests::testPropagation));
 	cute::ide_listener lis;
-	cute::makeRunner(lis)(s, "UseCasesTest");
+	cute::makeRunner(lis)(s, "Propagation");
 }
 
-void UseCasesTest::testPropagation() {
+void PropagationTests::testPropagation() {
 
 	common::TimeKeeper & tk = common::TimeKeeper::getTimeKeeper();
 	tk.reset();
@@ -157,12 +164,14 @@ void UseCasesTest::testPropagation() {
 			// check for activation
 			if (i == 4 || i == 5) {
 				double expected = Node::Positive;
-				Node::ActivationState actual = nodeA->checkActivationState();
+				nodeA->update();
+				Node::ActivationState actual = nodeA->getLastActivationState();
 				bool state_equality = (expected == actual);
 				ASSERT(state_equality);
 			} else {
 				double expected = Node::None;
-				Node::ActivationState actual = nodeA->checkActivationState();
+				nodeA->update();
+				Node::ActivationState actual = nodeA->getLastActivationState();
 				bool state_equality = (expected == actual);
 				ASSERT(state_equality);
 			}
@@ -186,14 +195,16 @@ void UseCasesTest::testPropagation() {
 			//		<< " total:" << imp1->getActivity() + imp2->getActivity() + imp3->getActivity() << std::endl;
 			if (i == 4) {
 				double expected = Node::Positive;
-				Node::ActivationState actual = nodeA->checkActivationState();
+				nodeA->update();
+				Node::ActivationState actual = nodeA->getLastActivationState();
 				bool state_equality = (expected == actual);
 				ASSERT(state_equality);
 
 				// Do update which will clear impulses since they're all active
 			} else {
 				double expected = Node::None;
-				Node::ActivationState actual = nodeA->checkActivationState();
+				nodeA->update();
+				Node::ActivationState actual = nodeA->getLastActivationState();
 				bool state_equality = (expected == actual);
 				ASSERT(state_equality);
 			}
@@ -215,91 +226,6 @@ void UseCasesTest::testPropagation() {
 	}
 	ASSERTM("TODO: Actually propagate an impulse", false);
 }
-
-void UseCasesTest::testFullCycle() {
-	const int FIBRE_WIDTH = 10;
-	Bundle bundle;
-	boost::shared_ptr<Cluster> cluster1 = bundle.createCluster(10, 10);
-	boost::shared_ptr<Cluster> cluster2 = bundle.createCluster(10, 10);
-	boost::shared_ptr<Cluster> cluster3 = bundle.createCluster(10, 10);
-	ASSERT_EQUAL(3, bundle.getClusters().getSize());
-
-	boost::shared_ptr<Fibre> fibre1in = bundle.connectPrimaryInputCluster(cluster1->getUUID(), FIBRE_WIDTH);
-	boost::shared_ptr<Fibre> fibre12 = bundle.connectCluster(cluster1->getUUID(), cluster2->getUUID(), FIBRE_WIDTH);
-	boost::shared_ptr<Fibre> fibre23 = bundle.connectCluster(cluster2->getUUID(), cluster3->getUUID(), FIBRE_WIDTH);
-	boost::shared_ptr<Fibre> fibre13 = bundle.connectCluster(cluster1->getUUID(), cluster3->getUUID(), FIBRE_WIDTH);
-	boost::shared_ptr<Fibre> fibre3out = bundle.connectPrimaryOutputCluster(cluster3->getUUID(), FIBRE_WIDTH);
-	ASSERT_EQUAL(3, bundle.getFibres().getSize());
-	ASSERT_EQUAL(1, bundle.getInputFibres().getSize());
-	ASSERT_EQUAL(1, bundle.getOutputFibres().getSize());
-
-	ASSERT_EQUAL(Fibre::OutputCluster, fibre1in->isConnected(cluster1) );
-	ASSERT_EQUAL(Fibre::InputCluster, fibre12->isConnected(cluster1) );
-	ASSERT_EQUAL(Fibre::OutputCluster, fibre12->isConnected(cluster2) );
-	ASSERT_EQUAL(Fibre::InputCluster, fibre23->isConnected(cluster2) );
-	ASSERT_EQUAL(Fibre::OutputCluster, fibre23->isConnected(cluster3) );
-	ASSERT_EQUAL(Fibre::InputCluster, fibre13->isConnected(cluster1) );
-	ASSERT_EQUAL(Fibre::OutputCluster, fibre13->isConnected(cluster3) );
-	ASSERT_EQUAL(Fibre::InputCluster, fibre3out->isConnected(cluster3) );
-
-	// Structure summary
-	// pin->cluster1-> cluster2->cluster3->pout
-	//						 --------------->
-	const unsigned int TOTAL_UPDATES = 100;
-	for (int i = 0; i < TOTAL_UPDATES; i++) {
-		//	std::cout<<"UseCasesTest::testFullCycle: "<<i<<std::endl;
-		//	std::cout<<"###################################################"<<std::endl;
-		//std::cout<<bundle<<std::endl;
-		//	std::cout<<"###################################################"<<std::endl;
-		fibre1in->trigger(0.8);
-		bundle.update();
-	}
-
-	ASSERTM("TODO", false);
 }
 
-void UseCasesTest::testBasicFullSystem() {
-	manager::CryoManager manager;
-	manager.create("Data/basic-2c.config");
-	boost::shared_ptr<structures::Bundle> bundle = manager.getMutableBundle();
-	bundle->setDebug(true);
-	//bundle->update();
-	// Test structure
-	{
-		boost::shared_ptr<utilities::Statistician> statistician = manager.getBundle()->getMutableStatistician();
-		if (statistician == 0) {
-			ASSERTM("Null statistician", false);
-		}
-		statistician->update();
-		/**
-		 int cluster_count =statistician->getClusterCount();
-		 int fibpatmap_count = manager.getBundle()->getFibrePatternChannelMap().size();
-		 int input_fibres_count = statistician->getInputFibresCount();
-		 int output_fibres_count = statistician->getOutputFibresCount();
-		 int normal_fibres_count = statistician->getNormalFibresCount();
-		 int input_channels_map_count = statistician->getInputChannelsCount();
-		 int output_channels_map_count = statistician->getOutputChannelsCount();
-		 */
-		int cluster_count = manager.getBundle()->getClusters().getSize();
-		int fibpatmap_count = manager.getBundle()->getFibrePatternChannelMap().size();
-		int input_fibres_count = statistician->getInputFibresCount();
-		int output_fibres_count = statistician->getOutputFibresCount();
-		int normal_fibres_count = statistician->getNormalFibresCount();
-		int input_channels_map_count = statistician->getInputChannelsCount();
-		int output_channels_map_count = statistician->getOutputChannelsCount();
-		ASSERT_EQUAL(2, cluster_count);
-		ASSERT_EQUAL(6, fibpatmap_count);
-		ASSERT_EQUAL(3, input_fibres_count);
-		ASSERT_EQUAL(3, output_fibres_count);
-		ASSERT_EQUAL(1, normal_fibres_count);
-		ASSERT_EQUAL(3, input_channels_map_count);
-		ASSERT_EQUAL(3, output_channels_map_count);
-	}
-
-	for (int i = 0; i< 100; i++) {
-		bundle->update();
-		std::cout<<*(bundle->getStatistician())<<std::endl;
-	}
-	ASSERTM("TODO", false);
 }
-}//NAMESPACE
