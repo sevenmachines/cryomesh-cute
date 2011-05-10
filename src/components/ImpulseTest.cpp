@@ -130,7 +130,6 @@ void ImpulseTest::testActiveCycles() {
 }
 
 void ImpulseTest::testOperators() {
-
 	// test op==
 	{
 		Impulse obj1(2, 10);
@@ -157,6 +156,7 @@ void ImpulseTest::testOperators() {
 		Impulse obj4(1, 2);
 		obj1.setFirstActiveCycle(2);
 		Impulse obj2 = obj1;
+
 		Impulse obj3 = obj1 + obj1;
 
 		{
@@ -190,7 +190,7 @@ void ImpulseTest::testOperators() {
 			unsigned long int last_act = obj2.getLastActiveCycle().toULInt();
 			ASSERT_EQUAL(2, first_act);
 			ASSERT_EQUAL(17, last_act);
-			//std::cout << "ImpulseTest::testOperators: " << "" << std::endl;
+//std::cout << "ImpulseTest::testOperators: " << "" << std::endl;
 			//std::cout << "obj2+=obj1: "  << std::endl;
 			//common::Containers::print(std::cout, obj2.getCollection());
 			// all should have a value
@@ -244,7 +244,7 @@ void ImpulseTest::testIsActive() {
 
 }
 
-void ImpulseTest::testRandom(){
+void ImpulseTest::testRandom() {
 	ASSERTM("TODO", false);
 }
 }//NAMESPACE

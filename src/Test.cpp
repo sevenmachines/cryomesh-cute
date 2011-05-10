@@ -55,9 +55,9 @@ void runManagerSuite() {
 }
 
 void runUseCasesSuite() {
-	//usecases::CycleTests::runSuite();
-	//usecases::PropagationTests::runSuite();
-	//usecases::FullSystemTests::runSuite();
+	usecases::CycleTests::runSuite();
+	usecases::PropagationTests::runSuite();
+	usecases::FullSystemTests::runSuite();
 	usecases::MinimumNodeSystemTest::runSuite();
 }
 
@@ -100,15 +100,15 @@ int main() {
 	/**
 	 * DISABLED
 	 *
-	 runStateSuite();
-	 runCommonSuite();
-	 runDataObjectsSuite();
-	 runUtilitiesSuite();
-	 runManagerSuite();
-	 runStructuresSuite();
-	 	runComponentsSuite();
 	 */
-	runUseCasesSuite();
+	runStateSuite();
+	runCommonSuite();
+	runDataObjectsSuite();
+	runUtilitiesSuite();
+	runManagerSuite();
+	runComponentsSuite();
+	runStructuresSuite();
+	 runUseCasesSuite();
 
 	return 0;
 }
