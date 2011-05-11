@@ -92,10 +92,10 @@ void runDataObjectsSuite() {
 }
 
 void runStructuresSuite() {
-	structures::ClusterTest::runSuite();
-	structures::ClusterMapTest::runSuite();
+	//structures::FibreTest::runSuite();
+	//structures::ClusterTest::runSuite();
+	//structures::ClusterMapTest::runSuite();
 	structures::BundleTest::runSuite();
-	structures::FibreTest::runSuite();
 }
 
 int main() {

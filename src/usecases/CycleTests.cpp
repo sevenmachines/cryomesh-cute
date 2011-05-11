@@ -25,7 +25,7 @@ void CycleTests::runSuite() {
 	cute::makeRunner(lis)(s, "Cycle");
 }
 
-	void CycleTests::testFullCycle() {
+void CycleTests::testFullCycle() {
 	const int FIBRE_WIDTH = 10;
 	Bundle bundle;
 	boost::shared_ptr<Cluster> cluster1 = bundle.createCluster(10, 10);
@@ -33,11 +33,20 @@ void CycleTests::runSuite() {
 	boost::shared_ptr<Cluster> cluster3 = bundle.createCluster(10, 10);
 	ASSERT_EQUAL(3, bundle.getClusters().getSize());
 
-	boost::shared_ptr<Fibre> fibre1in = bundle.connectPrimaryInputCluster(cluster1->getUUID(), FIBRE_WIDTH);
+	std::vector<boost::shared_ptr<Fibre> > new_input_fibres = bundle.autoConnectPrimaryInputClusters(std::vector<boost::shared_ptr<Cluster> >({cluster1}));
+	ASSERT_EQUAL(1, new_input_fibres.size());
+	boost::shared_ptr<Fibre> fibre1in = *(new_input_fibres.begin());
+
 	boost::shared_ptr<Fibre> fibre12 = bundle.connectCluster(cluster1->getUUID(), cluster2->getUUID(), FIBRE_WIDTH);
 	boost::shared_ptr<Fibre> fibre23 = bundle.connectCluster(cluster2->getUUID(), cluster3->getUUID(), FIBRE_WIDTH);
 	boost::shared_ptr<Fibre> fibre13 = bundle.connectCluster(cluster1->getUUID(), cluster3->getUUID(), FIBRE_WIDTH);
-	boost::shared_ptr<Fibre> fibre3out = bundle.connectPrimaryOutputCluster(cluster3->getUUID(), FIBRE_WIDTH);
+
+	//std::vector<boost::shared_ptr<Cluster> > output_clusters;
+	//output_clusters.push_back(cluster3);
+	std::vector<boost::shared_ptr<Fibre> > new_output_fibres = bundle.autoConnectPrimaryOutputClusters(std::vector<boost::shared_ptr<Cluster> >({cluster3}));
+	ASSERT_EQUAL(1, new_output_fibres.size());
+	boost::shared_ptr<Fibre> fibre3out = *(new_output_fibres.begin());
+
 	ASSERT_EQUAL(3, bundle.getFibres().getSize());
 	ASSERT_EQUAL(1, bundle.getInputFibres().getSize());
 	ASSERT_EQUAL(1, bundle.getOutputFibres().getSize());

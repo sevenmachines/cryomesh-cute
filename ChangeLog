@@ -1,3 +1,7 @@
+2011-05-11  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/structures/BundleTest.cpp (BundleTest::testPatternChannelsSetup): test setup of a bundles pattern channels and fibres
+
 2011-04-06  SevenMachines  <SevenMachines@yahoo.co.uk>
 
 	* src/manager/DatabaseObjectsTest.cpp (DatabaseObjectsTest::testCreateInsertPattern): New test for generating sql command from pattern

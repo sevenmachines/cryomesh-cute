@@ -48,7 +48,7 @@ void FullSystemTests::testBasicFullSystem() {
 		 int output_channels_map_count = statistician->getOutputChannelsCount();
 		 */
 		int cluster_count = manager.getBundle()->getClusters().getSize();
-		int fibpatmap_count = manager.getBundle()->getFibrePatternChannelMap().size();
+		int fibpatmap_count = manager.getBundle()->getRealFibrePatternChannelMap().size();
 		int input_fibres_count = statistician->getInputFibresCount();
 		int output_fibres_count = statistician->getOutputFibresCount();
 		int normal_fibres_count = statistician->getNormalFibresCount();
