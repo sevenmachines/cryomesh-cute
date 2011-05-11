@@ -30,6 +30,7 @@
 
 //structures
 #include "structures/ClusterTest.h"
+#include "structures/ClusterMapTest.h"
 #include "structures/BundleTest.h"
 #include "structures/FibreTest.h"
 
@@ -92,6 +93,7 @@ void runDataObjectsSuite() {
 
 void runStructuresSuite() {
 	structures::ClusterTest::runSuite();
+	structures::ClusterMapTest::runSuite();
 	structures::BundleTest::runSuite();
 	structures::FibreTest::runSuite();
 }
@@ -100,15 +102,15 @@ int main() {
 	/**
 	 * DISABLED
 	 *
-	 */
-	runStateSuite();
-	runCommonSuite();
-	runDataObjectsSuite();
-	runUtilitiesSuite();
-	runManagerSuite();
-	runComponentsSuite();
-	runStructuresSuite();
+	 runStateSuite();
+	 runCommonSuite();
+	 runDataObjectsSuite();
+	 runUtilitiesSuite();
+	 runManagerSuite();
+	 runComponentsSuite();
 	 runUseCasesSuite();
+	 */
+	runStructuresSuite();
 
 	return 0;
 }

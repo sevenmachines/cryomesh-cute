@@ -44,3 +44,4 @@ namespace cute {
 #define ASSERT_THROWS(code,exc) ASSERT_THROWSM(" expecting " #code " to throw " #exc,code,exc)
 
 #endif /*CUTE_THROWS_H_*/
+
