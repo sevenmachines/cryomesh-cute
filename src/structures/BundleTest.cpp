@@ -146,8 +146,8 @@ void BundleTest::testLoadData() {
 
 	bun.loadChannels(DATAFILE);
 
-	ASSERT_EQUAL(3, bun.getInputChannelsMap().getSize());
-	ASSERT_EQUAL(3, bun.getOutputChannelsMap().getSize());
+	ASSERT_EQUAL(3, bun.getRealInputChannelsMap().getSize());
+	ASSERT_EQUAL(3, bun.getRealOutputChannelsMap().getSize());
 
 }
 
@@ -169,8 +169,8 @@ void BundleTest::testConnectPatternChannels() {
 
 	bun.loadChannels(DATAFILE);
 
-	ASSERT_EQUAL(3, bun.getInputChannelsMap().getSize());
-	ASSERT_EQUAL(3, bun.getOutputChannelsMap().getSize());
+	ASSERT_EQUAL(3, bun.getRealInputChannelsMap().getSize());
+	ASSERT_EQUAL(3, bun.getRealOutputChannelsMap().getSize());
 
 	// inrefs channels are 1, 2 3
 	boost::uuids::uuid inchan1;
@@ -179,10 +179,10 @@ void BundleTest::testConnectPatternChannels() {
 	// get the 3 input channel ids
 	{
 		std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator it_input_channels_map =
-				bun.getInputChannelsMap().begin();
+				bun.getRealInputChannelsMap().begin();
 		const std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator
-				it_input_channels_map_end = bun.getInputChannelsMap().end();
-		ASSERT_EQUAL(3, bun.getInputChannelsMap().getSize());
+				it_input_channels_map_end = bun.getRealInputChannelsMap().end();
+		ASSERT_EQUAL(3, bun.getRealInputChannelsMap().getSize());
 		inchan1 = it_input_channels_map->first;
 		++it_input_channels_map;
 		inchan2 = it_input_channels_map->first;
@@ -206,10 +206,10 @@ void BundleTest::testConnectPatternChannels() {
 	// get the 3 output channel ids
 	{
 		std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator it_output_channels_map =
-				bun.getOutputChannelsMap().begin();
+				bun.getRealOutputChannelsMap().begin();
 		const std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator
-				it_output_channels_map_end = bun.getOutputChannelsMap().end();
-		ASSERT_EQUAL(3, bun.getOutputChannelsMap().getSize());
+				it_output_channels_map_end = bun.getRealOutputChannelsMap().end();
+		ASSERT_EQUAL(3, bun.getRealOutputChannelsMap().getSize());
 		outchan1 = it_output_channels_map->first;
 		++it_output_channels_map;
 		outchan2 = it_output_channels_map->first;

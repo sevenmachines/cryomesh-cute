@@ -44,12 +44,12 @@ void CreatorTest::testCreation() {
 	ASSERT_EQUAL(6, patternmap_count);
 
 	int infib_sz = creator.getBundle()->getInputFibres().getSize();
-	int infibmap_sz = creator.getBundle()->getInputChannelsMap().getSize();
+	int infibmap_sz = creator.getBundle()->getRealInputChannelsMap().getSize();
 	ASSERT_EQUAL(3, infib_sz);
 	ASSERT_EQUAL(3, infibmap_sz);
 
 	int outfib_sz = creator.getBundle()->getOutputFibres().getSize();
-	int outfibmap_sz = creator.getBundle()->getOutputChannelsMap().getSize();
+	int outfibmap_sz = creator.getBundle()->getRealOutputChannelsMap().getSize();
 	ASSERT_EQUAL(3, outfib_sz);
 	ASSERT_EQUAL(3, outfibmap_sz);
 
