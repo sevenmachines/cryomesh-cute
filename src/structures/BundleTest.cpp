@@ -7,6 +7,10 @@
 
 #include "structures/Bundle.h"
 #include "BundleTest.h"
+#include "state/PatternChannelMap.h"
+
+using namespace cryomesh;
+using namespace cryomesh::state;
 
 namespace cryomesh {
 
@@ -135,6 +139,10 @@ void BundleTest::testLoadData() {
 	// data file is 3 in/outs of 3x2
 	const std::string DATAFILE = "TestData/sequences_3x2x3.xml";
 
+	const int PATTERN_CHANNEL_WIDTH = 3;
+	const int PATTERN_CHANNEL_DEPTH = 2;
+	const int PATTERN_CHANNEL_COUNT = 3;
+
 	const int FIBRE_SZ = 10;
 	const int CLUSTER1_SZ = 10;
 	const int CLUSTER2_SZ = 20;
@@ -149,8 +157,14 @@ void BundleTest::testLoadData() {
 
 	bun.loadChannels(DATAFILE);
 
-	ASSERT_EQUAL(3, bun.getRealInputChannelsMap().getSize());
-	ASSERT_EQUAL(3, bun.getRealOutputChannelsMap().getSize());
+	ASSERT_EQUAL(PATTERN_CHANNEL_COUNT, bun.getRealInputChannelsMap().getSize());
+	ASSERT_EQUAL(PATTERN_CHANNEL_COUNT, bun.getRealOutputChannelsMap().getSize());
+
+	ASSERT_EQUAL(PATTERN_CHANNEL_DEPTH, bun.getRealInputChannelsMap().getCollection().begin()->second->getPatternList().size());
+	ASSERT_EQUAL(PATTERN_CHANNEL_DEPTH, bun.getRealOutputChannelsMap().getCollection().begin()->second->getPatternList().size());
+
+	ASSERT_EQUAL(PATTERN_CHANNEL_WIDTH, bun.getRealOutputChannelsMap().getCollection().begin()->second->getPatternMap().begin()->second->getWidth());
+	ASSERT_EQUAL(PATTERN_CHANNEL_WIDTH, bun.getRealOutputChannelsMap().getCollection().begin()->second->getPatternMap().begin()->second->getWidth());
 
 }
 
@@ -309,23 +323,33 @@ void BundleTest::testPatternChannelsSetup() {
 	{
 		ASSERT_EQUAL(2*PATTERN_CHANNEL_COUNT, bun.getRealFibrePatternChannelMap().size());
 		ASSERT_EQUAL(2*PATTERN_CHANNEL_COUNT, bun.getActualFibrePatternChannelMap().size());
-		ASSERT_EQUAL(PATTERN_CHANNEL_COUNT, bun.getRealInputChannelsMap().getSize());
-		ASSERT_EQUAL(PATTERN_CHANNEL_COUNT, bun.getRealOutputChannelsMap().getSize());
 		ASSERT_EQUAL(PATTERN_CHANNEL_COUNT, bun.getActualInputChannelsMap().getSize());
 		ASSERT_EQUAL(PATTERN_CHANNEL_COUNT, bun.getActualOutputChannelsMap().getSize());
-		std::cout << "BundleTest::testPatternChannelsSetup: " << "INITIAL MAPPINGS" << std::endl;
-		std::cout << bun.printChannels(std::cout);
-		std::cout << std::endl;
-		BundleTest::printFibreMaps(bun);
-		std::cout << std::endl;
+
+		ASSERT_EQUAL(PATTERN_CHANNEL_COUNT, bun.getRealInputChannelsMap().getSize());
+		ASSERT_EQUAL(PATTERN_CHANNEL_COUNT, bun.getRealOutputChannelsMap().getSize());
+
+		ASSERT_EQUAL(PATTERN_CHANNEL_DEPTH, bun.getRealInputChannelsMap().getCollection().begin()->second->getPatternList().size());
+		ASSERT_EQUAL(PATTERN_CHANNEL_DEPTH, bun.getRealOutputChannelsMap().getCollection().begin()->second->getPatternList().size());
+
+		ASSERT_EQUAL(PATTERN_CHANNEL_WIDTH, bun.getRealOutputChannelsMap().getCollection().begin()->second->getPatternMap().begin()->second->getWidth());
+		ASSERT_EQUAL(PATTERN_CHANNEL_WIDTH, bun.getRealOutputChannelsMap().getCollection().begin()->second->getPatternMap().begin()->second->getWidth());
+
+		/*
+		 std::cout << "BundleTest::testPatternChannelsSetup: " << "INITIAL MAPPINGS" << std::endl;
+		 std::cout << bun.printChannels(std::cout);
+		 std::cout << std::endl;
+		 bun.printFibreMaps(std::cout);
+		 std::cout << std::endl;
+		 */
 	}
 
 	// count channels at start
 	{
-		std::cout << "BundleTest::testPatternChannelsSetup: " << "Real: BEGIN" << std::endl;
+		//	std::cout << "BundleTest::testPatternChannelsSetup: " << "Real: BEGIN" << std::endl;
 		ASSERT(BundleTest::checkChannelsMapDepth(bun.getRealInputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 		ASSERT(BundleTest::checkChannelsMapDepth(bun.getRealOutputChannelsMap(), PATTERN_CHANNEL_DEPTH));
-		std::cout << "BundleTest::testPatternChannelsSetup: " << "Actual: BEGIN" << std::endl;
+		//	std::cout << "BundleTest::testPatternChannelsSetup: " << "Actual: BEGIN" << std::endl;
 		ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualInputChannelsMap(), 0));
 		ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualOutputChannelsMap(), 0));
 	}
@@ -333,31 +357,31 @@ void BundleTest::testPatternChannelsSetup() {
 	// count channels as we update
 	{
 		for (int i = 0; i < PATTERN_CHANNEL_DEPTH; i++) {
-			bun.update();
 			std::cout << "BundleTest::testPatternChannelsSetup: " << "Real:" << i << std::endl;
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getRealInputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getRealOutputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			std::cout << "BundleTest::testPatternChannelsSetup: " << "Actual:" << i << std::endl;
-			//ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualInputChannelsMap(), i));
+			ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualInputChannelsMap(), i));
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualOutputChannelsMap(), i));
+			bun.update();
 		}
 	}
 
 	// count channels reach max size
 	{
-		for (int i = 0; i < 2; i++) {
-			bun.update();
+		for (int i = 0; i < 3; i++) {
 			std::cout << "BundleTest::testPatternChannelsSetup: " << "Real:" << i << std::endl;
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getRealInputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getRealOutputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			std::cout << "BundleTest::testPatternChannelsSetup: " << "Actual:" << i << std::endl;
-			//ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualInputChannelsMap(), PATTERN_CHANNEL_DEPTH));
+			ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualInputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualOutputChannelsMap(), PATTERN_CHANNEL_DEPTH));
+			bun.update();
 		}
 	}
 }
 
-void BundleTest::testGetDisconnectedChannels(){
+void BundleTest::testGetDisconnectedChannels() {
 	ASSERTM("TODO", false);
 }
 void BundleTest::testAutoConnection() {
@@ -403,11 +427,17 @@ void BundleTest::testAutoConnection() {
 		ASSERT_EQUAL(0, real_fibre_map.size());
 		ASSERT_EQUAL(0, actual_fibre_map.size());
 	}
-
+	//std::cout << "BundleTest::testAutoConnection: " << "BEFORE AUTOCONNECT ***********" << std::endl << std::endl;
+	//bun.print(std::cout, common::Loggable::LoggingDepth::MAX);
 	// connect up the fibres and pattern channels
-	std::vector<boost::shared_ptr< Fibre > > new_ins = bun.autoConnectPrimaryInputClusters(std::vector<boost::shared_ptr<Cluster> >( { cluster1 }));
-	std::vector<boost::shared_ptr<Fibre> > new_outs = bun.autoConnectPrimaryOutputClusters(std::vector<boost::shared_ptr<Cluster> >( { cluster2 }));
-
+	//std::cout << "BundleTest::testAutoConnection: autoConnectPrimaryInputClusters" << "" << std::endl << std::endl;
+	std::vector<boost::shared_ptr<Fibre> > new_ins = bun.autoConnectPrimaryInputClusters(
+			std::vector<boost::shared_ptr<Cluster> >( { cluster1 }));
+	//	std::cout << "BundleTest::testAutoConnection: autoConnectPrimaryOutputClusters" << "" << std::endl << std::endl;
+	std::vector<boost::shared_ptr<Fibre> > new_outs = bun.autoConnectPrimaryOutputClusters(
+			std::vector<boost::shared_ptr<Cluster> >( { cluster2 }));
+	//	std::cout << "BundleTest::testAutoConnection: " << "AFTER AUTOCONNECT ***********" << std::endl << std::endl;
+	//	bun.print(std::cout, common::Loggable::LoggingDepth::MAX);
 	ASSERT_EQUAL(3, new_ins.size());
 	ASSERT_EQUAL(3, new_outs.size());
 
@@ -427,6 +457,90 @@ void BundleTest::testAutoConnection() {
 		ASSERT_EQUAL(PATTERN_CHANNEL_COUNT, bun.getActualInputChannelsMap().getSize());
 		ASSERT_EQUAL(PATTERN_CHANNEL_COUNT, bun.getActualOutputChannelsMap().getSize());
 	}
+
+	// test fibre map of ins
+	checkFibreMapsContain(new_ins, bun.getRealFibrePatternChannelMap());
+	//test fibre map of outs
+	checkFibreMapsContain(new_outs, bun.getRealFibrePatternChannelMap());
+	//test pattern channels of actual outs
+	{
+		const std::map<boost::uuids::uuid, boost::uuids::uuid> & map = bun.getActualFibrePatternChannelMap();
+		// forall in map
+		{
+			std::map<boost::uuids::uuid, boost::uuids::uuid>::const_iterator it_map = map.begin();
+			const std::map<boost::uuids::uuid, boost::uuids::uuid>::const_iterator it_map_end = map.end();
+			while (it_map != it_map_end) {
+				bool in_inputs = false;
+				bool in_outputs = false;
+
+				boost::uuids::uuid search_uuid = it_map->second;
+				const std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator
+						it_found_in_channel = bun.getActualInputChannelsMap().getCollection().find(search_uuid);
+				const std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator
+						it_found_out_channel = bun.getActualOutputChannelsMap().getCollection().find(search_uuid);
+
+				if (it_found_in_channel != bun.getActualInputChannelsMap().getCollection().end()) {
+					in_inputs = true;
+				}
+
+				if (it_found_out_channel != bun.getActualOutputChannelsMap().getCollection().end()) {
+					in_outputs = true;
+				}
+
+				ASSERT( (in_inputs == true ) || (in_outputs == true));
+
+				++it_map;
+			}
+		}
+	}
+}
+
+bool BundleTest::checkFibreMapsContain(const std::vector<boost::shared_ptr<Fibre> > & check_fibres,
+		const std::map<boost::uuids::uuid, boost::uuids::uuid> & map) {
+	bool success = true;
+	// forall in check_fibres
+	{
+		std::vector<boost::shared_ptr<Fibre> >::const_iterator it_check_fibres = check_fibres.begin();
+		const std::vector<boost::shared_ptr<Fibre> >::const_iterator it_check_fibres_end = check_fibres.end();
+		while (it_check_fibres != it_check_fibres_end) {
+			const std::map<boost::uuids::uuid, boost::uuids::uuid>::const_iterator it_found = map.find(
+					(*it_check_fibres)->getUUID());
+			if (it_found == map.end()) {
+				std::cout << "BundleTest::checkFibreMapsContain: " << "ERROR: Fibre not found: uuid: "
+						<< (*it_check_fibres)->getUUIDString() << std::endl;
+				success = false;
+			}
+			++it_check_fibres;
+		}
+	}
+	return success;
+}
+
+bool BundleTest::checkPatternChannelMapsContain(
+		const std::vector<boost::shared_ptr<state::PatternChannel> > & check_channels,
+		const state::PatternChannelMap & map) {
+	bool success = true;
+
+	// forall in check_channels
+	{
+		std::vector<boost::shared_ptr<state::PatternChannel> >::const_iterator it_check_channels =
+				check_channels.begin();
+		const std::vector<boost::shared_ptr<state::PatternChannel> >::const_iterator it_check_channels_end =
+				check_channels.end();
+		while (it_check_channels != it_check_channels_end) {
+			const std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator it_found =
+					map.getCollection().find((*it_check_channels)->getUUID());
+			if (it_found == map.getCollection().end()) {
+				std::cout << "BundleTest::checkPatternChannelMapsContain: "
+						<< "ERROR: PatternChannel not found: uuid: " << (*it_check_channels)->getUUIDString()
+						<< std::endl;
+				success = false;
+			}
+			++it_check_channels;
+		}
+	}
+
+	return success;
 }
 
 bool BundleTest::checkChannelsMapDepth(const state::PatternChannelMap & map, const int depth) {
@@ -444,7 +558,7 @@ bool BundleTest::checkChannelsMapDepth(const state::PatternChannelMap & map, con
 				success = false;
 				std::cout << "BundleTest::checkChannelsMapDepth: " << pc_depth << "!=" << depth << std::endl;
 			} else {
-			//	std::cout << "BundleTest::checkChannelsMapDepth: " << pc_depth << "==" << depth << std::endl;
+				std::cout << "BundleTest::checkChannelsMapDepth: " << pc_depth << "==" << depth << std::endl;
 
 			}
 			++it_all_objs;
@@ -453,25 +567,6 @@ bool BundleTest::checkChannelsMapDepth(const state::PatternChannelMap & map, con
 	return success;
 }
 
-void BundleTest::printFibreMaps(const Bundle & bun) {
-
-	std::cout << "BundleTest::printFibreMaps: " << "RealFibrePatternChannelMap" << std::endl;
-	printFibreMap(bun.getRealFibrePatternChannelMap());
-	std::cout << "BundleTest::printFibreMaps: " << "ActualFibrePatternChannelMap" << std::endl;
-	printFibreMap(bun.getActualFibrePatternChannelMap());
-}
-
-void BundleTest::printFibreMap(const std::map<boost::uuids::uuid, boost::uuids::uuid> & fibre_map) {
-	// forall in fibre_map
-	{
-		std::map<boost::uuids::uuid, boost::uuids::uuid>::const_iterator it_fibre_map = fibre_map.begin();
-		const std::map<boost::uuids::uuid, boost::uuids::uuid>::const_iterator it_fibre_map_end = fibre_map.end();
-		while (it_fibre_map != it_fibre_map_end) {
-			std::cout << it_fibre_map->first << " : " << it_fibre_map->second << std::endl;
-			++it_fibre_map;
-		}
-	}
-}
 }//NAMESPACE
 
 }//NAMESPACE

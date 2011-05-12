@@ -33,9 +33,8 @@ public:
 
 private:
 	static bool checkChannelsMapDepth(const  cryomesh::state::PatternChannelMap & map, const int depth);
-	static void printFibreMaps(const structures::Bundle & bun) ;
-	static void printFibreMap(const std::map<boost::uuids::uuid, boost::uuids::uuid> & fibre_map) ;
-
+	static bool checkFibreMapsContain(const std::vector<boost::shared_ptr< Fibre > > & check_fibres, const std::map<boost::uuids::uuid, boost::uuids::uuid> & map);
+	static bool checkPatternChannelMapsContain(const std::vector<boost::shared_ptr< state::PatternChannel > > & check_channels, const state::PatternChannelMap & map);
 };
 
 }
