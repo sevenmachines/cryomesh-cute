@@ -370,13 +370,32 @@ void BundleTest::testPatternChannelsSetup() {
 	// count channels reach max size
 	{
 		for (int i = 0; i < 3; i++) {
-			std::cout << "BundleTest::testPatternChannelsSetup: " << "Real:" << i << std::endl;
+			// get current first and last patterns
+			boost::uuids::uuid pre_first_pattern_uuid =
+					bun.getActualInputChannelsMap().begin()->second->getPatternList().front();
+			boost::uuids::uuid pre_last_pattern_uuid =
+					bun.getActualInputChannelsMap().begin()->second->getPatternList().back();
+
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getRealInputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getRealOutputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			std::cout << "BundleTest::testPatternChannelsSetup: " << "Actual:" << i << std::endl;
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualInputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualOutputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			bun.update();
+
+			boost::uuids::uuid post_first_pattern_uuid =
+					bun.getActualInputChannelsMap().begin()->second->getPatternList().front();
+			boost::uuids::uuid post_last_pattern_uuid =
+					bun.getActualInputChannelsMap().begin()->second->getPatternList().back();
+			boost::uuids::uuid post_second_last_pattern_uuid =
+					*(++(bun.getActualInputChannelsMap().begin()->second->getPatternList().rbegin()));
+			// check everything has shuflled up
+			{
+				ASSERT(pre_first_pattern_uuid != post_first_pattern_uuid);
+				ASSERT(pre_last_pattern_uuid != post_last_pattern_uuid);
+				ASSERT_EQUAL (pre_last_pattern_uuid, post_second_last_pattern_uuid);
+			}
+
 		}
 	}
 }
