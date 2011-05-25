@@ -29,7 +29,7 @@ void FullSystemTests::testBasicFullSystem() {
 	manager::CryoManager manager;
 	manager.create("Data/basic-2c.config");
 	boost::shared_ptr<structures::Bundle> bundle = manager.getMutableBundle();
-	bundle->setDebug(true);
+	//bundle->setDebug(true);
 	//bundle->update();
 	// Test structure
 	{

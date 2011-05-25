@@ -26,23 +26,25 @@
 								<option id="gnu.cpp.compiler.exe.debug.option.optimization.level.172957357" name="Optimization Level" superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.2028620780" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.88057406" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-cute/cute}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.225973077" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6`" valueType="string"/>
-								<option id="gnu.cpp.compiler.option.warnings.pedantic.787973411" superClass="gnu.cpp.compiler.option.warnings.pedantic" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.warnings.pedantic.787973411" name="Pedantic (-pedantic)" superClass="gnu.cpp.compiler.option.warnings.pedantic" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1402821640" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.240404337" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.exe.debug.option.optimization.level.1322217512" name="Optimization Level" superClass="gnu.c.compiler.exe.debug.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.exe.debug.option.debugging.level.1167533474" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.124083101" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-cute/cute}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.858793991" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -75,9 +77,10 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.650496274" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug">
 								<option id="gnu.both.asm.option.include.paths.1745326082" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-cute/cute}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-cute/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cryomesh-common/src}&quot;"/>
 								</option>
@@ -92,7 +95,22 @@
 					</sourceEntries>
 				</configuration>
 			</storageModule>
-			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
+				<externalSettings containerId="cryomesh;cdt.managedbuild.config.gnu.exe.debug.558512732" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cryomesh"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cryomesh/Debug"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cryomesh"/>
+					</externalSetting>
+				</externalSettings>
+				<externalSettings containerId="cryomesh-common;cdt.managedbuild.config.gnu.so.debug.1232354671" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cryomesh-common"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cryomesh-common/Debug"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cryomesh-common"/>
+					</externalSetting>
+				</externalSettings>
+			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 			<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>

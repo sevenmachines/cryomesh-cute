@@ -92,25 +92,25 @@ void runDataObjectsSuite() {
 }
 
 void runStructuresSuite() {
-	//structures::FibreTest::runSuite();
-	//structures::ClusterTest::runSuite();
-	//structures::ClusterMapTest::runSuite();
+	structures::FibreTest::runSuite();
+	structures::ClusterTest::runSuite();
+	structures::ClusterMapTest::runSuite();
 	structures::BundleTest::runSuite();
 }
 
 int main() {
 	/**
 	 * DISABLED
-	 *
-	 runStateSuite();
+	 *runStateSuite();
 	 runCommonSuite();
 	 runDataObjectsSuite();
 	 runUtilitiesSuite();
-	 runManagerSuite();
 	 runComponentsSuite();
 	 runUseCasesSuite();
+	 runStructuresSuite();
 	 */
-	runStructuresSuite();
+
+	runManagerSuite();
 
 	return 0;
 }

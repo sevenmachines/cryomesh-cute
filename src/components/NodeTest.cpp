@@ -469,7 +469,7 @@ void NodeTest::testForceFire() {
 	common::Cycle start_cycle = common::TimeKeeper::getTimeKeeper().getCycle();
 	std::cout << "NodeTest::testForceFire: " << "start time: " << start_cycle << std::endl;
 	boost::shared_ptr<Node> node1 = Node::getRandom();
-	node1->setDebug(true);
+	//node1->setDebug(true);
 	std::cout << "NodeTest::testForceFire: " << *node1 << std::endl;
 	ASSERT(node1->getLastActivationState() == None);
 	node1->forceFire();

@@ -22,8 +22,10 @@ public:
 	static void testCreation();
 	static void testCheckConfigEntry();
 	static void testCheckConfigStructure();
+	static void testAutoConnect();
 
 	static const std::string CONFIG_FILE;
+	static const std::string AUTOCONNECT_CONFIG_FILE;
 	static const std::string NULL_CONFIG_FILE;
 	static const std::string DATAFILE;
 

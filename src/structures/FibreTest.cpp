@@ -23,6 +23,7 @@ void FibreTest::runSuite() {
 	s.push_back(CUTE( FibreTest::testGetNodesPattern));
 	s.push_back(CUTE( FibreTest::testCountConnections));
 	s.push_back(CUTE( FibreTest::testImpulsePropagation));
+	s.push_back(CUTE( FibreTest::testIsConnected));
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "FibreTest");
 }
@@ -44,14 +45,16 @@ void FibreTest::testImpulsePropagation() {
 	ASSERT(node2 !=0);
 	ASSERT(connection1 !=0);
 
-	node1->setDebug(true);
-	node2->setDebug(true);
-	connection1->setDebug(true);
+	//node1->setDebug(true);
+	//node2->setDebug(true);
+	//connection1->setDebug(true);
 
 	node1->addImpulse(components::Impulse::getTriggerImpulse());
 
-	std::cout << "FibreTest::testImpulsePropagation: " << "NODE1 " <<"cycle: "<<common::TimeKeeper::getTimeKeeper().getCycle()<< std::endl << *node1 << std::endl << std::endl;
-	std::cout << "FibreTest::testImpulsePropagation: " << "NODE2 " <<"cycle: "<<common::TimeKeeper::getTimeKeeper().getCycle()<< std::endl << *node2 << std::endl << std::endl;
+	std::cout << "FibreTest::testImpulsePropagation: " << "NODE1 " << "cycle: "
+			<< common::TimeKeeper::getTimeKeeper().getCycle() << std::endl << *node1 << std::endl << std::endl;
+	std::cout << "FibreTest::testImpulsePropagation: " << "NODE2 " << "cycle: "
+			<< common::TimeKeeper::getTimeKeeper().getCycle() << std::endl << *node2 << std::endl << std::endl;
 	// check start structure
 	{
 		int node1_inputs = node1->getConnector().getInputs().size();
@@ -124,14 +127,15 @@ void FibreTest::testImpulsePropagation() {
 		node2->update();
 		if (connection1->getImpulses().getSize() < 1) {
 			impulse_propagated = true;
-			std::cout << "ConnectionTest::testImpulsePropagation: " << "NODE2: "<<"cycle: "<<common::TimeKeeper::getTimeKeeper().getCycle()<<std::endl<<*node2 << std::endl;
+			std::cout << "ConnectionTest::testImpulsePropagation: " << "NODE2: " << "cycle: "
+					<< common::TimeKeeper::getTimeKeeper().getCycle() << std::endl << *node2 << std::endl;
 			ASSERT_EQUAL(1, node2->getImpulses().getSize());
 
 			// adjust for delay
-			boost::shared_ptr< components::Impulse > node2_imp = node2->getImpulses().begin()->second;
-			int count =0;
+			boost::shared_ptr<components::Impulse> node2_imp = node2->getImpulses().begin()->second;
+			int count = 0;
 			int delay = node2_imp->getActivityDelay();
-			while (common::TimeKeeper::getTimeKeeper().getCycle()<node2_imp->getFirstActiveCycle()){
+			while (common::TimeKeeper::getTimeKeeper().getCycle() < node2_imp->getFirstActiveCycle()) {
 				common::TimeKeeper::getTimeKeeper().update();
 				++count;
 			}
@@ -155,11 +159,11 @@ void FibreTest::testImpulsePropagation() {
 		--count_limit;
 	}
 	common::TimeKeeper::getTimeKeeper().update();
-		node1->update();
-		ASSERT_EQUAL(1, node2->getImpulses().getSize());
-			ASSERT_EQUAL(false, node2->isTriggered());
-			ASSERT_EQUAL(true,node2->isActive());
-			ASSERT_EQUAL(true,node2->isLive());
+	node1->update();
+	ASSERT_EQUAL(1, node2->getImpulses().getSize());
+	ASSERT_EQUAL(false, node2->isTriggered());
+	ASSERT_EQUAL(true,node2->isActive());
+	ASSERT_EQUAL(true,node2->isLive());
 }
 
 void FibreTest::testCreation() {
@@ -181,11 +185,11 @@ void FibreTest::testCreation() {
 			int sz = fibre.getConnections().getSize();
 			// test cluster types
 			Fibre::FibreType fibretype = fibre.getType();
-			Fibre::ClusterConnectionType clustertype1 = fibre.isConnected(cluster1);
+			bool output_cluster_connected = Fibre::OutputCluster & fibre.isConnected(cluster1);
 
 			ASSERT_EQUAL(WIDTH, sz);
 			ASSERT_EQUAL(Fibre::PrimaryInputFibre, fibretype);
-			ASSERT_EQUAL(Fibre::OutputCluster, clustertype1);
+			ASSERT(output_cluster_connected);
 		}
 
 		//DEPRECATED
@@ -211,14 +215,14 @@ void FibreTest::testCreation() {
 			int sz = fibre.getConnections().getSize();
 			// test cluster types
 			Fibre::FibreType fibretype = fibre.getType();
-			Fibre::ClusterConnectionType clustertype1 = fibre.isConnected(cluster1);
+			int clustertype1 = Fibre::InputCluster & fibre.isConnected(cluster1);
 			int insz = fibre.getConnector().getInputs().size();
 			int outsz = fibre.getConnector().getOutputs().size();
 			ASSERT_EQUAL(1, insz);
 			ASSERT_EQUAL(0, outsz);
 			ASSERT_EQUAL(WIDTH, sz);
 			ASSERT_EQUAL(Fibre::PrimaryOutputFibre, fibretype);
-			ASSERT_EQUAL(Fibre::InputCluster, clustertype1);
+			ASSERT(clustertype1);
 		}
 
 		//DEPRECATED
@@ -244,16 +248,16 @@ void FibreTest::testCreation() {
 			int sz = fibre.getConnections().getSize();
 			// test cluster types
 			Fibre::FibreType fibretype = fibre.getType();
-			Fibre::ClusterConnectionType clustertype1 = fibre.isConnected(cluster1);
-			Fibre::ClusterConnectionType clustertype2 = fibre.isConnected(cluster2);
+			int clustertype1 = Fibre::InputCluster & fibre.isConnected(cluster1);
+			int clustertype2 = Fibre::OutputCluster & fibre.isConnected(cluster2);
 			int insz = fibre.getConnector().getInputs().size();
 			int outsz = fibre.getConnector().getOutputs().size();
 			ASSERT_EQUAL(1, insz);
 			ASSERT_EQUAL(1, outsz);
 			ASSERT_EQUAL(WIDTH, sz);
 			ASSERT_EQUAL(Fibre::IntermediateFibre, fibretype);
-			ASSERT_EQUAL(Fibre::InputCluster, clustertype1);
-			ASSERT_EQUAL(Fibre::OutputCluster, clustertype2);
+			ASSERT(clustertype1);
+			ASSERT( clustertype2);
 		}
 
 		//DEPRECATED
@@ -290,14 +294,14 @@ void FibreTest::testCreation() {
 			int sz = fibre.getConnections().getSize();
 			// test cluster types
 			Fibre::FibreType fibretype = fibre.getType();
-			Fibre::ClusterConnectionType clustertype1 = fibre.isConnected(cluster1);
+			int clustertype1 = Fibre::LoopbackCluster & fibre.isConnected(cluster1);
 			int insz = fibre.getConnector().getInputs().size();
 			int outsz = fibre.getConnector().getOutputs().size();
 			ASSERT_EQUAL(1, insz);
 			ASSERT_EQUAL(1, outsz);
 			ASSERT_EQUAL(WIDTH, sz);
 			ASSERT_EQUAL(Fibre::LoopbackFibre, fibretype);
-			ASSERT_EQUAL(Fibre::LoopbackCluster, clustertype1);
+			ASSERT(clustertype1);
 		}
 
 		//DEPRECATED
@@ -458,6 +462,25 @@ void FibreTest::testCountConnections() {
 
 }
 
+void FibreTest::testIsConnected() {
+	const int WIDTH=10;
+	// as input
+	{
+		boost::shared_ptr<Cluster> cluster1(new Cluster(10, 1));
+		boost::shared_ptr<Fibre> fibre(new Fibre(cluster1, Fibre::PrimaryInputFibre, WIDTH));
+		int type_int = fibre->isConnected(cluster1);
+		bool type = type_int & Fibre::ClusterConnectionType::OutputCluster;
+		std::cout<<"FibreTest::testIsConnected: "<<"type_int: "<<type_int<<" type: "<<type<<std::endl;
+		ASSERT(type);
+	}
+	// as output
+	{
+		boost::shared_ptr<Cluster> cluster1(new Cluster(10, 1));
+		boost::shared_ptr<Fibre> fibre(new Fibre(cluster1, Fibre::PrimaryOutputFibre, WIDTH));
+		bool type = fibre->isConnected(cluster1) & Fibre::ClusterConnectionType::InputCluster;
+		ASSERT(type);
+	}
+}
 }//NAMESPACE
 
 }//NAMESPACE

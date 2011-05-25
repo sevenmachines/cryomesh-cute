@@ -26,9 +26,9 @@ void ConnectionTest::testImpulsePropagation() {
 	boost::shared_ptr<Node> node2 = Node::getRandom();
 	boost::shared_ptr<Connection> connection1(new Connection);
 
-	node1->setDebug(true);
-	node2->setDebug(true);
-	connection1->setDebug(true);
+	//node1->setDebug(true);
+	//node2->setDebug(true);
+	//connection1->setDebug(true);
 
 	connection1->getMutableConnector().connectInput(node1);
 	node1->getMutableConnector().connectOutput(connection1);

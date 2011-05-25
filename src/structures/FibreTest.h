@@ -25,6 +25,7 @@ public:
 	static void testGetNodesPattern();
 	static void testCountConnections();
 	static void testImpulsePropagation();
+	static void testIsConnected() ;
 };
 
 }

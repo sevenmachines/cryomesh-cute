@@ -4,6 +4,7 @@
 	<comment></comment>
 	<projects>
 		<project>cryomesh</project>
+		<project>cryomesh-common</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

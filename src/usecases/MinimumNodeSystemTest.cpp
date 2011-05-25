@@ -91,14 +91,14 @@ void MinimumNodeSystemTest::testMinimumNodeSystem() {
 
 	//setup for running
 	{
-		node1 ->setDebug(false);
-		node2->setDebug(false);
+		//node1 ->setDebug(false);
+		//node2->setDebug(false);
 		setAllInputConnectionsDebug(node1, false);
 		setAllOutputConnectionsDebug(node1, false);
 		setAllInputConnectionsDebug(node2, false);
 		setAllOutputConnectionsDebug(node2, false);
-		bundle->setDebug(false);
-		cluster->setDebug(false);
+		//bundle->setDebug(false);
+		//cluster->setDebug(false);
 	}
 	// input pattern sequence is 1x2x1{1,0}
 	// start propagating the input pattern
@@ -140,7 +140,7 @@ void MinimumNodeSystemTest::testMinimumNodeSystem() {
 
 	// a bunch of updates
 	{
-		node1->setDebug(true);
+	//	node1->setDebug(true);
 		const int UPDATE_COUNT = 10;
 		for (int i = 0; i < UPDATE_COUNT; i++) {
 			bundle->update();
@@ -148,7 +148,7 @@ void MinimumNodeSystemTest::testMinimumNodeSystem() {
 			printAllNodes(nodes);
 #endif
 		}
-		node1->setDebug(false);
+		//node1->setDebug(false);
 	}
 }
 
@@ -180,7 +180,7 @@ void MinimumNodeSystemTest::setAllConnectionsDebug(std::map<boost::uuids::uuid, 
 		std::map<boost::uuids::uuid, boost::shared_ptr<Connection> >::iterator it_cons = cons.begin();
 		const std::map<boost::uuids::uuid, boost::shared_ptr<Connection> >::const_iterator it_cons_end = cons.end();
 		while (it_cons != it_cons_end) {
-			it_cons->second->setDebug(debug);
+			it_cons->second->enableDebug(debug);
 			++it_cons;
 		}
 	}
@@ -194,7 +194,7 @@ void MinimumNodeSystemTest::setAllInputConnectionsDebug(boost::shared_ptr<Node> 
 		std::map<boost::uuids::uuid, boost::shared_ptr<Connection> >::iterator it_cons = cons.begin();
 		const std::map<boost::uuids::uuid, boost::shared_ptr<Connection> >::const_iterator it_cons_end = cons.end();
 		while (it_cons != it_cons_end) {
-			it_cons->second->setDebug(debug);
+			it_cons->second->enableDebug(debug);
 			++it_cons;
 		}
 	}
@@ -208,7 +208,7 @@ void MinimumNodeSystemTest::setAllOutputConnectionsDebug(boost::shared_ptr<Node>
 		std::map<boost::uuids::uuid, boost::shared_ptr<Connection> >::iterator it_cons = cons.begin();
 		const std::map<boost::uuids::uuid, boost::shared_ptr<Connection> >::const_iterator it_cons_end = cons.end();
 		while (it_cons != it_cons_end) {
-			it_cons->second->setDebug(debug);
+			it_cons->second->enableDebug(debug);
 			++it_cons;
 		}
 	}
