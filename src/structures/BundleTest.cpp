@@ -577,7 +577,7 @@ bool BundleTest::checkChannelsMapDepth(const state::PatternChannelMap & map, con
 				success = false;
 				std::cout << "BundleTest::checkChannelsMapDepth: " << pc_depth << "!=" << depth << std::endl;
 			} else {
-				std::cout << "BundleTest::checkChannelsMapDepth: " << pc_depth << "==" << depth << std::endl;
+			//	std::cout << "BundleTest::checkChannelsMapDepth: " << pc_depth << "==" << depth << std::endl;
 
 			}
 			++it_all_objs;

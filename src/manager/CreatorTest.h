@@ -23,6 +23,7 @@ public:
 	static void testCheckConfigEntry();
 	static void testCheckConfigStructure();
 	static void testAutoConnect();
+	static void testAutoConnect2();
 
 	static const std::string CONFIG_FILE;
 	static const std::string AUTOCONNECT_CONFIG_FILE;

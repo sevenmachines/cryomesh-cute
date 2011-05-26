@@ -31,14 +31,16 @@ void ClusterTest::testCreateNodes() {
 
 void ClusterTest::testCreateConnections() {
 	structures::Cluster cluster;
-	cluster.createNodes(10);
-	cluster.createConnectivity(2);
+	const int CON_COUNT = 2;
+	const int NODE_COUNT = 100;
+	cluster.createNodes(NODE_COUNT);
+	cluster.createConnectivity(CON_COUNT);
 
 	const std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> > & allnodes = cluster.getNodes();
 
 	// forall in allnodes
 	{
-		int count =0;
+		int count = 0;
 		std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> >::const_iterator it_allnodes =
 				allnodes.begin();
 		const std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> >::const_iterator it_allnodes_end =
@@ -46,9 +48,14 @@ void ClusterTest::testCreateConnections() {
 		while (it_allnodes != it_allnodes_end) {
 			int insz = it_allnodes->second->getConnector().getInputs().size();
 			int outsz = it_allnodes->second->getConnector().getOutputs().size();
-			//std::cout<<"ClusterTest::testCreateConnections: "<<"count:"<<count<<" in:"<<insz<<" out:"<<outsz<<std::endl;
-			ASSERT_EQUAL(2, insz);
-			ASSERT_EQUAL(2, outsz);
+			//std::cout << "ClusterTest::testCreateConnections: " << "count:" << count << " in:" << insz << " out:"
+			//		<< outsz << std::endl;
+
+			// allow for random and self connection
+			ASSERT(insz>=CON_COUNT-1);
+			ASSERT(insz<=CON_COUNT+1);
+			ASSERT(outsz>=CON_COUNT-1);
+			ASSERT(outsz<=CON_COUNT+1);
 			++count;
 			++it_allnodes;
 		}

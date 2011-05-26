@@ -116,6 +116,84 @@ void CreatorTest::testCheckConfigStructure() {
 }
 
 void CreatorTest::testAutoConnect() {
+	std::stringstream creator_stream;
+	creator_stream << "create-cluster id=1 size=5 connectivity=1" << std::endl;
+	creator_stream << "create-cluster id=2 size=10 connectivity=2" << std::endl;
+	creator_stream << "connect-clusters inputid=1 outputid=2 width=10" << std::endl;
+	creator_stream << "loaddata file=TestData/sequences_3x2x3.xml" << std::endl;
+
+	Creator creator(creator_stream);
+	boost::shared_ptr<structures::Bundle> bundle = creator.getBundle();
+	ASSERT(bundle !=0);
+
+	// check pre autoconnected state
+	{
+		// 1 interconnecting fibres
+		ASSERT_EQUAL(1, bundle->getFibres().getSize());
+
+		// test connecting to loaded pattern channels, 3 in, 3 out
+		ASSERT_EQUAL(6, creator.getPatternChannelIDMap().size());
+
+		ASSERT_EQUAL(0, bundle->getInputFibres().getSize());
+		ASSERT_EQUAL(3, bundle->getRealInputChannelsMap().getSize());
+
+		ASSERT_EQUAL(0, bundle->getOutputFibres().getSize());
+		ASSERT_EQUAL(3, bundle->getRealOutputChannelsMap().getSize());
+
+		// check all pattern channels are disconnected
+		ASSERT_EQUAL(3, bundle->getDisconnectedRealInputPatternChannels().size());
+		ASSERT_EQUAL(3, bundle->getDisconnectedRealOutputPatternChannels().size());
+
+		ASSERT_EQUAL(0,bundle->getActualFibrePatternChannelMap().size());
+		ASSERT_EQUAL(0,bundle->getActualInputChannelsMap().getSize());
+		ASSERT_EQUAL(0,bundle->getActualOutputChannelsMap().getSize());
+	}
+
+	// do autoconnect inputs
+	{
+		config::ConfigEntry autoconf_ins_str("autoconnect-inputs ids=\"1 2\"");
+		creator.runCommand(autoconf_ins_str);
+	}
+	// test
+	{
+		ASSERT_EQUAL(3, bundle->getInputFibres().getSize());
+		ASSERT_EQUAL(0, bundle->getOutputFibres().getSize());
+
+		// check all pattern channels are disconnected
+		ASSERT_EQUAL(0, bundle->getDisconnectedRealInputPatternChannels().size());
+		ASSERT_EQUAL(3, bundle->getDisconnectedRealOutputPatternChannels().size());
+
+		ASSERT_EQUAL(3,bundle->getActualFibrePatternChannelMap().size());
+		ASSERT_EQUAL(3,bundle->getActualInputChannelsMap().getSize());
+		ASSERT_EQUAL(0,bundle->getActualOutputChannelsMap().getSize());
+
+	}
+
+	// autoconnect outputs
+	{
+		config::ConfigEntry autoconf_outs_str("autoconnect-outputs ids=2");
+		creator.runCommand(autoconf_outs_str);
+	}
+
+	//test
+	{
+		ASSERT_EQUAL(3, bundle->getInputFibres().getSize());
+		ASSERT_EQUAL(3, bundle->getOutputFibres().getSize());
+
+		// check all pattern channels are disconnected
+		ASSERT_EQUAL(0, bundle->getDisconnectedRealInputPatternChannels().size());
+		ASSERT_EQUAL(0, bundle->getDisconnectedRealOutputPatternChannels().size());
+
+		ASSERT_EQUAL(6,bundle->getActualFibrePatternChannelMap().size());
+		ASSERT_EQUAL(3,bundle->getActualInputChannelsMap().getSize());
+		ASSERT_EQUAL(3,bundle->getActualOutputChannelsMap().getSize());
+	}
+
+	//std::cout<<"CreatorTest::testAutoConnect: "<<*bundle<<std::endl;
+}
+
+
+void CreatorTest::testAutoConnect2() {
 	Creator creator(CreatorTest::AUTOCONNECT_CONFIG_FILE);
 	std::cout << "CreatorTest::testAutoConnect: " << "" << std::endl;
 	boost::shared_ptr<structures::Bundle> bundle = creator.getBundle();

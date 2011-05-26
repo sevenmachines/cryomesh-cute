@@ -93,24 +93,24 @@ void runDataObjectsSuite() {
 
 void runStructuresSuite() {
 	structures::FibreTest::runSuite();
-	structures::ClusterTest::runSuite();
 	structures::ClusterMapTest::runSuite();
 	structures::BundleTest::runSuite();
+	structures::ClusterTest::runSuite();
 }
 
 int main() {
 	/**
 	 * DISABLED
 	 *runStateSuite();
-	 runCommonSuite();
-	 runDataObjectsSuite();
-	 runUtilitiesSuite();
-	 runComponentsSuite();
-	 runUseCasesSuite();
-	 runStructuresSuite();
-	 */
-
+	runCommonSuite();
+	runDataObjectsSuite();
+	runUtilitiesSuite();
+	runComponentsSuite();
+	runUseCasesSuite();
 	runManagerSuite();
+	 */
+	runStructuresSuite();
+
 
 	return 0;
 }
