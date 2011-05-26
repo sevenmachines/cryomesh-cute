@@ -6,7 +6,6 @@
  */
 
 #include "ImpulseCollectionTest.h"
-#include "components/Mesh.h"
 #include "components/ImpulseCollection.h"
 #include "common/TimeKeeper.h"
 
