@@ -33,6 +33,7 @@
 #include "structures/ClusterMapTest.h"
 #include "structures/BundleTest.h"
 #include "structures/FibreTest.h"
+#include "structures/MeshTest.h"
 
 //utilities
 #include "utilities/SequencerChannelsTest.h"
@@ -92,10 +93,11 @@ void runDataObjectsSuite() {
 }
 
 void runStructuresSuite() {
-	structures::FibreTest::runSuite();
-	structures::ClusterMapTest::runSuite();
-	structures::BundleTest::runSuite();
-	structures::ClusterTest::runSuite();
+	//structures::FibreTest::runSuite();
+	//structures::ClusterMapTest::runSuite();
+	//structures::BundleTest::runSuite();
+	//structures::ClusterTest::runSuite();
+	structures::MeshTest::runSuite();
 }
 
 int main() {
