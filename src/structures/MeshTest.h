@@ -8,6 +8,7 @@
 #ifndef MESHTEST_H_
 #define MESHTEST_H_
 
+#ifdef ENABLE_ACTIVITYGRID
 #include "structures/Mesh.h"
 #include "ICuteSuite.h"
 
@@ -32,3 +33,4 @@ public:
 }
 
 #endif /* MESHTEST_H_ */
+#endif //ENABLE_ACTIVITYGRID

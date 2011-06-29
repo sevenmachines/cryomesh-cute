@@ -4,6 +4,7 @@
  *  Created on: 1 Jun 2011
  *      Author: "SevenMachines <SevenMachines@yahoo.co.uk>"
  */
+#ifdef ENABLE_ACTIVITYGRID
 
 #include "MeshTest.h"
 #include "structures/Mesh.h"
@@ -75,3 +76,4 @@ void MeshTest::testWarpImpulse() {
 }//NAMESPACE
 
 }//NAMESPACE
+#endif //ENABLE_ACTIVITYGRID

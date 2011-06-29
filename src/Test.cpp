@@ -34,6 +34,7 @@
 #include "structures/BundleTest.h"
 #include "structures/FibreTest.h"
 #include "structures/MeshTest.h"
+#include "structures/NodeMeshTest.h"
 
 //utilities
 #include "utilities/SequencerChannelsTest.h"
@@ -97,7 +98,8 @@ void runStructuresSuite() {
 	//structures::ClusterMapTest::runSuite();
 	//structures::BundleTest::runSuite();
 	//structures::ClusterTest::runSuite();
-	structures::MeshTest::runSuite();
+	//structures::MeshTest::runSuite();
+	structures::NodeMeshTest::runSuite();
 }
 
 int main() {
