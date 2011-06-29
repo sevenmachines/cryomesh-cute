@@ -190,7 +190,7 @@ void ImpulseTest::testOperators() {
 			unsigned long int last_act = obj2.getLastActiveCycle().toULInt();
 			ASSERT_EQUAL(2, first_act);
 			ASSERT_EQUAL(17, last_act);
-//std::cout << "ImpulseTest::testOperators: " << "" << std::endl;
+			//std::cout << "ImpulseTest::testOperators: " << "" << std::endl;
 			//std::cout << "obj2+=obj1: "  << std::endl;
 			//common::Containers::print(std::cout, obj2.getCollection());
 			// all should have a value
@@ -245,7 +245,21 @@ void ImpulseTest::testIsActive() {
 }
 
 void ImpulseTest::testRandom() {
-	ASSERTM("TODO", false);
+	// get positive
+	{
+		for (int i = 0; i < 10; i++) {
+
+			boost::shared_ptr<Impulse> imp = Impulse::getRandom(1);
+			ASSERT(imp->getActivityMinimum()>=0);
+		}
+	}
+	// get positive
+	{
+		for (int i = 0; i < 10; i++) {
+			boost::shared_ptr<Impulse> imp = Impulse::getRandom(0);
+			ASSERT(imp->getActivityMaximum()<=0);
+		}
+	}
 }
 }//NAMESPACE
 
