@@ -21,6 +21,7 @@ public:
 	static void runSuite();
 	static void testRegenerateNeighbourhoods();
 	static void testRegenerateActivities();
+	static void testWarpNodes();
 };
 
 }

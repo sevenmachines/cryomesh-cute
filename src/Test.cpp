@@ -97,7 +97,7 @@ void runStructuresSuite() {
 	//structures::FibreTest::runSuite();
 	//structures::ClusterMapTest::runSuite();
 	//structures::BundleTest::runSuite();
-	//structures::ClusterTest::runSuite();
+	structures::ClusterTest::runSuite();
 	//structures::MeshTest::runSuite();
 	structures::NodeMeshTest::runSuite();
 }
