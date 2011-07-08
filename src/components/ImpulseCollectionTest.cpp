@@ -5,6 +5,8 @@
  *      Author: SevenMachines<SevenMachines@yahoo.co.uk>
  */
 
+//#define IMPULSECOLLECTIONTEST_DEBUG
+
 #include "ImpulseCollectionTest.h"
 #include "components/ImpulseCollection.h"
 #include "common/TimeKeeper.h"
@@ -78,9 +80,9 @@ void ImpulseCollectionTest::testAddRemoveImpulses() {
 }
 void ImpulseCollectionTest::testClear() {
 	ImpulseCollection ic;
-	for (int i = 0; i< 5; i++) {
-			TimeKeeper::getTimeKeeper().update();
-		}
+	for (int i = 0; i < 5; i++) {
+		TimeKeeper::getTimeKeeper().update();
+	}
 	// test clear zeroes
 	{
 		boost::shared_ptr<Impulse> imp1(new Impulse(1, 5));
@@ -88,7 +90,7 @@ void ImpulseCollectionTest::testClear() {
 		boost::shared_ptr<Impulse> imp3(new Impulse(1, 3));
 		long int BASE_CYCLE = common::TimeKeeper::getTimeKeeper().getCycle().toLInt();
 
-	//	std::cout<<"ImpulseCollectionTest::testClear: "<<"BASE_CYCLE: "<<BASE_CYCLE<<std::endl;
+		//	std::cout<<"ImpulseCollectionTest::testClear: "<<"BASE_CYCLE: "<<BASE_CYCLE<<std::endl;
 		ic.add(imp1);
 		ic.add(imp2);
 		ic.add(imp3);
@@ -265,7 +267,9 @@ void ImpulseCollectionTest::testGetActivity() {
 	boost::shared_ptr<Impulse> imp1(new Impulse);
 	boost::shared_ptr<Impulse> imp2(new Impulse);
 	imp1->randomise();
+	imp1->setActivityDelay(0);
 	imp2->randomise();
+	imp2->setActivityDelay(0);
 	imp1->setFirstActiveCycle(2);
 	imp2->setFirstActiveCycle(2);
 
@@ -281,6 +285,16 @@ void ImpulseCollectionTest::testGetActivity() {
 	double sum1 = ic1.getActivity(3);
 	double sum2 = ic2.getActivity(3);
 	double sum12 = ic12.getActivity(3);
+
+#ifdef IMPULSECOLLECTIONTEST_DEBUG
+	std::cout << "ImpulseCollectionTest::testGetActivity: " << "ic1: " << std::endl;
+	std::cout << ic1 << std::endl;
+	std::cout << "ImpulseCollectionTest::testGetActivity: " << "ic2: " << std::endl;
+	std::cout << ic2 << std::endl;
+	std::cout << "ImpulseCollectionTest::testGetActivity: " << "ic12: " << std::endl;
+	std::cout << ic12 << std::endl;
+std::cout<<"ImpulseCollectionTest::testGetActivity: "<<"sum1="<<sum1<<" sum2="<<sum2<<std::endl;
+	#endif
 	ASSERT(sum1!=0);
 	ASSERT(sum2!=0);
 	ASSERT_EQUAL_DELTA(sum1+sum2, sum12, 0.0001);
@@ -461,7 +475,7 @@ void ImpulseCollectionTest::testDataObjects() {
 	//test
 	double ave0 = 0;
 	{
-		std::vector<boost::shared_ptr<Impulse> > all_impulses = impcoll.getObjectList();
+		std::vector < boost::shared_ptr<Impulse> > all_impulses = impcoll.getObjectList();
 		ASSERT_EQUAL(0, all_impulses.size());
 
 		// get average
@@ -470,7 +484,7 @@ void ImpulseCollectionTest::testDataObjects() {
 
 	}
 
-	for (int i = 0; i< 100; i++) {
+	for (int i = 0; i < 100; i++) {
 		TimeKeeper::getTimeKeeper().update();
 		//std::cout<<"ImpulseCollectionTest::testDataObjects: "<<i<<":"<<impcoll.getActivity()<<std::endl;
 	}
@@ -478,11 +492,11 @@ void ImpulseCollectionTest::testDataObjects() {
 	//test
 	double ave1 = 0;
 	{
-		std::vector<boost::shared_ptr<Impulse> > all_impulses = impcoll.getObjectList();
+		std::vector < boost::shared_ptr<Impulse> > all_impulses = impcoll.getObjectList();
 		ASSERT_EQUAL(1, all_impulses.size());
 
 		// get average
-		 ave1 = impcoll.getDataObject().getAverageValue();
+		ave1 = impcoll.getDataObject().getAverageValue();
 		ASSERT(ave1 !=ave0);
 
 	}
@@ -491,11 +505,11 @@ void ImpulseCollectionTest::testDataObjects() {
 	//test
 	double ave2 = 0;
 	{
-		std::vector<boost::shared_ptr<Impulse> > all_impulses = impcoll.getObjectList();
+		std::vector < boost::shared_ptr<Impulse> > all_impulses = impcoll.getObjectList();
 		ASSERT_EQUAL(2, all_impulses.size());
 
 		// get average
-		 ave2 = impcoll.getDataObject().getAverageValue();
+		ave2 = impcoll.getDataObject().getAverageValue();
 		ASSERT(ave1 !=ave2);
 
 	}

@@ -5,6 +5,8 @@
  *      Author: SevenMachines<SevenMachines@yahoo.co.uk>
  */
 
+//#define NODETEST_DEBUG
+
 #include "NodeTest.h"
 #include "components/Connection.h"
 #include "common/TimeKeeper.h"
@@ -58,22 +60,26 @@ void NodeTest::testUpdateImpulses() {
 
 		const int DELAY2 = 2;
 		node1->addImpulse(imp1);
-
-		//	std::cout << "NodeTest::testUpdateImpulses: " << "cycle: " << common::TimeKeeper::getTimeKeeper().getCycle()
-		//			<< std::endl;
-		//	std::cout << *node1 << std::endl;
-		//std::cout << "NodeTest::testUpdateImpulses: " << "imp1: " << "(" << imp1->getFirstActiveCycle().toLInt() << ","
-		//			<< imp1->getLastActiveCycle().toLInt() << ")" << std::endl;
-
+#ifdef NODETEST_DEBUG
+		std::cout << "NodeTest::testUpdateImpulses: " << "cycle: " << common::TimeKeeper::getTimeKeeper().getCycle()
+				<< std::endl;
+		std::cout << *node1 << std::endl;
+		std::cout << "NodeTest::testUpdateImpulses: " << "imp1: " << "(" << imp1->getFirstActiveCycle().toLInt() << ","
+				<< imp1->getLastActiveCycle().toLInt() << ")" << std::endl;
+#endif
 		for (int i = 0; i < LENGTH1 + DELAY2 + 5; i++) {
 			tk.update();
 			if (i == 1) {
 				node1->addImpulse(imp2);
-				//		std::cout << "NodeTest::testUpdateImpulses: " << "imp2: " << "("
-				//			<< imp2->getFirstActiveCycle().toLInt() << "," << imp2->getLastActiveCycle().toLInt() << ")"
-				//				<< std::endl;
+#ifdef NODETEST_DEBUG
+				std::cout << "NodeTest::testUpdateImpulses: " << "imp2: " << "(" << imp2->getFirstActiveCycle().toLInt()
+						<< "," << imp2->getLastActiveCycle().toLInt() << ")" << std::endl;
+#endif
 			}
-			//	std::cout << "NodeTest::testUpdateImpulses: " << i << ": " << "cycle: " << tk.getCycle().toLInt() << std::endl;
+#ifdef NODETEST_DEBUG
+			std::cout << "NodeTest::testUpdateImpulses: " << i << ": " << "cycle: " << tk.getCycle().toLInt()
+					<< std::endl;
+#endif
 			node1->update();
 			int sz = node1->getImpulses().getSize();
 			if (i < 10 && i >= 1) {
@@ -90,7 +96,9 @@ void NodeTest::testUpdateImpulses() {
 	}
 
 	//check  fire
-	//	std::cout << "NodeTest::testUpdateImpulses: " << "########### FIRE ###########" << std::endl;
+#ifdef NODETEST_DEBUG
+	std::cout << "NodeTest::testUpdateImpulses: " << "########### FIRE ###########" << std::endl;
+#endif
 	{
 		{
 			common::TimeKeeper & tk = common::TimeKeeper::getTimeKeeper();
@@ -104,21 +112,26 @@ void NodeTest::testUpdateImpulses() {
 			const int DELAY2 = 2;
 			node1->addImpulse(imp1);
 
-			//	std::cout << "NodeTest::testUpdateImpulses: " << "cycle: " << common::TimeKeeper::getTimeKeeper().getCycle()
-			//			<< std::endl;
-			//	std::cout << *node1 << std::endl;
-			//std::cout << "NodeTest::testUpdateImpulses: " << "imp1: " << "(" << imp1->getFirstActiveCycle().toLInt()
-			//		<< "," << imp1->getLastActiveCycle().toLInt() << ")" << std::endl;
-
+#ifdef NODETEST_DEBUG
+		std::cout << "NodeTest::testUpdateImpulses: " << "cycle: " << common::TimeKeeper::getTimeKeeper().getCycle()
+					<< std::endl;
+			std::cout << *node1 << std::endl;
+			std::cout << "NodeTest::testUpdateImpulses: " << "imp1: " << "(" << imp1->getFirstActiveCycle().toLInt()
+				<< "," << imp1->getLastActiveCycle().toLInt() << ")" << std::endl;
+#endif
 			for (int i = 0; i < LENGTH1 + DELAY2 + 5; i++) {
 				tk.update();
 				if (i == 1) {
 					node1->addImpulse(imp2);
-					//	std::cout << "NodeTest::testUpdateImpulses: " << "imp2: " << "("
-					//			<< imp2->getFirstActiveCycle().toLInt() << "," << imp2->getLastActiveCycle().toLInt()
-					//				<< ")" << std::endl;
+#ifdef NODETEST_DEBUG
+		std::cout << "NodeTest::testUpdateImpulses: " << "imp2: " << "("
+							<< imp2->getFirstActiveCycle().toLInt() << "," << imp2->getLastActiveCycle().toLInt()
+							<< ")" << std::endl;
+#endif
 				}
-				//	std::cout << "NodeTest::testUpdateImpulses: " << i << ": " << "cycle: " << tk.getCycle().toLInt() << std::endl;
+#ifdef NODETEST_DEBUG
+		std::cout << "NodeTest::testUpdateImpulses: " << i << ": " << "cycle: " << tk.getCycle().toLInt() << std::endl;
+#endif
 				node1->update();
 				int sz = node1->getImpulses().getSize();
 				if (i < 1) {
@@ -336,8 +349,8 @@ void NodeTest::testGetSetCurrentActivity() {
 	nt.addActivity(tk.getCycle() + 2, 3);
 	int act_sz = nt.getActivities().size();
 	ASSERT_EQUAL(3, act_sz);
-	ASSERT_EQUAL_DELTA(1, nt.getActivity() , 0.00001);
-	ASSERT_EQUAL_DELTA(3, nt.getActivity(tk.getCycle() + 2) , 0.00001);
+	ASSERT_EQUAL_DELTA(1, nt.getActivity(), 0.00001);
+	ASSERT_EQUAL_DELTA(3, nt.getActivity(tk.getCycle() + 2), 0.00001);
 
 	nt.setActivity(4);
 	ASSERT_EQUAL(3, nt.getActivities().size());
@@ -467,18 +480,20 @@ void NodeTest::testAddImpulse() {
 
 void NodeTest::testForceFire() {
 	common::Cycle start_cycle = common::TimeKeeper::getTimeKeeper().getCycle();
-	std::cout << "NodeTest::testForceFire: " << "start time: " << start_cycle << std::endl;
 	boost::shared_ptr<Node> node1 = Node::getRandom();
-	//node1->setDebug(true);
+
+	std::cout << "NodeTest::testForceFire: " << "start time: " << start_cycle << std::endl;
 	std::cout << "NodeTest::testForceFire: " << *node1 << std::endl;
+
 	ASSERT(node1->getLastActivationState() == None);
+
 	node1->forceFire();
 	double act1 = node1->getActivity();
 
 	common::TimeKeeper::getTimeKeeper().update();
-	node1->update();
 	std::cout << "NodeTest::testForceFire: " << *node1 << std::endl;
 	common::Cycle cycle1_cycle = common::TimeKeeper::getTimeKeeper().getCycle();
+	node1->update();
 	std::cout << "NodeTest::testForceFire: " << "cycle1 time: " << cycle1_cycle << std::endl;
 	double act2 = node1->getActivity();
 	std::cout << "NodeTest::testForceFire: " << "act1:" << act1 << " act2:" << act2 << std::endl;

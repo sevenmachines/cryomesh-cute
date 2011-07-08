@@ -85,8 +85,8 @@ void runComponentsSuite() {
 	components::ImpulseCollectionTest::runSuite();
 	components::ImpulseTest::runSuite();
 	components::ActivityTimerTest::runSuite();
-	components::NodeTest::runSuite();
 	components::ConnectionTest::runSuite();
+	components::NodeTest::runSuite();
 }
 
 void runDataObjectsSuite() {
@@ -94,9 +94,9 @@ void runDataObjectsSuite() {
 }
 
 void runStructuresSuite() {
-	//structures::FibreTest::runSuite();
-	//structures::ClusterMapTest::runSuite();
-	//structures::BundleTest::runSuite();
+	structures::FibreTest::runSuite();
+	structures::ClusterMapTest::runSuite();
+	structures::BundleTest::runSuite();
 	structures::ClusterTest::runSuite();
 	//structures::MeshTest::runSuite();
 	structures::NodeMeshTest::runSuite();
@@ -105,13 +105,14 @@ void runStructuresSuite() {
 int main() {
 	/**
 	 * DISABLED
-	 *runStateSuite();
-	 runCommonSuite();
-	 runDataObjectsSuite();
-	 runUtilitiesSuite();
-	 runUseCasesSuite();
-	 runManagerSuite();
 	 */
+	runStateSuite();
+	runCommonSuite();
+	runDataObjectsSuite();
+	runUtilitiesSuite();
+	runUseCasesSuite();
+	runManagerSuite();
+
 	runComponentsSuite();
 	runStructuresSuite();
 

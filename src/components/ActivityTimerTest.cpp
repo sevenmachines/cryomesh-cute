@@ -5,6 +5,8 @@
  *      Author: "SevenMachines <SevenMachines@yahoo.co.uk>"
  */
 
+#define ACTIVITYTIMER_TEST
+
 #include "ActivityTimerTest.h"
 #include "components/ActivityTimerDistance.h"
 
@@ -22,9 +24,15 @@ void ActivityTimerTest::runSuite() {
 void ActivityTimerTest::testdistanceTimer() {
 	//test random
 	boost::shared_ptr<ActivityTimerDistance> act_timer = ActivityTimerDistance::getRandom();
+
+#ifdef ACTIVITYTIMER_TEST
+	std::cout<<"ActivityTimerTest::testdistanceTimer: "<<"act_timer: "<<*act_timer<<std::endl;
+	std::cout<<"DISTANCE: "<<ActivityTimerDistance::MIN_DISTANCE<<"/"<<ActivityTimerDistance::MAX_DISTANCE<<std::endl;
+	std::cout<<"DECREMENT_FRACTION: "<<ActivityTimerDistance::MIN_DECREMENT_FRACTION<<"/"<<ActivityTimerDistance::MAX_DECREMENT_FRACTION<<std::endl;
+#endif
 	ASSERT (act_timer->getDelay()>ActivityTimerDistance::MIN_DISTANCE);
 	ASSERT (act_timer->getDelay() <ActivityTimerDistance::MAX_DISTANCE);
-	ASSERT (act_timer->getDecrement()>ActivityTimerDistance::MIN_DECREMENT_FRACTION *ActivityTimerDistance::MAX_DISTANCE);
+	ASSERT (act_timer->getDecrement()>ActivityTimerDistance::MIN_DECREMENT_FRACTION *ActivityTimerDistance::MIN_DISTANCE);
 	ASSERT (act_timer->getDecrement() <ActivityTimerDistance::MAX_DECREMENT_FRACTION * ActivityTimerDistance::MAX_DISTANCE);
 
 	double pre_delay = act_timer->getDelay();

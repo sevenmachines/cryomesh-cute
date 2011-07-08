@@ -5,6 +5,8 @@
  *      Author: "SevenMachines <SevenMachines@yahoo.co.uk>"
  */
 
+#define NODEMESHTEST_DEBUG
+
 #include "NodeMeshTest.h"
 #include "structures/NodeMesh.h"
 #include "ICuteSuite.h"
@@ -64,6 +66,9 @@ void NodeMeshTest::testRegenerateActivities() {
 		std::map<boost::shared_ptr<components::Node>, double>::const_iterator it_acts = acts.begin();
 		const std::map<boost::shared_ptr<components::Node>, double>::const_iterator it_acts_end = acts.end();
 		while (it_acts != it_acts_end) {
+#ifdef NODEMESHTEST_DEBUG
+			std::cout<<"NodeMeshTest::testRegenerateActivities: "<<"it_acts->second="<<it_acts->second<<std::endl;
+#endif
 			ASSERT(it_acts->second>0);
 			++it_acts;
 		}
@@ -150,9 +155,9 @@ void NodeMeshTest::testWarpNodes() {
 
 				double new_activity = it_all_nodes->second->getActivity();
 				int dnoteq = common::Maths::compareDoubles(original_activity, new_activity, 0.00001);
-				std::cout << "NodeMeshTest::testWarpNodes: pre-warp -> " << "original: " << original_activity
-						<< " new_activity: " << new_activity << " delta: " << new_activity - original_activity
-						<< std::endl;
+				//std::cout << "NodeMeshTest::testWarpNodes: pre-warp -> " << "original: " << original_activity
+				//		<< " new_activity: " << new_activity << " delta: " << new_activity - original_activity
+				//		<< std::endl;
 				ASSERT_EQUAL(0, dnoteq);
 
 				int new_impulse_count = it_all_nodes->second->getImpulses().getSize();
@@ -211,9 +216,9 @@ void NodeMeshTest::testWarpNodes() {
 
 				double new_activity = it_all_nodes->second->getActivity();
 				int dnoteq = common::Maths::compareDoubles(original_activity, new_activity, 0.00001);
-				std::cout << "NodeMeshTest::testWarpNodes: post-warp -> " << "original: " << original_activity
-						<< " new_activity: " << new_activity << " delta: " << new_activity - original_activity
-						<< std::endl;
+			//	std::cout << "NodeMeshTest::testWarpNodes: post-warp -> " << "original: " << original_activity
+			//			<< " new_activity: " << new_activity << " delta: " << new_activity - original_activity
+			//			<< std::endl;
 				ASSERT(dnoteq != 0);
 
 				int new_impulse_count = it_all_nodes->second->getImpulses().getSize();
