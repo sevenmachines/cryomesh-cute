@@ -5,7 +5,7 @@
  *      Author: "SevenMachines <SevenMachines@yahoo.co.uk>"
  */
 
-#define NODEMESHTEST_DEBUG
+//#define NODEMESHTEST_DEBUG
 
 #include "NodeMeshTest.h"
 #include "structures/NodeMesh.h"
@@ -45,7 +45,7 @@ void NodeMeshTest::testRegenerateNeighbourhoods() {
 
 void NodeMeshTest::testRegenerateActivities() {
 	// set up cluster
-	const int NODECOUNT = 10;
+	const int NODECOUNT = 100;
 	const double BOUNDINGBOXMAX = 0.5;
 	// set up test neighbourhood
 	boost::shared_ptr<Cluster> cluster(
@@ -67,7 +67,8 @@ void NodeMeshTest::testRegenerateActivities() {
 		const std::map<boost::shared_ptr<components::Node>, double>::const_iterator it_acts_end = acts.end();
 		while (it_acts != it_acts_end) {
 #ifdef NODEMESHTEST_DEBUG
-			std::cout<<"NodeMeshTest::testRegenerateActivities: "<<"it_acts->second="<<it_acts->second<<std::endl;
+			std::cout << "NodeMeshTest::testRegenerateActivities: " << "it_acts->second=" << it_acts->second
+					<< std::endl;
 #endif
 			ASSERT(it_acts->second>0);
 			++it_acts;
@@ -78,7 +79,7 @@ void NodeMeshTest::testRegenerateActivities() {
 void NodeMeshTest::testWarpNodes() {
 	// create cluster, ensure all nodes are close enough to have neighbours
 	// set up cluster
-	const int NODECOUNT = 10;
+	const int NODECOUNT = 100;
 	const double BOUNDINGBOXMAX = 0.5;
 	// set up test neighbourhood
 	boost::shared_ptr<Cluster> cluster(
@@ -177,6 +178,7 @@ void NodeMeshTest::testWarpNodes() {
 	{
 		// forall in all_nodes
 		{
+			unsigned int warped_node_count = 0;
 			const std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> > & all_nodes =
 					cluster->getNodeMap().getCollection();
 			std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> >::const_iterator it_all_nodes =
@@ -216,15 +218,20 @@ void NodeMeshTest::testWarpNodes() {
 
 				double new_activity = it_all_nodes->second->getActivity();
 				int dnoteq = common::Maths::compareDoubles(original_activity, new_activity, 0.00001);
-			//	std::cout << "NodeMeshTest::testWarpNodes: post-warp -> " << "original: " << original_activity
-			//			<< " new_activity: " << new_activity << " delta: " << new_activity - original_activity
-			//			<< std::endl;
-				ASSERT(dnoteq != 0);
+#ifdef NODEMESHTEST_DEBUG
+				std::cout << "NodeMeshTest::testWarpNodes: post-warp -> " << "original: " << original_activity
+						<< " new_activity: " << new_activity << " delta: " << new_activity - original_activity
+						<< std::endl;
+#endif
+				if (dnoteq != 0) {
+					++warped_node_count;
+					int new_impulse_count = it_all_nodes->second->getImpulses().getSize();
+					ASSERT_EQUAL(original_impulse_count +1 , new_impulse_count);
+				}
 
-				int new_impulse_count = it_all_nodes->second->getImpulses().getSize();
-				ASSERT_EQUAL(original_impulse_count +1 , new_impulse_count);
 				++it_all_nodes;
 			}
+			ASSERT(warped_node_count>0);
 		}
 	}
 
@@ -245,44 +252,44 @@ void NodeMeshTest::testWarpNodes() {
 	}
 
 	/*
-	// warp the clusters nodes using mesh
-	cluster->update();
+	 // warp the clusters nodes using mesh
+	 cluster->update();
 
-	// check cluster and its copy have same diferent activities for all nodes
-	{
-		// forall in all_nodes
-		{
-			const std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> > & all_nodes =
-					cluster->getNodeMap().getCollection();
-			std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> >::const_iterator it_all_nodes =
-					all_nodes.begin();
-			const std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> >::const_iterator it_all_nodes_end =
-					all_nodes.end();
-			const std::map<boost::uuids::uuid, double>::const_iterator it_found_original_activities_end =
-					original_node_activities.end();
-			const std::map<boost::uuids::uuid, int>::const_iterator it_temp_node_impulse_count_end =
-					temp_node_impulse_count.end();
+	 // check cluster and its copy have same diferent activities for all nodes
+	 {
+	 // forall in all_nodes
+	 {
+	 const std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> > & all_nodes =
+	 cluster->getNodeMap().getCollection();
+	 std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> >::const_iterator it_all_nodes =
+	 all_nodes.begin();
+	 const std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> >::const_iterator it_all_nodes_end =
+	 all_nodes.end();
+	 const std::map<boost::uuids::uuid, double>::const_iterator it_found_original_activities_end =
+	 original_node_activities.end();
+	 const std::map<boost::uuids::uuid, int>::const_iterator it_temp_node_impulse_count_end =
+	 temp_node_impulse_count.end();
 
-			while (it_all_nodes != it_all_nodes_end) {
+	 while (it_all_nodes != it_all_nodes_end) {
 
-				std::map<boost::uuids::uuid, int>::const_iterator it_found_temp_node_impulse_count =
-						temp_node_impulse_count.find(it_all_nodes->first);
+	 std::map<boost::uuids::uuid, int>::const_iterator it_found_temp_node_impulse_count =
+	 temp_node_impulse_count.find(it_all_nodes->first);
 
-				int temp_impulse_count;
-				if (it_found_temp_node_impulse_count != it_temp_node_impulse_count_end) {
-					temp_impulse_count = it_found_temp_node_impulse_count->second;
-				} else {
-					std::cout << "NodeMeshTest::testWarpNodes: " << "ERROR: Original uuid not found in impulse count"
-							<< std::endl;
-					assert(false);
-				}
-				int new_impulse_count = it_all_nodes->second->getImpulses().getSize();
-				ASSERT_EQUAL(temp_impulse_count-1 , new_impulse_count);
-				++it_all_nodes;
-			}
-		}
-	}
-	*/
+	 int temp_impulse_count;
+	 if (it_found_temp_node_impulse_count != it_temp_node_impulse_count_end) {
+	 temp_impulse_count = it_found_temp_node_impulse_count->second;
+	 } else {
+	 std::cout << "NodeMeshTest::testWarpNodes: " << "ERROR: Original uuid not found in impulse count"
+	 << std::endl;
+	 assert(false);
+	 }
+	 int new_impulse_count = it_all_nodes->second->getImpulses().getSize();
+	 ASSERT_EQUAL(temp_impulse_count-1 , new_impulse_count);
+	 ++it_all_nodes;
+	 }
+	 }
+	 }
+	 */
 
 }
 }//NAMESPACE

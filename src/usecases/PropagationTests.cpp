@@ -43,9 +43,9 @@ void PropagationTests::testPropagation() {
 	boost::shared_ptr<Connection> con_b3(new Connection);
 
 	// Get 3 impulses which will sum greater than activity trigger
-	boost::shared_ptr<Impulse> imp1(new Impulse(0.4 * Node::ACTIVITY_THRESHOLD, 8));
-	boost::shared_ptr<Impulse> imp2(new Impulse(0.5 * Node::ACTIVITY_THRESHOLD, 4));
-	boost::shared_ptr<Impulse> imp3(new Impulse(0.6 * Node::ACTIVITY_THRESHOLD, 2));
+	boost::shared_ptr<Impulse> imp1(new Impulse(0.4 * Node::MAX_ACTIVITY_THRESHOLD, 8));
+	boost::shared_ptr<Impulse> imp2(new Impulse(0.5 * Node::MAX_ACTIVITY_THRESHOLD, 4));
+	boost::shared_ptr<Impulse> imp3(new Impulse(0.6 * Node::MAX_ACTIVITY_THRESHOLD, 2));
 
 	// Reset start times
 	{

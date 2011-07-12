@@ -357,10 +357,14 @@ void BundleTest::testPatternChannelsSetup() {
 	// count channels as we update
 	{
 		for (int i = 0; i < PATTERN_CHANNEL_DEPTH; i++) {
+#ifdef BUNDLETEST_DEBUG
 			std::cout << "BundleTest::testPatternChannelsSetup: " << "Real:" << i << std::endl;
+#endif
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getRealInputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getRealOutputChannelsMap(), PATTERN_CHANNEL_DEPTH));
+#ifdef BUNDLETEST_DEBUG
 			std::cout << "BundleTest::testPatternChannelsSetup: " << "Actual:" << i << std::endl;
+#endif
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualInputChannelsMap(), i));
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualOutputChannelsMap(), i));
 			bun.update();
@@ -378,8 +382,10 @@ void BundleTest::testPatternChannelsSetup() {
 
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getRealInputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getRealOutputChannelsMap(), PATTERN_CHANNEL_DEPTH));
-			std::cout << "BundleTest::testPatternChannelsSetup: " << "Actual:" << i << std::endl;
-			ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualInputChannelsMap(), PATTERN_CHANNEL_DEPTH));
+#ifdef BUNDLETEST_DEBUG
+std::cout << "BundleTest::testPatternChannelsSetup: " << "Actual:" << i << std::endl;
+#endif
+ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualInputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			ASSERT(BundleTest::checkChannelsMapDepth(bun.getActualOutputChannelsMap(), PATTERN_CHANNEL_DEPTH));
 			bun.update();
 
@@ -577,7 +583,7 @@ bool BundleTest::checkChannelsMapDepth(const state::PatternChannelMap & map, con
 				success = false;
 				std::cout << "BundleTest::checkChannelsMapDepth: " << pc_depth << "!=" << depth << std::endl;
 			} else {
-			//	std::cout << "BundleTest::checkChannelsMapDepth: " << pc_depth << "==" << depth << std::endl;
+				//	std::cout << "BundleTest::checkChannelsMapDepth: " << pc_depth << "==" << depth << std::endl;
 
 			}
 			++it_all_objs;

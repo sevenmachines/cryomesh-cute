@@ -328,10 +328,10 @@ void FibreTest::testTrigger() {
 		boost::shared_ptr<Fibre> fibre(new Fibre(cluster1, cluster2, WIDTH));
 		fibre->trigger(expected_pat);
 		common::TimeKeeper::getTimeKeeper().update();
-		//cluster1->update();
-		//cluster2->update();
+		cluster1->update();
+		cluster2->update();
 		fibre->update();
-		// fibre->getMutableConnections().update();
+		 fibre->getMutableConnections().update();
 		const boost::shared_ptr<state::Pattern> actual_pattern = fibre->getOutputNodesPattern();
 		ASSERT_EQUAL(expected_pat, *actual_pattern);
 	}

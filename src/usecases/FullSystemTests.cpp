@@ -65,7 +65,9 @@ void FullSystemTests::testBasicFullSystem() {
 
 	for (int i = 0; i < 100; i++) {
 		bundle->update();
+#ifdef FULLSYSTEMTESTS_DEBUG
 		std::cout << *(bundle) << std::endl;
+#endif
 	}
 	ASSERTM("TODO", false);
 }
