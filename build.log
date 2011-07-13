@@ -2,21 +2,13 @@
 **** Build of configuration Release for project cryomesh-cute ****
 
 make all 
-Building file: ../src/state/PatternChannelTest.cpp
+Building file: ../src/state/PatternChannelMapTest.cpp
 Invoking: GCC C++ Compiler
-/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/state/PatternChannelTest.d" -MT"src/state/PatternChannelTest.d" -o"src/state/PatternChannelTest.o" "../src/state/PatternChannelTest.cpp"
-../src/state/PatternChannelTest.cpp: In static member function ‘static void cryomesh::state::PatternChannelTest::testaddPatterns_1()’:
-../src/state/PatternChannelTest.cpp:176:7: warning: unused variable ‘tagsz’
-../src/state/PatternChannelTest.cpp: In static member function ‘static void cryomesh::state::PatternChannelTest::testremovePatterns()’:
-../src/state/PatternChannelTest.cpp:224:7: warning: unused variable ‘tagsz’
-../src/state/PatternChannelTest.cpp: In static member function ‘static void cryomesh::state::PatternChannelTest::testremovePatterns_1()’:
-../src/state/PatternChannelTest.cpp:251:8: warning: unused variable ‘eq’
-../src/state/PatternChannelTest.cpp: In static member function ‘static void cryomesh::state::PatternChannelTest::testforcePatternListSize()’:
-../src/state/PatternChannelTest.cpp:463:7: warning: unused variable ‘pre_pos’
-Finished building: ../src/state/PatternChannelTest.cpp
+/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/state/PatternChannelMapTest.d" -MT"src/state/PatternChannelMapTest.d" -o"src/state/PatternChannelMapTest.o" "../src/state/PatternChannelMapTest.cpp"
+Finished building: ../src/state/PatternChannelMapTest.cpp
  
 Building target: cryomesh-cute
 Invoking: GCC C++ Linker
-/usr/bin/g++-4.5 -L"/home/niall/Projects/Eclipse/CPP/cryomesh/Release" -L"/home/niall/Projects/Eclipse/CPP/cryomesh-common/Release" -std=c++0x `pkg-config --libs libxml++-2.6` -o"cryomesh-cute"  ./src/utilities/SequencerChannelsTest.o ./src/utilities/SequencerGenericTest.o  ./src/usecases/CycleTests.o ./src/usecases/FullSystemTests.o ./src/usecases/MinimumNodeSystemTest.o ./src/usecases/PropagationTests.o ./src/usecases/UseCasesTest.o  ./src/structures/BundleTest.o ./src/structures/ClusterMapTest.o ./src/structures/ClusterTest.o ./src/structures/FibreTest.o ./src/structures/MeshTest.o ./src/structures/NodeMeshTest.o  ./src/state/BinaryStringTest.o ./src/state/PatternChannelTest.o ./src/state/PatternTest.o ./src/state/SequenceTest.o  ./src/manager/CreatorTest.o ./src/manager/DatabaseManagerTest.o ./src/manager/DatabaseObjectsTest.o  ./src/dataobjects/DataObjectTest.o  ./src/components/ActivityTimerTest.o ./src/components/ConnectionTest.o ./src/components/ImpulseCollectionTest.o ./src/components/ImpulseTest.o ./src/components/NodeTest.o  ./src/common/ConnectorTest.o ./src/common/CycleTest.o ./src/common/TimeKeeperTest.o  ./src/CoreTestsDefaults.o ./src/Test.o   -lcryomesh-common -lcryomesh -lboost_serialization -lgmpxx -lgmp -lsqlite3
+/usr/bin/g++-4.5 -L"/home/niall/Projects/Eclipse/CPP/cryomesh/Release" -L"/home/niall/Projects/Eclipse/CPP/cryomesh-common/Release" -std=c++0x `pkg-config --libs libxml++-2.6` -o"cryomesh-cute"  ./src/utilities/SequencerChannelsTest.o ./src/utilities/SequencerGenericTest.o  ./src/usecases/CycleTests.o ./src/usecases/FullSystemTests.o ./src/usecases/MinimumNodeSystemTest.o ./src/usecases/PropagationTests.o ./src/usecases/UseCasesTest.o  ./src/structures/BundleTest.o ./src/structures/ClusterMapTest.o ./src/structures/ClusterTest.o ./src/structures/FibreTest.o ./src/structures/MeshTest.o ./src/structures/NodeMeshTest.o  ./src/state/BinaryStringTest.o ./src/state/PatternChannelMapTest.o ./src/state/PatternChannelTest.o ./src/state/PatternTest.o ./src/state/SequenceTest.o  ./src/manager/CreatorTest.o ./src/manager/DatabaseManagerTest.o ./src/manager/DatabaseObjectsTest.o  ./src/dataobjects/DataObjectTest.o  ./src/components/ActivityTimerTest.o ./src/components/ConnectionTest.o ./src/components/ImpulseCollectionTest.o ./src/components/ImpulseTest.o ./src/components/NodeTest.o  ./src/common/ConnectorTest.o ./src/common/CycleTest.o ./src/common/TimeKeeperTest.o  ./src/CoreTestsDefaults.o ./src/Test.o   -lcryomesh-common -lcryomesh -lboost_serialization -lgmpxx -lgmp -lsqlite3
 Finished building target: cryomesh-cute
  

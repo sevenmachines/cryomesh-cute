@@ -12,6 +12,7 @@
 #include "state/PatternChannelTest.h"
 #include "state/PatternTest.h"
 #include "state/SequenceTest.h"
+#include "state/PatternChannelMapTest.h"
 
 // common
 #include "common/ConnectorTest.h"
@@ -66,9 +67,10 @@ void runUseCasesSuite() {
 
 void runStateSuite() {
 	state::BinaryStringTest::runSuite();
-	state::PatternChannelTest::runSuite();
 	state::PatternTest::runSuite();
 	state::SequenceTest::runSuite();
+	state::PatternChannelTest::runSuite();
+	state::PatternChannelMapTest::runSuite();
 }
 void runCommonSuite() {
 	common::ConnectorTest::runSuite();
