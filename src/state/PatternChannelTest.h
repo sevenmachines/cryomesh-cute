@@ -16,6 +16,7 @@ public:
 	static void testremovePatterns();
 	static void testremovePatterns_1();
 	static void testgetCurrentPattern();
+	static void testgetPatternByCycle();
 	static void testnextPattern();
 	static void testpreviousPattern();
 
