@@ -2,10 +2,89 @@
 **** Build of configuration Release for project cryomesh-cute ****
 
 make all 
-Building file: ../src/state/PatternChannelMapTest.cpp
+Building file: ../src/usecases/CycleTests.cpp
 Invoking: GCC C++ Compiler
-/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/state/PatternChannelMapTest.d" -MT"src/state/PatternChannelMapTest.d" -o"src/state/PatternChannelMapTest.o" "../src/state/PatternChannelMapTest.cpp"
-Finished building: ../src/state/PatternChannelMapTest.cpp
+/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/CycleTests.d" -MT"src/usecases/CycleTests.d" -o"src/usecases/CycleTests.o" "../src/usecases/CycleTests.cpp"
+In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/components/ConnectionMap.h:17:0,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:12,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
+                 from ../src/usecases/CycleTests.cpp:9:
+/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
+In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:21:0,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
+                 from ../src/usecases/CycleTests.cpp:9:
+/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
+../src/usecases/CycleTests.cpp: In static member function ‘static void cryomesh::usecases::CycleTests::testFullCycle()’:
+../src/usecases/CycleTests.cpp:67:22: warning: comparison between signed and unsigned integer expressions
+Finished building: ../src/usecases/CycleTests.cpp
+ 
+Building file: ../src/usecases/FullSystemTests.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/FullSystemTests.d" -MT"src/usecases/FullSystemTests.d" -o"src/usecases/FullSystemTests.o" "../src/usecases/FullSystemTests.cpp"
+In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/components/ConnectionMap.h:17:0,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:12,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
+                 from ../src/usecases/FullSystemTests.cpp:9:
+/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
+In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:21:0,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
+                 from ../src/usecases/FullSystemTests.cpp:9:
+/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
+Finished building: ../src/usecases/FullSystemTests.cpp
+ 
+Building file: ../src/usecases/MinimumNodeSystemTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/MinimumNodeSystemTest.d" -MT"src/usecases/MinimumNodeSystemTest.d" -o"src/usecases/MinimumNodeSystemTest.o" "../src/usecases/MinimumNodeSystemTest.cpp"
+In file included from ../src/usecases/MinimumNodeSystemTest.h:13:0,
+                 from ../src/usecases/MinimumNodeSystemTest.cpp:9:
+/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
+In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/components/ConnectionMap.h:17:0,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:12,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
+                 from ../src/usecases/MinimumNodeSystemTest.cpp:10:
+/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
+../src/usecases/MinimumNodeSystemTest.cpp: In static member function ‘static void cryomesh::usecases::MinimumNodeSystemTest::testMinimumNodeSystem()’:
+../src/usecases/MinimumNodeSystemTest.cpp:28:12: warning: unused variable ‘SIZE’
+Finished building: ../src/usecases/MinimumNodeSystemTest.cpp
+ 
+Building file: ../src/usecases/PropagationTests.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/PropagationTests.d" -MT"src/usecases/PropagationTests.d" -o"src/usecases/PropagationTests.o" "../src/usecases/PropagationTests.cpp"
+In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/components/ConnectionMap.h:17:0,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:12,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
+                 from ../src/usecases/PropagationTests.cpp:9:
+/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
+In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:21:0,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
+                 from ../src/usecases/PropagationTests.cpp:9:
+/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
+Finished building: ../src/usecases/PropagationTests.cpp
+ 
+Building file: ../src/usecases/UseCasesTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/UseCasesTest.d" -MT"src/usecases/UseCasesTest.d" -o"src/usecases/UseCasesTest.o" "../src/usecases/UseCasesTest.cpp"
+In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/components/ConnectionMap.h:17:0,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:12,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
+                 from ../src/usecases/UseCasesTest.cpp:3:
+/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
+In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:21:0,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
+                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
+                 from ../src/usecases/UseCasesTest.cpp:3:
+/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
+../src/usecases/UseCasesTest.cpp: In static member function ‘static void cryomesh::UseCasesTest::testFullCycle()’:
+../src/usecases/UseCasesTest.cpp:50:22: warning: comparison between signed and unsigned integer expressions
+Finished building: ../src/usecases/UseCasesTest.cpp
  
 Building target: cryomesh-cute
 Invoking: GCC C++ Linker
