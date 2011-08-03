@@ -184,7 +184,6 @@ void ConnectionTest::testCreationConnection() {
 		ASSERT_EQUAL(0, sz);
 	}
 
-	ASSERT(false);
 }
 
 void ConnectionTest::testUpdate() {
@@ -279,7 +278,6 @@ void ConnectionTest::testUpdate() {
 			ASSERT_EQUAL(3, node_count);
 		}
 	}
-	ASSERT(false);
 }
 }//NAMESPACE
 

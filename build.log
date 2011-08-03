@@ -1,93 +1,171 @@
 
-**** Build of configuration Release for project cryomesh-cute ****
+**** Build of configuration Debug for project cryomesh-cute ****
 
-make all 
+make -j all 
+Building file: ../src/utilities/SequencerChannelsTest.cpp
+Building file: ../src/utilities/SequencerGenericTest.cpp
 Building file: ../src/usecases/CycleTests.cpp
-Invoking: GCC C++ Compiler
-/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/CycleTests.d" -MT"src/usecases/CycleTests.d" -o"src/usecases/CycleTests.o" "../src/usecases/CycleTests.cpp"
-In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/components/ConnectionMap.h:17:0,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:12,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
-                 from ../src/usecases/CycleTests.cpp:9:
-/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
-In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:21:0,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
-                 from ../src/usecases/CycleTests.cpp:9:
-/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
-../src/usecases/CycleTests.cpp: In static member function ‘static void cryomesh::usecases::CycleTests::testFullCycle()’:
-../src/usecases/CycleTests.cpp:67:22: warning: comparison between signed and unsigned integer expressions
-Finished building: ../src/usecases/CycleTests.cpp
- 
 Building file: ../src/usecases/FullSystemTests.cpp
 Invoking: GCC C++ Compiler
-/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/FullSystemTests.d" -MT"src/usecases/FullSystemTests.d" -o"src/usecases/FullSystemTests.o" "../src/usecases/FullSystemTests.cpp"
-In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/components/ConnectionMap.h:17:0,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:12,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
-                 from ../src/usecases/FullSystemTests.cpp:9:
-/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
-In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:21:0,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
-                 from ../src/usecases/FullSystemTests.cpp:9:
-/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
-Finished building: ../src/usecases/FullSystemTests.cpp
- 
-Building file: ../src/usecases/MinimumNodeSystemTest.cpp
 Invoking: GCC C++ Compiler
-/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/MinimumNodeSystemTest.d" -MT"src/usecases/MinimumNodeSystemTest.d" -o"src/usecases/MinimumNodeSystemTest.o" "../src/usecases/MinimumNodeSystemTest.cpp"
-In file included from ../src/usecases/MinimumNodeSystemTest.h:13:0,
-                 from ../src/usecases/MinimumNodeSystemTest.cpp:9:
-/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
-In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/components/ConnectionMap.h:17:0,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:12,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
-                 from ../src/usecases/MinimumNodeSystemTest.cpp:10:
-/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
-../src/usecases/MinimumNodeSystemTest.cpp: In static member function ‘static void cryomesh::usecases::MinimumNodeSystemTest::testMinimumNodeSystem()’:
-../src/usecases/MinimumNodeSystemTest.cpp:28:12: warning: unused variable ‘SIZE’
-Finished building: ../src/usecases/MinimumNodeSystemTest.cpp
- 
+Invoking: GCC C++ Compiler
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/utilities/SequencerChannelsTest.d" -MT"src/utilities/SequencerChannelsTest.d" -o"src/utilities/SequencerChannelsTest.o" "../src/utilities/SequencerChannelsTest.cpp"
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/utilities/SequencerGenericTest.d" -MT"src/utilities/SequencerGenericTest.d" -o"src/utilities/SequencerGenericTest.o" "../src/utilities/SequencerGenericTest.cpp"
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/CycleTests.d" -MT"src/usecases/CycleTests.d" -o"src/usecases/CycleTests.o" "../src/usecases/CycleTests.cpp"
+Building file: ../src/usecases/MinimumNodeSystemTest.cpp
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/FullSystemTests.d" -MT"src/usecases/FullSystemTests.d" -o"src/usecases/FullSystemTests.o" "../src/usecases/FullSystemTests.cpp"
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/MinimumNodeSystemTest.d" -MT"src/usecases/MinimumNodeSystemTest.d" -o"src/usecases/MinimumNodeSystemTest.o" "../src/usecases/MinimumNodeSystemTest.cpp"
 Building file: ../src/usecases/PropagationTests.cpp
 Invoking: GCC C++ Compiler
-/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/PropagationTests.d" -MT"src/usecases/PropagationTests.d" -o"src/usecases/PropagationTests.o" "../src/usecases/PropagationTests.cpp"
-In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/components/ConnectionMap.h:17:0,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:12,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
-                 from ../src/usecases/PropagationTests.cpp:9:
-/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
-In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:21:0,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
-                 from ../src/usecases/PropagationTests.cpp:9:
-/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
+Building file: ../src/usecases/UseCasesTest.cpp
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/PropagationTests.d" -MT"src/usecases/PropagationTests.d" -o"src/usecases/PropagationTests.o" "../src/usecases/PropagationTests.cpp"
+Building file: ../src/structures/BundleTest.cpp
+Invoking: GCC C++ Compiler
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/UseCasesTest.d" -MT"src/usecases/UseCasesTest.d" -o"src/usecases/UseCasesTest.o" "../src/usecases/UseCasesTest.cpp"
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/structures/BundleTest.d" -MT"src/structures/BundleTest.d" -o"src/structures/BundleTest.o" "../src/structures/BundleTest.cpp"
+Building file: ../src/structures/ClusterMapTest.cpp
+Building file: ../src/structures/ClusterTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/structures/ClusterMapTest.d" -MT"src/structures/ClusterMapTest.d" -o"src/structures/ClusterMapTest.o" "../src/structures/ClusterMapTest.cpp"
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/structures/ClusterTest.d" -MT"src/structures/ClusterTest.d" -o"src/structures/ClusterTest.o" "../src/structures/ClusterTest.cpp"
+Building file: ../src/structures/FibreTest.cpp
+Building file: ../src/structures/MeshTest.cpp
+Invoking: GCC C++ Compiler
+Building file: ../src/structures/NodeMeshTest.cpp
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/structures/FibreTest.d" -MT"src/structures/FibreTest.d" -o"src/structures/FibreTest.o" "../src/structures/FibreTest.cpp"
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/structures/MeshTest.d" -MT"src/structures/MeshTest.d" -o"src/structures/MeshTest.o" "../src/structures/MeshTest.cpp"
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/structures/NodeMeshTest.d" -MT"src/structures/NodeMeshTest.d" -o"src/structures/NodeMeshTest.o" "../src/structures/NodeMeshTest.cpp"
+Building file: ../src/state/BinaryStringTest.cpp
+Building file: ../src/state/PatternChannelMapTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/state/BinaryStringTest.d" -MT"src/state/BinaryStringTest.d" -o"src/state/BinaryStringTest.o" "../src/state/BinaryStringTest.cpp"
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/state/PatternChannelMapTest.d" -MT"src/state/PatternChannelMapTest.d" -o"src/state/PatternChannelMapTest.o" "../src/state/PatternChannelMapTest.cpp"
+Building file: ../src/state/PatternChannelTest.cpp
+Building file: ../src/state/PatternTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/state/PatternChannelTest.d" -MT"src/state/PatternChannelTest.d" -o"src/state/PatternChannelTest.o" "../src/state/PatternChannelTest.cpp"
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/state/PatternTest.d" -MT"src/state/PatternTest.d" -o"src/state/PatternTest.o" "../src/state/PatternTest.cpp"
+Finished building: ../src/structures/MeshTest.cpp
+Building file: ../src/state/SequenceTest.cpp
+ 
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/state/SequenceTest.d" -MT"src/state/SequenceTest.d" -o"src/state/SequenceTest.o" "../src/state/SequenceTest.cpp"
+Building file: ../src/manager/CreatorTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/manager/CreatorTest.d" -MT"src/manager/CreatorTest.d" -o"src/manager/CreatorTest.o" "../src/manager/CreatorTest.cpp"
+Building file: ../src/manager/DatabaseManagerTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/manager/DatabaseManagerTest.d" -MT"src/manager/DatabaseManagerTest.d" -o"src/manager/DatabaseManagerTest.o" "../src/manager/DatabaseManagerTest.cpp"
+Building file: ../src/manager/DatabaseObjectsTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/manager/DatabaseObjectsTest.d" -MT"src/manager/DatabaseObjectsTest.d" -o"src/manager/DatabaseObjectsTest.o" "../src/manager/DatabaseObjectsTest.cpp"
+Building file: ../src/dataobjects/DataObjectTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/dataobjects/DataObjectTest.d" -MT"src/dataobjects/DataObjectTest.d" -o"src/dataobjects/DataObjectTest.o" "../src/dataobjects/DataObjectTest.cpp"
+Building file: ../src/components/ActivityTimerTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/components/ActivityTimerTest.d" -MT"src/components/ActivityTimerTest.d" -o"src/components/ActivityTimerTest.o" "../src/components/ActivityTimerTest.cpp"
+Building file: ../src/components/ConnectionTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/components/ConnectionTest.d" -MT"src/components/ConnectionTest.d" -o"src/components/ConnectionTest.o" "../src/components/ConnectionTest.cpp"
+Building file: ../src/components/ImpulseCollectionTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/components/ImpulseCollectionTest.d" -MT"src/components/ImpulseCollectionTest.d" -o"src/components/ImpulseCollectionTest.o" "../src/components/ImpulseCollectionTest.cpp"
+Building file: ../src/components/ImpulseTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/components/ImpulseTest.d" -MT"src/components/ImpulseTest.d" -o"src/components/ImpulseTest.o" "../src/components/ImpulseTest.cpp"
+Building file: ../src/components/NodeTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/components/NodeTest.d" -MT"src/components/NodeTest.d" -o"src/components/NodeTest.o" "../src/components/NodeTest.cpp"
+Building file: ../src/common/ConnectorTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/common/ConnectorTest.d" -MT"src/common/ConnectorTest.d" -o"src/common/ConnectorTest.o" "../src/common/ConnectorTest.cpp"
+Building file: ../src/common/CycleTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/common/CycleTest.d" -MT"src/common/CycleTest.d" -o"src/common/CycleTest.o" "../src/common/CycleTest.cpp"
+Building file: ../src/common/TimeKeeperTest.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/common/TimeKeeperTest.d" -MT"src/common/TimeKeeperTest.d" -o"src/common/TimeKeeperTest.o" "../src/common/TimeKeeperTest.cpp"
+Building file: ../src/CoreTestsDefaults.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/CoreTestsDefaults.d" -MT"src/CoreTestsDefaults.d" -o"src/CoreTestsDefaults.o" "../src/CoreTestsDefaults.cpp"
+Building file: ../src/Test.cpp
+Invoking: GCC C++ Compiler
+/usr/bin/g++ -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -O0 -g3 -pedantic -pedantic-errors -Wall -Werror -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/Test.d" -MT"src/Test.d" -o"src/Test.o" "../src/Test.cpp"
+Finished building: ../src/CoreTestsDefaults.cpp
+ 
+Finished building: ../src/common/TimeKeeperTest.cpp
+ 
+Finished building: ../src/utilities/SequencerGenericTest.cpp
+ 
+Finished building: ../src/components/ActivityTimerTest.cpp
+ 
+Finished building: ../src/common/CycleTest.cpp
+ 
+Finished building: ../src/dataobjects/DataObjectTest.cpp
+ 
+Finished building: ../src/components/ImpulseCollectionTest.cpp
+ 
+Finished building: ../src/state/BinaryStringTest.cpp
+ 
+Finished building: ../src/structures/ClusterTest.cpp
+ 
+Finished building: ../src/state/PatternChannelMapTest.cpp
+ 
+Finished building: ../src/structures/NodeMeshTest.cpp
+ 
+Finished building: ../src/state/PatternChannelTest.cpp
+ 
+Finished building: ../src/utilities/SequencerChannelsTest.cpp
+ 
+Finished building: ../src/components/ImpulseTest.cpp
+ 
 Finished building: ../src/usecases/PropagationTests.cpp
  
-Building file: ../src/usecases/UseCasesTest.cpp
-Invoking: GCC C++ Compiler
-/usr/bin/g++-4.5 -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/cute" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-cute/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh-common/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh/src" -I"/home/niall/Projects/Eclipse/CPP/cryomesh" -O2 -Wall -c -fmessage-length=0 -std=c++0x `pkg-config --cflags libxml++-2.6` -MMD -MP -MF"src/usecases/UseCasesTest.d" -MT"src/usecases/UseCasesTest.d" -o"src/usecases/UseCasesTest.o" "../src/usecases/UseCasesTest.cpp"
-In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/components/ConnectionMap.h:17:0,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:12,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
-                 from ../src/usecases/UseCasesTest.cpp:3:
-/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
-In file included from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Cluster.h:21:0,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/ClusterMap.h:14,
-                 from /home/niall/Projects/Eclipse/CPP/cryomesh/src/structures/Bundle.h:14,
-                 from ../src/usecases/UseCasesTest.cpp:3:
-/home/niall/Projects/Eclipse/CPP/cryomesh/src/components/Connection.h:147:3: warning: "/*" within comment
-../src/usecases/UseCasesTest.cpp: In static member function ‘static void cryomesh::UseCasesTest::testFullCycle()’:
-../src/usecases/UseCasesTest.cpp:50:22: warning: comparison between signed and unsigned integer expressions
+Finished building: ../src/structures/ClusterMapTest.cpp
+ 
+Finished building: ../src/usecases/FullSystemTests.cpp
+ 
+Finished building: ../src/Test.cpp
+ 
+Finished building: ../src/usecases/MinimumNodeSystemTest.cpp
+ 
+Finished building: ../src/common/ConnectorTest.cpp
+ 
+Finished building: ../src/manager/DatabaseManagerTest.cpp
+Finished building: ../src/components/ConnectionTest.cpp
+ 
+ 
 Finished building: ../src/usecases/UseCasesTest.cpp
+ 
+Finished building: ../src/state/PatternTest.cpp
+ 
+Finished building: ../src/structures/FibreTest.cpp
+ 
+Finished building: ../src/manager/DatabaseObjectsTest.cpp
+ 
+Finished building: ../src/manager/CreatorTest.cpp
+ 
+Finished building: ../src/components/NodeTest.cpp
+ 
+Finished building: ../src/usecases/CycleTests.cpp
+ 
+Finished building: ../src/structures/BundleTest.cpp
+ 
+Finished building: ../src/state/SequenceTest.cpp
  
 Building target: cryomesh-cute
 Invoking: GCC C++ Linker
-/usr/bin/g++-4.5 -L"/home/niall/Projects/Eclipse/CPP/cryomesh/Release" -L"/home/niall/Projects/Eclipse/CPP/cryomesh-common/Release" -std=c++0x `pkg-config --libs libxml++-2.6` -o"cryomesh-cute"  ./src/utilities/SequencerChannelsTest.o ./src/utilities/SequencerGenericTest.o  ./src/usecases/CycleTests.o ./src/usecases/FullSystemTests.o ./src/usecases/MinimumNodeSystemTest.o ./src/usecases/PropagationTests.o ./src/usecases/UseCasesTest.o  ./src/structures/BundleTest.o ./src/structures/ClusterMapTest.o ./src/structures/ClusterTest.o ./src/structures/FibreTest.o ./src/structures/MeshTest.o ./src/structures/NodeMeshTest.o  ./src/state/BinaryStringTest.o ./src/state/PatternChannelMapTest.o ./src/state/PatternChannelTest.o ./src/state/PatternTest.o ./src/state/SequenceTest.o  ./src/manager/CreatorTest.o ./src/manager/DatabaseManagerTest.o ./src/manager/DatabaseObjectsTest.o  ./src/dataobjects/DataObjectTest.o  ./src/components/ActivityTimerTest.o ./src/components/ConnectionTest.o ./src/components/ImpulseCollectionTest.o ./src/components/ImpulseTest.o ./src/components/NodeTest.o  ./src/common/ConnectorTest.o ./src/common/CycleTest.o ./src/common/TimeKeeperTest.o  ./src/CoreTestsDefaults.o ./src/Test.o   -lcryomesh-common -lcryomesh -lboost_serialization -lgmpxx -lgmp -lsqlite3
+/usr/bin/g++ -L"/home/niall/Projects/Eclipse/CPP/cryomesh/Debug" -L"/home/niall/Projects/Eclipse/CPP/cryomesh-common/Debug" -std=c++0x `pkg-config --libs libxml++-2.6` -o "cryomesh-cute"  ./src/utilities/SequencerChannelsTest.o ./src/utilities/SequencerGenericTest.o  ./src/usecases/CycleTests.o ./src/usecases/FullSystemTests.o ./src/usecases/MinimumNodeSystemTest.o ./src/usecases/PropagationTests.o ./src/usecases/UseCasesTest.o  ./src/structures/BundleTest.o ./src/structures/ClusterMapTest.o ./src/structures/ClusterTest.o ./src/structures/FibreTest.o ./src/structures/MeshTest.o ./src/structures/NodeMeshTest.o  ./src/state/BinaryStringTest.o ./src/state/PatternChannelMapTest.o ./src/state/PatternChannelTest.o ./src/state/PatternTest.o ./src/state/SequenceTest.o  ./src/manager/CreatorTest.o ./src/manager/DatabaseManagerTest.o ./src/manager/DatabaseObjectsTest.o  ./src/dataobjects/DataObjectTest.o  ./src/components/ActivityTimerTest.o ./src/components/ConnectionTest.o ./src/components/ImpulseCollectionTest.o ./src/components/ImpulseTest.o ./src/components/NodeTest.o  ./src/common/ConnectorTest.o ./src/common/CycleTest.o ./src/common/TimeKeeperTest.o  ./src/CoreTestsDefaults.o ./src/Test.o   -lcryomesh-common -lcryomesh -lboost_serialization -lgmpxx -lgmp -lsqlite3 -lxml++-2.6
 Finished building target: cryomesh-cute
  
+
+**** Build Finished ****

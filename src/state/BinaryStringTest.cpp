@@ -73,7 +73,6 @@ void BinaryStringTest::testtoInt() {
 */
 void BinaryStringTest::BinaryStringString() {
 	std::string teststr_exp = "TeSt1";
-	int testint_exp = atoi(teststr_exp.c_str());
 	// TeSt1 = 54h 65h 53h 74h 31h
 	// TeSt1 = 01010100 01100101 01010011 01110100 00110001
 	std::string bin_exp = "0101010001100101010100110111010000110001";
@@ -92,7 +91,6 @@ void BinaryStringTest::BinaryStringString() {
 
 void BinaryStringTest::BinaryStringPattern() {
 	std::string teststr_exp = "TeSt1";
-	int testint_exp = atoi(teststr_exp.c_str());
 	// TeSt1 = 54h 65h 53h 74h 31h
 	// TeSt1 = 01010100 01100101 01010011 01110100 00110001
 	std::string bin_exp = "0101010001100101010100110111010000110001";
@@ -245,7 +243,6 @@ void BinaryStringTest::testformatTextToInt() {
 void BinaryStringTest::testformatTextToBinaryString() {
 	{
 		std::string teststr_exp = "TeSt1";
-		int testint_exp = atoi(teststr_exp.c_str());
 		// TeSt1 = 54h 65h 53h 74h 31h
 		// TeSt1 = 01010100 01100101 01010011 01110100 00110001
 		std::string bin_exp = "0101010001100101010100110111010000110001";

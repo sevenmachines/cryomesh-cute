@@ -47,7 +47,7 @@ void UseCasesTest::testFullCycle() {
 	// pin->cluster1-> cluster2->cluster3->pout
 	//						 --------------->
 	const unsigned int TOTAL_UPDATES = 100;
-	for (int i = 0; i < TOTAL_UPDATES; i++) {
+	for (unsigned int i = 0; i < TOTAL_UPDATES; i++) {
 		//	std::cout<<"UseCasesTest::testFullCycle: "<<i<<std::endl;
 		//	std::cout<<"###################################################"<<std::endl;
 		//std::cout<<bundle<<std::endl;

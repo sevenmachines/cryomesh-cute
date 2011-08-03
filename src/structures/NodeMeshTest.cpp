@@ -144,14 +144,9 @@ void NodeMeshTest::testWarpNodes() {
 				// find orginal impulse count
 				std::map<boost::uuids::uuid, int>::const_iterator it_found_original_impulse_count =
 						original_node_impulse_count.find(it_all_nodes->first);
-				int original_impulse_count;
 
-				if (it_found_original_impulse_count != it_original_impulse_count_end) {
-					original_impulse_count = it_found_original_impulse_count->second;
-				} else {
-					std::cout << "NodeMeshTest::testWarpNodes: " << "ERROR: Original uuid not found in impulse count"
-							<< std::endl;
-					assert(false);
+				if (it_found_original_impulse_count == it_original_impulse_count_end) {
+					ASSERTM("ERROR: Original uuid not found in impulse count", false);
 				}
 
 				double new_activity = it_all_nodes->second->getActivity();
@@ -161,9 +156,6 @@ void NodeMeshTest::testWarpNodes() {
 				//		<< std::endl;
 				ASSERT_EQUAL(0, dnoteq);
 
-				int new_impulse_count = it_all_nodes->second->getImpulses().getSize();
-				//	ASSERT_EQUAL(1 , original_impulse_count);
-				//	ASSERT_EQUAL(0 , new_impulse_count);
 				++it_all_nodes;
 
 			}

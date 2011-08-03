@@ -88,7 +88,6 @@ void ImpulseCollectionTest::testClear() {
 		boost::shared_ptr<Impulse> imp1(new Impulse(1, 5));
 		boost::shared_ptr<Impulse> imp2(new Impulse(1, 4));
 		boost::shared_ptr<Impulse> imp3(new Impulse(1, 3));
-		long int BASE_CYCLE = common::TimeKeeper::getTimeKeeper().getCycle().toLInt();
 
 		//	std::cout<<"ImpulseCollectionTest::testClear: "<<"BASE_CYCLE: "<<BASE_CYCLE<<std::endl;
 		ic.add(imp1);
@@ -433,7 +432,6 @@ void ImpulseCollectionTest::testClearActiveCycles() {
 		for (int i = 0; i < 5; i++) {
 			tk.update();
 		}
-		long int time = tk.getCycle().toLInt();
 		obj1.clearActiveImpulses();
 		// check size
 		{

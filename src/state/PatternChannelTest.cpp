@@ -124,7 +124,6 @@ void PatternChannelTest::testaddPatterns() {
 		const std::list<boost::uuids::uuid> & pat_list = pc.getPatternList();
 
 		std::list<boost::uuids::uuid>::const_iterator it_pat_list = pat_list.begin();
-		const std::list<boost::uuids::uuid>::const_iterator it_pat_list_end = pat_list.end();
 
 		bool eq = false;
 		// match patterns
@@ -173,7 +172,6 @@ void PatternChannelTest::testaddPatterns_1() {
 		ASSERT_EQUAL(3, sz);
 		ASSERT_EQUAL(3, wd);
 
-		int tagsz = pc.getPatternByTagMap().size();
 		ASSERT_EQUAL(3, sz);
 	}
 	//check patterns are added in order to end
@@ -181,7 +179,6 @@ void PatternChannelTest::testaddPatterns_1() {
 		const std::list<boost::uuids::uuid> & pat_list = pc.getPatternList();
 
 		std::list<boost::uuids::uuid>::const_iterator it_pat_list = pat_list.begin();
-		const std::list<boost::uuids::uuid>::const_iterator it_pat_list_end = pat_list.end();
 
 		bool eq1 = (*it_pat_list == pat1->getUUID());
 		ASSERT(eq1);
@@ -221,8 +218,6 @@ void PatternChannelTest::testremovePatterns() {
 		bool eq = (*(pc.getPatternList().begin()) == pat2->getUUID());
 		ASSERT(eq);
 
-		int tagsz = pc.getPatternByTagMap().size();
-
 		ASSERT_EQUAL(1, sz);
 	}
 }
@@ -248,7 +243,6 @@ void PatternChannelTest::testremovePatterns_1() {
 		ASSERT_EQUAL(1,sz);
 
 		// check the inly pattern left is 2
-		bool eq = (*(pc.getPatternList().begin()) == pat2->getUUID());
 
 		// check position and iterator have been update from pat1
 		int pos = pc.getPatternPosition();
@@ -460,7 +454,6 @@ void PatternChannelTest::testforcePatternListSize() {
 		boost::shared_ptr<PatternChannel> pc = getTestPatternChannel();
 
 		int pre_sz = pc->getPatternList().size();
-		int pre_pos = pc->getPatternPosition();
 		for (int i = 0; i < pre_sz - 1; i++) {
 			pc->nextPattern();
 		}

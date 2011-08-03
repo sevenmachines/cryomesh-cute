@@ -30,7 +30,7 @@ void FibreTest::runSuite() {
 
 void FibreTest::testImpulsePropagation() {
 	//create start nodes and end nodes
-	const int WIDTH = 1;
+	//const int WIDTH = 1;
 	const boost::shared_ptr<state::Pattern> full_pat(new state::Pattern("1"));
 	const boost::shared_ptr<state::Pattern> null_pat(new state::Pattern("0"));
 	boost::shared_ptr<Cluster> cluster1(new Cluster(10, 1));
@@ -57,10 +57,10 @@ void FibreTest::testImpulsePropagation() {
 			<< common::TimeKeeper::getTimeKeeper().getCycle() << std::endl << *node2 << std::endl << std::endl;
 	// check start structure
 	{
-		int node1_inputs = node1->getConnector().getInputs().size();
+		//int node1_inputs = node1->getConnector().getInputs().size();
 		int node1_outputs = node1->getConnector().getOutputs().size();
 		int node2_inputs = node2->getConnector().getInputs().size();
-		int node2_outputs = node2->getConnector().getOutputs().size();
+		//int node2_outputs = node2->getConnector().getOutputs().size();
 
 		int connection_inputs = connection1->getConnector().getInputs().size();
 		int connection_outputs = connection1->getConnector().getOutputs().size();

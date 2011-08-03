@@ -73,12 +73,8 @@ void BundleTest::testPropagation() {
 	{
 		// general sizes
 		{
-			int bun_cluster_sz = bun.getClusters().getSize();
-			int bun_fibres_sz = bun.getFibres().getSize();
-
 			//cluster1
 			{
-				int con_sz = cluster1->getConnections().size();
 				int in_sz = cluster1->getConnector().getInputs().size();
 				int out_sz = cluster1->getConnector().getOutputs().size();
 				int node_sz = cluster1->getNodeMap().getSize();
@@ -89,7 +85,6 @@ void BundleTest::testPropagation() {
 
 			//cluster2
 			{
-				int con_sz = cluster2->getConnections().size();
 				int in_sz = cluster2->getConnector().getInputs().size();
 				int out_sz = cluster2->getConnector().getOutputs().size();
 				int node_sz = cluster2->getNodeMap().getSize();
@@ -197,8 +192,7 @@ void BundleTest::testConnectPatternChannels() {
 	{
 		std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator it_input_channels_map =
 				bun.getRealInputChannelsMap().begin();
-		const std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator
-				it_input_channels_map_end = bun.getRealInputChannelsMap().end();
+
 		ASSERT_EQUAL(3, bun.getRealInputChannelsMap().getSize());
 		inchan1 = it_input_channels_map->first;
 		++it_input_channels_map;
@@ -225,8 +219,7 @@ void BundleTest::testConnectPatternChannels() {
 	{
 		std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator it_output_channels_map =
 				bun.getRealOutputChannelsMap().begin();
-		const std::map<boost::uuids::uuid, boost::shared_ptr<state::PatternChannel> >::const_iterator
-				it_output_channels_map_end = bun.getRealOutputChannelsMap().end();
+
 		ASSERT_EQUAL(3, bun.getRealOutputChannelsMap().getSize());
 		outchan1 = it_output_channels_map->first;
 		++it_output_channels_map;
@@ -412,8 +405,6 @@ void BundleTest::testGetDisconnectedChannels() {
 void BundleTest::testAutoConnection() {
 	// data file is 3 in/outs of 3x2
 	const std::string DATAFILE = "TestData/sequences_3x2x3.xml";
-	const int PATTERN_CHANNEL_WIDTH = 3;
-	const int PATTERN_CHANNEL_DEPTH = 2;
 	const int PATTERN_CHANNEL_COUNT = 3;
 
 	const int FIBRE_SZ = 10;

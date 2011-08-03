@@ -25,7 +25,7 @@ void MinimumNodeSystemTest::runSuite() {
 }
 
 void MinimumNodeSystemTest::testMinimumNodeSystem() {
-	const int SIZE = 2;
+	//const int SIZE = 2;
 	manager::CryoManager manager;
 	manager.create("TestData/basic-1c-5n.config");
 	const int NODE_COUNT = 5;

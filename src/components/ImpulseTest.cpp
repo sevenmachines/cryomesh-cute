@@ -36,14 +36,12 @@ void ImpulseTest::testActivityCreation() {
 	const unsigned int LENGTH = 10;
 	const double MAX_Y_PLUS = 1.5;
 	const double MAX_Y_NEG = -1.5;
-	const double DELTA = 0.0001;
 	// test positive creation
 	{
 		Impulse imp(MAX_Y_PLUS, LENGTH);
 		const std::list<double> & acts = imp.getActivities();
 
 		std::list<double>::const_iterator it_acts = acts.begin();
-		const std::list<double>::const_iterator it_acts_end = acts.end();
 		for (unsigned int i = 0; i < LENGTH; ++i) {
 			//	std::cout << "ImpulseTest::testActivityCreation: " << i << ":" << *it_acts << std::endl;
 			ASSERT(*it_acts>0);
@@ -57,7 +55,6 @@ void ImpulseTest::testActivityCreation() {
 		const std::list<double> & acts = imp.getActivities();
 
 		std::list<double>::const_iterator it_acts = acts.begin();
-		const std::list<double>::const_iterator it_acts_end = acts.end();
 		for (unsigned int i = 0; i < LENGTH; ++i) {
 			//	std::cout<<"ImpulseTest::testActivityCreation: "<<i<<":"<<*it_acts<<std::endl;
 			ASSERT(*it_acts<0);
@@ -197,7 +194,6 @@ void ImpulseTest::testOperators() {
 			const std::list<double> & vals = obj2.getCollection();
 			// forall in vals
 			{
-				unsigned int count = 0;
 				std::list<double>::const_iterator it_vals = vals.begin();
 				const std::list<double>::const_iterator it_vals_end = vals.end();
 				while (it_vals != it_vals_end) {

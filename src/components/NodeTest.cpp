@@ -51,7 +51,6 @@ void NodeTest::testUpdateImpulses() {
 	//check no fire but experation only
 	{
 		common::TimeKeeper & tk = common::TimeKeeper::getTimeKeeper();
-		const long int BASE_CYCLE = tk.getCycle().toLInt();
 		boost::shared_ptr<Node> node1 = getDefaultNode();
 
 		const int LENGTH1 = 10;
@@ -102,7 +101,6 @@ void NodeTest::testUpdateImpulses() {
 	{
 		{
 			common::TimeKeeper & tk = common::TimeKeeper::getTimeKeeper();
-			const long int BASE_CYCLE = tk.getCycle().toLInt();
 			boost::shared_ptr<Node> node1 = getDefaultNode();
 
 			const int LENGTH1 = 10;

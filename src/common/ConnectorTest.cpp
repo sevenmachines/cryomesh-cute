@@ -134,8 +134,6 @@ void ConnectorTest::testListConnectDisconnect() {
 	boost::shared_ptr<Node> pnode4(new Node());
 	boost::uuids::uuid pnode1_uuid = pnode1->getUUID();
 	boost::uuids::uuid pnode2_uuid = pnode2->getUUID();
-	boost::uuids::uuid pnode3_uuid = pnode3->getUUID();
-	boost::uuids::uuid pnode4_uuid = pnode4->getUUID();
 
 	boost::shared_ptr<Connection> pcon1(new Connection());
 	boost::shared_ptr<Connection> pcon2(new Connection());
@@ -143,8 +141,6 @@ void ConnectorTest::testListConnectDisconnect() {
 	boost::shared_ptr<Connection> pcon4(new Connection());
 	boost::uuids::uuid pcon1_uuid = pcon1->getUUID();
 	boost::uuids::uuid pcon2_uuid = pcon2->getUUID();
-	boost::uuids::uuid pcon3_uuid = pcon3->getUUID();
-	boost::uuids::uuid pcon4_uuid = pcon4->getUUID();
 
 	// connect inputs by vector pointer
 	{
