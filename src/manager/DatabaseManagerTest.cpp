@@ -34,7 +34,9 @@ void DatabaseManagerTest::testCreation() {
 	{
 		DatabaseManager dbm;
 		ASSERT(dbm.isDatabaseAccessable() == true);
-		std::ifstream ifs(DatabaseManager::DEFAULT_DATABASE);
+		std::stringstream ss;
+		ss <<DatabaseManager::DEFAULT_DATABASE_PATH<<"/" <<DatabaseManager::DEFAULT_DATABASE;
+		std::ifstream ifs(ss.str());
 		ASSERT(ifs.is_open());
 	}
 
@@ -122,7 +124,7 @@ void DatabaseManagerTest::testCommands() {
 		exp_cycle << common::TimeKeeper::getTimeKeeper().getCycle() - 2;
 		std::stringstream exp_activity;
 		exp_activity << node1->getActivity();
-
+		std::cout<<"DatabaseManagerTest::testCommands: "<<"exp_id='"<<exp_id<<"'"<<std::endl <<"id='"<<id<<"'"<<std::endl;;
 		ASSERT_EQUAL(exp_id, id);
 		ASSERT_EQUAL(exp_x.str(), x);
 		ASSERT_EQUAL(exp_y.str(), y);

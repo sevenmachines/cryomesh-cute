@@ -49,7 +49,7 @@ void PatternTest::testPattern_cc() {
 	ASSERT(pat1==pat2);
 }
 void PatternTest::testPattern_vec() {
-	std::cout << "PatternTest::testPattern_vec: " << std::endl;
+	//std::cout << "PatternTest::testPattern_vec: " << std::endl;
 	int ids = Pattern::getIds();
 	std::vector<bool> vec_bool;
 	vec_bool.push_back(true);
@@ -64,7 +64,7 @@ void PatternTest::testPattern_vec() {
 
 }
 void PatternTest::testPattern_string() {
-	std::cout << "PatternTest::testPattern_string: " << std::endl;
+//	std::cout << "PatternTest::testPattern_string: " << std::endl;
 	{
 		int ids = Pattern::getIds();
 		std::string pat_str = "11001";
@@ -156,7 +156,7 @@ void PatternTest::testsetPattern() {
 	ASSERT(compareBools(vec_bool,compbool));
 }
 void PatternTest::testgetId() {
-	std::cout << "PatternTest::testgetId: " << std::endl;
+	//std::cout << "PatternTest::testgetId: " << std::endl;
 	int ids = Pattern::getIds();
 	Pattern pat;
 

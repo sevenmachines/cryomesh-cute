@@ -108,16 +108,22 @@ int main() {
 	/**
 	 * DISABLED
 	 */
+	/*	runStateSuite();
+	 runCommonSuite();
+	 runUtilitiesSuite();
+	 runUseCasesSuite();
+	 runManagerSuite();
+	 runComponentsSuite();
+	 runStructuresSuite();
+	 */
+	runDataObjectsSuite();
 	runStateSuite();
 	runCommonSuite();
-	runDataObjectsSuite();
 	runUtilitiesSuite();
 	runUseCasesSuite();
 	runManagerSuite();
-
 	runComponentsSuite();
 	runStructuresSuite();
-
 	return 0;
 }
 
