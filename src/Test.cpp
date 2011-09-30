@@ -2,6 +2,19 @@
 #include "ide_listener.h"
 #include "cute_runner.h"
 
+//#define DATAOBJECTS_TEST_SUITE
+//#define STATE_TEST_SUITE
+//#define COMMON_TEST_SUITE
+//#define UTILITIES_TEST_SUITE
+//#define USECASES_TEST_SUITE
+//#define MANAGER_TEST_SUITE
+//#define COMPONENTS_TEST_SUITE
+//#define STRUCTURES_TEST_SUITE
+#define MANIPULATORS_TEST_SUITE
+
+// manipulators
+#include "manipulators/ClusterArchitectTest.h"
+
 //manager
 #include "manager/DatabaseManagerTest.h"
 #include "manager/DatabaseObjectsTest.h"
@@ -47,6 +60,10 @@
 #include "usecases/FullSystemTests.h"
 #include "usecases/MinimumNodeSystemTest.h"
 using namespace cryomesh;
+
+void runManipulatorsSuite() {
+	manipulators::ClusterArchitectTest::runSuite();
+}
 
 void runUtilitiesSuite() {
 	utilities::SequencerGenericTest::runSuite();
@@ -105,25 +122,33 @@ void runStructuresSuite() {
 }
 
 int main() {
-	/**
-	 * DISABLED
-	 */
-	/*	runStateSuite();
-	 runCommonSuite();
-	 runUtilitiesSuite();
-	 runUseCasesSuite();
-	 runManagerSuite();
-	 runComponentsSuite();
-	 runStructuresSuite();
-	 */
+#ifdef DATAOBJECTS_TEST_SUITE
 	runDataObjectsSuite();
+#endif
+#ifdef STATE_TEST_SUITE
 	runStateSuite();
+#endif
+#ifdef COMMON_TEST_SUITE
 	runCommonSuite();
+#endif
+#ifdef UTILITIES_TEST_SUITE
 	runUtilitiesSuite();
+#endif
+#ifdef USECASES_TEST_SUITE
 	runUseCasesSuite();
+#endif
+#ifdef MANAGER_TEST_SUITE
 	runManagerSuite();
+#endif
+#ifdef COMPONENTS_TEST_SUITE
 	runComponentsSuite();
+#endif
+#ifdef STRUCTURES_TEST_SUITE
 	runStructuresSuite();
+#endif
+#ifdef MANIPULATORS_TEST_SUITE
+	runManipulatorsSuite();
+#endif
 	return 0;
 }
 
