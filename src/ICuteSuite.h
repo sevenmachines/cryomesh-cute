@@ -14,6 +14,8 @@
 #include "ide_listener.h"
 #include "cute_runner.h"
 
+#define CUTE_TEST
+
 class ICuteSuite{
 public:
 	virtual ~ICuteSuite(){}

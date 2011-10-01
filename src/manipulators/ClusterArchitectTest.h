@@ -17,6 +17,11 @@ public:
 	ClusterArchitectTest();
 	virtual ~ClusterArchitectTest();
 	static void runSuite();
+	static void testCreateRandomNodes();
+	static void testCreateRandomConnections();
+	static void testDestroyRandomNodes();
+	static void testDestroyRandomConnections();
+
 };
 
 } /* namespace manipulators */

@@ -22,7 +22,7 @@ void CycleTests::runSuite() {
 	cute::suite s;
 	s.push_back(CUTE(CycleTests::testFullCycle));
 	cute::ide_listener lis;
-	cute::makeRunner(lis)(s, "Cycle");
+	cute::makeRunner(lis)(s, "CycleTests");
 }
 
 void CycleTests::testFullCycle() {
@@ -34,7 +34,8 @@ void CycleTests::testFullCycle() {
 	ASSERT_EQUAL(3, bundle.getClusters().getSize());
 
 	std::vector<boost::shared_ptr<Fibre> > new_input_fibres = bundle.autoConnectPrimaryInputClusters(std::vector<boost::shared_ptr<Cluster> >({cluster1}));
-	ASSERT_EQUAL(1, new_input_fibres.size());
+int new_input_fibres_sz =  new_input_fibres.size();
+	ASSERT_EQUAL(1,new_input_fibres_sz);
 	boost::shared_ptr<Fibre> fibre1in = *(new_input_fibres.begin());
 
 	boost::shared_ptr<Fibre> fibre12 = bundle.connectCluster(cluster1->getUUID(), cluster2->getUUID(), FIBRE_WIDTH);
