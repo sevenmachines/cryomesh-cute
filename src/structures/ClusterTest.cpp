@@ -27,7 +27,7 @@ void ClusterTest::runSuite() {
 void ClusterTest::testCreateNodes() {
 	structures::Cluster cluster;
 	int presz = cluster.getNodes().size();
-	cluster.getClusterArchitect()->createRandomNodes(10);
+	cluster.getMutableClusterArchitect()->createRandomNodes(10);
 	int postsz = cluster.getNodes().size();
 	ASSERT_EQUAL(presz+10, postsz);
 
