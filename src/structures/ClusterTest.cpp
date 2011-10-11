@@ -51,14 +51,14 @@ void ClusterTest::testCreateConnections() {
 		{
 			const int CON_COUNT = 2;
 			const int NODE_COUNT = 2;
-			std::list<boost::shared_ptr<components::Node> > new_nodes =
+			std::set<boost::shared_ptr<components::Node> > new_nodes =
 					cluster.getClusterArchitect()->createRandomNodes(NODE_COUNT, CON_COUNT);
 
 			// forall in new_nodes
 			{
 				int count = 0;
-				std::list<boost::shared_ptr<components::Node> >::const_iterator it_new_nodes = new_nodes.begin();
-				const std::list<boost::shared_ptr<components::Node> >::const_iterator it_new_nodes_end =
+				std::set<boost::shared_ptr<components::Node> >::const_iterator it_new_nodes = new_nodes.begin();
+				const std::set<boost::shared_ptr<components::Node> >::const_iterator it_new_nodes_end =
 						new_nodes.end();
 				while (it_new_nodes != it_new_nodes_end) {
 					int insz = (*it_new_nodes)->getConnector().getInputs().size();

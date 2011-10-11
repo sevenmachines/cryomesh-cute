@@ -20,10 +20,11 @@ void ClusterArchitectTest::runSuite() {
 	cute::suite s;
 	s.push_back(CUTE(ClusterArchitectTest::testCreateRandomNodes));
 	s.push_back(CUTE(ClusterArchitectTest::testCreateRandomConnections));
-	s.push_back(CUTE(ClusterArchitectTest::testDestroyRandomNodes));
-	s.push_back(CUTE(ClusterArchitectTest::testDestroyRandomConnections));
 	s.push_back(CUTE(ClusterArchitectTest::testGetRandomNodes));
-	s.push_back(CUTE(ClusterArchitectTest::testGetRandomConnections));
+		s.push_back(CUTE(ClusterArchitectTest::testGetRandomConnections));
+		s.push_back(CUTE(ClusterArchitectTest::testDestroyRandomNodes));
+	s.push_back(CUTE(ClusterArchitectTest::testDestroyRandomConnections));
+
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "ClusterArchitectTest");
 }
@@ -36,7 +37,7 @@ void ClusterArchitectTest::testCreateRandomNodes() {
 		boost::shared_ptr<ClusterArchitect> cluster_arch = cluster.getMutableClusterArchitect();
 		const int NEW_SIZE = 10;
 		const int NEW_CONNECTIVITY = 20;
-		std::list<boost::shared_ptr<cryomesh::components::Node> > new_nodes = cluster_arch->createRandomNodes(NEW_SIZE,
+		std::set<boost::shared_ptr<cryomesh::components::Node> > new_nodes = cluster_arch->createRandomNodes(NEW_SIZE,
 				NEW_CONNECTIVITY, ClusterArchitect::ENABLE_SELF_CONNECT);
 		ASSERT_EQUAL(NEW_SIZE, new_nodes.size());
 
@@ -49,8 +50,8 @@ void ClusterArchitectTest::testCreateRandomNodes() {
 		{
 
 			int count = 0;
-			std::list<boost::shared_ptr<cryomesh::components::Node> >::const_iterator it_new_nodes = new_nodes.begin();
-			const std::list<boost::shared_ptr<cryomesh::components::Node> >::const_iterator it_new_nodes_end =
+			std::set<boost::shared_ptr<cryomesh::components::Node> >::const_iterator it_new_nodes = new_nodes.begin();
+			const std::set<boost::shared_ptr<cryomesh::components::Node> >::const_iterator it_new_nodes_end =
 					new_nodes.end();
 			while (it_new_nodes != it_new_nodes_end) {
 				const int insz = (*it_new_nodes)->getConnector().getInputs().size();
@@ -282,18 +283,19 @@ void ClusterArchitectTest::testGetRandomNodes() {
 		Cluster cluster(NEW_SIZE, NEW_CONNECTIVITY);
 		boost::shared_ptr<ClusterArchitect> cluster_arch = cluster.getMutableClusterArchitect();
 
-		std::list<boost::shared_ptr<components::Node> > random_nodes = cluster_arch->getRandomNodes(COUNT, false);
+		std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> > random_nodes = cluster_arch->getRandomNodes(COUNT, false);
 		const int random_node_count = random_nodes.size();
 		ASSERT_EQUAL(COUNT, random_node_count);
+		//ASSERT_EQUAL(COUNT+NEW_SIZE, cluster.getNodeMap().getSize());
 
 		// forall in random_nodes
 		{
-			std::list<boost::shared_ptr<components::Node> >::const_iterator it_random_nodes = random_nodes.begin();
-			const std::list<boost::shared_ptr<components::Node> >::const_iterator it_random_nodes_end =
+			std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> >::const_iterator it_random_nodes = random_nodes.begin();
+			const std::map<boost::uuids::uuid, boost::shared_ptr<components::Node> >::const_iterator it_random_nodes_end =
 					random_nodes.end();
 			while (it_random_nodes != it_random_nodes_end) {
-				ASSERT_EQUAL(false, (*it_random_nodes)->isPrimaryInputAttachedNode());
-				ASSERT_EQUAL(false, (*it_random_nodes)->isPrimaryOutputAttachedNode());
+				ASSERT_EQUAL(false, it_random_nodes->second->isPrimaryInputAttachedNode());
+				ASSERT_EQUAL(false,  it_random_nodes->second->isPrimaryOutputAttachedNode());
 				++it_random_nodes;
 			}
 		}
@@ -303,7 +305,36 @@ void ClusterArchitectTest::testGetRandomNodes() {
 }
 
 void ClusterArchitectTest::testGetRandomConnections() {
-	ASSERTM("TODO", false);
+	// test non prime
+	{
+		const int NEW_SIZE = 10;
+		const int NEW_CONNECTIVITY = 20;
+		const int COUNT = 20;
+		Cluster cluster(NEW_SIZE, NEW_CONNECTIVITY);
+		boost::shared_ptr<ClusterArchitect> cluster_arch = cluster.getMutableClusterArchitect();
+
+		//const int PRE_CONNS_COUNT = cluster.getConnections().size();
+		std::map<boost::uuids::uuid, boost::shared_ptr<components::Connection> > random_conns = cluster_arch->getRandomConnections(COUNT,
+				false);
+		const int random_conns_count = random_conns.size();
+		ASSERT_EQUAL(COUNT, random_conns_count);
+		//const int POST_CONNS_COUNT = cluster.getConnections().size();
+		//ASSERT_EQUAL(PRE_CONNS_COUNT+COUNT, POST_CONNS_COUNT);
+
+		// forall in random_conns
+		{
+			std::map<boost::uuids::uuid, boost::shared_ptr<components::Connection> >::const_iterator it_random_conns =
+					random_conns.begin();
+			const std::map<boost::uuids::uuid, boost::shared_ptr<components::Connection> >::const_iterator it_random_conns_end =
+					random_conns.end();
+			while (it_random_conns != it_random_conns_end) {
+				ASSERT_EQUAL(false, it_random_conns->second->isPrimaryInputConnection());
+									ASSERT_EQUAL(false, it_random_conns->second->isPrimaryOutputConnection());
+				++it_random_conns;
+			}
+		}
+
+	}
 }
 } /* namespace manipulators */
 } /* namespace cryomesh */
