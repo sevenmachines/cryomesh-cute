@@ -90,7 +90,7 @@ void ClusterTest::testCreateConnections() {
 		}
 		const int CON_COUNT = 2;
 		const int NODE_COUNT = 10;
-		cluster.getClusterArchitect()->createRandomNodes(NODE_COUNT, CON_COUNT);
+		cluster.getClusterArchitect()->createRandomNodes(NODE_COUNT, CON_COUNT, manipulators::ClusterArchitect::ENABLE_EVEN_DISTRIBUTION);
 
 		int total_in_count = 0;
 		int total_out_count = 0;
@@ -125,6 +125,7 @@ void ClusterTest::testCreateConnections() {
 				while (it_all_nodes != it_all_nodes_end) {
 					std::cout << "ClusterArchitect::createRandomNodes: " << "Node: " << it_all_nodes->second->getUUIDString()
 							<<" connections: "<< it_all_nodes->second->getConnector().getInputs().size() <<"/"<<  it_all_nodes->second->getConnector().getOutputs().size() << std::endl;
+
 					++it_all_nodes;
 				}
 			}
@@ -137,7 +138,9 @@ void ClusterTest::testCreateConnections() {
 			// min inputs are if all were connected evenly, we would have NODE_COUNT*CON_COUNT
 			// but more likely some with a full in or out count might have to accept a new in or out
 
-			ASSERT_EQUAL( (2*NODE_COUNT * CON_COUNT) , all_connections_sz);
+			// connections are merged into a map set so ins/outs are combined, hence, instead of
+			// 2*NODE_COUNT * CON_COUNT we have
+			ASSERT_EQUAL( (NODE_COUNT * CON_COUNT) , all_connections_sz);
 			ASSERT_EQUAL(NODE_COUNT * CON_COUNT, all_input_connections_sz);
 			ASSERT_EQUAL( NODE_COUNT * CON_COUNT, all_output_connections_sz);
 		}

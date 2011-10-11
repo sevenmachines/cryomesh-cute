@@ -2,14 +2,14 @@
 #include "ide_listener.h"
 #include "cute_runner.h"
 
-//#define DATAOBJECTS_TEST_SUITE
-//#define STATE_TEST_SUITE
-//#define COMMON_TEST_SUITE
-//#define UTILITIES_TEST_SUITE
-//#define USECASES_TEST_SUITE
-//#define MANAGER_TEST_SUITE
-//#define COMPONENTS_TEST_SUITE
-//#define STRUCTURES_TEST_SUITE
+#define DATAOBJECTS_TEST_SUITE
+#define STATE_TEST_SUITE
+#define COMMON_TEST_SUITE
+#define UTILITIES_TEST_SUITE
+#define USECASES_TEST_SUITE
+#define MANAGER_TEST_SUITE
+#define COMPONENTS_TEST_SUITE
+#define STRUCTURES_TEST_SUITE
 #define MANIPULATORS_TEST_SUITE
 
 // manipulators
