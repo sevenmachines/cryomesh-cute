@@ -21,7 +21,8 @@ public:
 	static void testCreateRandomConnections();
 	static void testDestroyRandomNodes();
 	static void testDestroyRandomConnections();
-
+	static void testGetRandomNodes();
+	static void testGetRandomConnections();
 };
 
 } /* namespace manipulators */

@@ -22,6 +22,8 @@ void ClusterArchitectTest::runSuite() {
 	s.push_back(CUTE(ClusterArchitectTest::testCreateRandomConnections));
 	s.push_back(CUTE(ClusterArchitectTest::testDestroyRandomNodes));
 	s.push_back(CUTE(ClusterArchitectTest::testDestroyRandomConnections));
+	s.push_back(CUTE(ClusterArchitectTest::testGetRandomNodes));
+	s.push_back(CUTE(ClusterArchitectTest::testGetRandomConnections));
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "ClusterArchitectTest");
 }
@@ -118,8 +120,8 @@ void ClusterArchitectTest::testCreateRandomNodes() {
 					}
 
 #ifdef CLUSTERARCHITECTTEST_DEBUG
-					std::cout << "ClusterArchitectTest::testCreateRandomNodes: Check inputs... " << "self_connects: " << self_connects
-							<< " multiple_connects: " << multiple_connects << " max_multiple_connect: "
+					std::cout << "ClusterArchitectTest::testCreateRandomNodes: Check inputs... " << "self_connects: "
+							<< self_connects << " multiple_connects: " << multiple_connects << " max_multiple_connect: "
 							<< max_multiple_connect << std::endl;
 #endif
 				}
@@ -160,8 +162,8 @@ void ClusterArchitectTest::testCreateRandomNodes() {
 					}
 
 #ifdef CLUSTERARCHITECTTEST_DEBUG
-					std::cout << "ClusterArchitectTest::testCreateRandomNodes: Check outputs... " << "self_connects: " << self_connects
-							<< " multiple_connects: " << multiple_connects << " max_multiple_connect: "
+					std::cout << "ClusterArchitectTest::testCreateRandomNodes: Check outputs... " << "self_connects: "
+							<< self_connects << " multiple_connects: " << multiple_connects << " max_multiple_connect: "
 							<< max_multiple_connect << std::endl;
 #endif
 				}
@@ -173,21 +175,135 @@ void ClusterArchitectTest::testCreateRandomNodes() {
 		}
 
 	}
-// test evenly distributed strategy
-	ASSERTM("TODO", false);
+
 }
 
 void ClusterArchitectTest::testCreateRandomConnections() {
-	ASSERTM("TODO", false);
+
+	const int CON_COUNT = 20;
+	const int NEW_SIZE = 10;
+	const int NEW_CONNECTIVITY = 20;
+	Cluster cluster(NEW_SIZE, NEW_CONNECTIVITY);
+
+	boost::shared_ptr<ClusterArchitect> cluster_arch = cluster.getMutableClusterArchitect();
+
+	const int PRE_CONN_COUNT = cluster.getConnections().size();
+	cluster_arch->createRandomConnections(CON_COUNT);
+	const int POST_CONN_COUNT = cluster.getConnections().size();
+
+	ASSERT_EQUAL(PRE_CONN_COUNT+CON_COUNT, POST_CONN_COUNT);
+
 }
 
 void ClusterArchitectTest::testDestroyRandomNodes() {
-	ASSERTM("TODO", false);
+
+	// test normal kill
+	{
+		const int COUNT = 2;
+
+		const int NEW_SIZE = 10;
+		const int NEW_CONNECTIVITY = 20;
+		Cluster cluster(NEW_SIZE, NEW_CONNECTIVITY);
+		boost::shared_ptr<ClusterArchitect> cluster_arch = cluster.getMutableClusterArchitect();
+
+		const int PRE_REAL_COUNT = cluster.getNodeMap().getSize();
+		const int PRE_REAL_COUNT_CONNS = cluster.getConnections().size();
+		cluster_arch->destroyRandomNodes(COUNT);
+		const int POST_REAL_COUNT = cluster.getNodeMap().getSize();
+		const int POST_REAL_COUNT_CONNS = cluster.getConnections().size();
+
+		ASSERT_EQUAL(PRE_REAL_COUNT - COUNT, POST_REAL_COUNT);
+		ASSERT(PRE_REAL_COUNT_CONNS>POST_REAL_COUNT_CONNS);
+	}
+
+	// test over kill
+	{
+		const int NEW_SIZE = 10;
+		const int NEW_CONNECTIVITY = 20;
+		const int COUNT = 2 * NEW_SIZE;
+		Cluster cluster(NEW_SIZE, NEW_CONNECTIVITY);
+		boost::shared_ptr<ClusterArchitect> cluster_arch = cluster.getMutableClusterArchitect();
+
+		//const int PRE_REAL_COUNT = cluster.getNodeMap().getSize();
+		//const int PRE_REAL_COUNT_CONNS = cluster.getConnections().size();
+		cluster_arch->destroyRandomNodes(COUNT);
+		const int POST_REAL_COUNT = cluster.getNodeMap().getSize();
+		const int POST_REAL_COUNT_CONNS = cluster.getConnections().size();
+
+		ASSERT_EQUAL(0, POST_REAL_COUNT);
+		ASSERT_EQUAL(0, POST_REAL_COUNT_CONNS);
+	}
+
 }
 
 void ClusterArchitectTest::testDestroyRandomConnections() {
-	ASSERTM("TODO", false);
+	// test normal kill
+	{
+		const int NEW_SIZE = 10;
+		const int NEW_CONNECTIVITY = 20;
+		const int COUNT = 2;
+		Cluster cluster(NEW_SIZE, NEW_CONNECTIVITY);
+		boost::shared_ptr<ClusterArchitect> cluster_arch = cluster.getMutableClusterArchitect();
+
+		const int PRE_REAL_COUNT = cluster.getNodeMap().getSize();
+		const int PRE_REAL_COUNT_CONNS = cluster.getConnections().size();
+		cluster_arch->destroyRandomConnections(COUNT);
+		const int POST_REAL_COUNT = cluster.getNodeMap().getSize();
+		const int POST_REAL_COUNT_CONNS = cluster.getConnections().size();
+
+		ASSERT_EQUAL(PRE_REAL_COUNT, POST_REAL_COUNT);
+		ASSERT_EQUAL(PRE_REAL_COUNT_CONNS - COUNT, POST_REAL_COUNT_CONNS);
+	}
+	// test over kill
+	{
+		const int NEW_SIZE = 10;
+		const int NEW_CONNECTIVITY = 20;
+		const int COUNT = 2 * NEW_SIZE * NEW_CONNECTIVITY;
+		Cluster cluster(NEW_SIZE, NEW_CONNECTIVITY);
+		boost::shared_ptr<ClusterArchitect> cluster_arch = cluster.getMutableClusterArchitect();
+
+		const int PRE_REAL_COUNT = cluster.getNodeMap().getSize();
+		//const int PRE_REAL_COUNT_CONNS = cluster.getConnections().size();
+		cluster_arch->destroyRandomConnections(COUNT);
+		const int POST_REAL_COUNT = cluster.getNodeMap().getSize();
+		const int POST_REAL_COUNT_CONNS = cluster.getConnections().size();
+
+		ASSERT_EQUAL(PRE_REAL_COUNT, POST_REAL_COUNT);
+		ASSERT_EQUAL(0, POST_REAL_COUNT_CONNS);
+	}
 }
 
+void ClusterArchitectTest::testGetRandomNodes() {
+	// test non prime
+	{
+		const int NEW_SIZE = 10;
+		const int NEW_CONNECTIVITY = 20;
+		const int COUNT = 2;
+		Cluster cluster(NEW_SIZE, NEW_CONNECTIVITY);
+		boost::shared_ptr<ClusterArchitect> cluster_arch = cluster.getMutableClusterArchitect();
+
+		std::list<boost::shared_ptr<components::Node> > random_nodes = cluster_arch->getRandomNodes(COUNT, false);
+		const int random_node_count = random_nodes.size();
+		ASSERT_EQUAL(COUNT, random_node_count);
+
+		// forall in random_nodes
+		{
+			std::list<boost::shared_ptr<components::Node> >::const_iterator it_random_nodes = random_nodes.begin();
+			const std::list<boost::shared_ptr<components::Node> >::const_iterator it_random_nodes_end =
+					random_nodes.end();
+			while (it_random_nodes != it_random_nodes_end) {
+				ASSERT_EQUAL(false, (*it_random_nodes)->isPrimaryInputAttachedNode());
+				ASSERT_EQUAL(false, (*it_random_nodes)->isPrimaryOutputAttachedNode());
+				++it_random_nodes;
+			}
+		}
+
+	}
+
+}
+
+void ClusterArchitectTest::testGetRandomConnections() {
+	ASSERTM("TODO", false);
+}
 } /* namespace manipulators */
 } /* namespace cryomesh */
