@@ -23,6 +23,7 @@ public:
 	static void testDestroyRandomConnections();
 	static void testGetRandomNodes();
 	static void testGetRandomConnections();
+	static void testAddHistoryEntry();
 };
 
 } /* namespace manipulators */

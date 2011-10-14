@@ -2,6 +2,7 @@
 #include "ide_listener.h"
 #include "cute_runner.h"
 
+/*
 #define DATAOBJECTS_TEST_SUITE
 #define STATE_TEST_SUITE
 #define COMMON_TEST_SUITE
@@ -10,10 +11,13 @@
 #define MANAGER_TEST_SUITE
 #define COMPONENTS_TEST_SUITE
 #define STRUCTURES_TEST_SUITE
+*/
 #define MANIPULATORS_TEST_SUITE
 
 // manipulators
 #include "manipulators/ClusterArchitectTest.h"
+#include "manipulators/ClusterAnalyserDataTest.h"
+#include "manipulators/ClusterAnalyserBasicTest.h"
 
 //manager
 #include "manager/DatabaseManagerTest.h"
@@ -62,6 +66,8 @@
 using namespace cryomesh;
 
 void runManipulatorsSuite() {
+	manipulators::ClusterAnalyserDataTest::runSuite();
+	manipulators::ClusterAnalyserBasicTest::runSuite();
 	manipulators::ClusterArchitectTest::runSuite();
 }
 

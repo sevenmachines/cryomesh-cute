@@ -23,7 +23,8 @@ void ClusterArchitectTest::runSuite() {
 	s.push_back(CUTE(ClusterArchitectTest::testGetRandomNodes));
 		s.push_back(CUTE(ClusterArchitectTest::testGetRandomConnections));
 		s.push_back(CUTE(ClusterArchitectTest::testDestroyRandomNodes));
-	s.push_back(CUTE(ClusterArchitectTest::testDestroyRandomConnections));
+		s.push_back(CUTE(ClusterArchitectTest::testDestroyRandomConnections));
+		s.push_back(CUTE(ClusterArchitectTest::testAddHistoryEntry));
 
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "ClusterArchitectTest");
@@ -335,6 +336,10 @@ void ClusterArchitectTest::testGetRandomConnections() {
 		}
 
 	}
+}
+
+void ClusterArchitectTest::testAddHistoryEntry(){
+	ASSERTM("TODO", false);
 }
 } /* namespace manipulators */
 } /* namespace cryomesh */
