@@ -32,45 +32,105 @@ void ClusterArchitectTest::runSuite() {
 }
 
 void ClusterArchitectTest::testRunAnalysis() {
-	common::TimeKeeper::getTimeKeeper().update();
-	const double FORCED_ENERGY = 0.5;
-	//	const double DELTA = 0.0000001;
-	structures::Cluster cluster(1000, 10);
-	cluster.setEnergy(FORCED_ENERGY);
-	boost::shared_ptr<ClusterArchitect> cluster_architect = ClusterArchitectTest::createTestClusterArchitect(cluster);
 
-	//const int cluster_pre_node_count = cluster_architect->getCluster().getNodeMap().getSize();
-//	const int cluster_pre_conn_count = cluster_architect->getCluster().getConnectionMap().getSize();
-	std::list<boost::uuids::uuid> pre_node_keylist = cluster_architect->getCluster().getNodeMap().getKeyList();
-	std::list<boost::uuids::uuid> pre_conn_keylist = cluster_architect->getCluster().getConnectionMap().getKeyList();
-
-	cluster_architect->runAnalysis();
-
-	const ClusterAnalysisData & cad = cluster_architect->getCurrentClusterAnalysisData();
-	const int nodes_created = cad.getNodesToCreate();
-	const int nodes_killed = cad.getNodesToDestroy();
-	const int conns_created = cad.getConnectionsToCreate();
-	const int conns_killed = cad.getConnectionsToDestroy();
-	//const int cluster_post_node_count = cluster_architect->getCluster().getNodeMap().getSize();
-	//const int cluster_post_conn_count = cluster_architect->getCluster().getConnectionMap().getSize();
-	std::list<boost::uuids::uuid> post_node_keylist = cluster_architect->getCluster().getNodeMap().getKeyList();
-	std::list<boost::uuids::uuid> post_conn_keylist = cluster_architect->getCluster().getConnectionMap().getKeyList();
-
-	// check nodes created and killed
+	// Kill some connections
 	{
-		const std::list<boost::uuids::uuid> nodelist_diff = common::Containers::getDifference(pre_node_keylist,
-				post_node_keylist);
-		ASSERT_EQUAL(nodes_created + nodes_killed, nodelist_diff.size());
+		common::TimeKeeper::getTimeKeeper().update();
+		const double FORCED_ENERGY = 0.5;
+		//	const double DELTA = 0.0000001;
+		structures::Cluster cluster(1000, 10);
+		cluster.setEnergy(FORCED_ENERGY);
+		boost::shared_ptr<ClusterArchitect> cluster_architect = ClusterArchitectTest::createTestClusterArchitect(
+				cluster);
+
+		const int cluster_pre_node_count = cluster_architect->getCluster().getNodeMap().getSize();
+		const int cluster_pre_conn_count = cluster_architect->getCluster().getConnectionMap().getSize();
+		std::list<boost::uuids::uuid> pre_node_keylist = cluster_architect->getCluster().getNodeMap().getKeyList();
+		std::list<boost::uuids::uuid> pre_conn_keylist =
+				cluster_architect->getCluster().getConnectionMap().getKeyList();
+
+		cluster_architect->runAnalysis();
+
+		const ClusterAnalysisData & cad = cluster_architect->getCurrentClusterAnalysisData();
+		const int nodes_created = cad.getNodesToCreate();
+		const int nodes_killed = cad.getNodesToDestroy();
+		const int conns_created = cad.getConnectionsToCreate();
+		const int conns_killed = cad.getConnectionsToDestroy();
+		const int cluster_post_node_count = cluster_architect->getCluster().getNodeMap().getSize();
+		const int cluster_post_conn_count = cluster_architect->getCluster().getConnectionMap().getSize();
+		std::list<boost::uuids::uuid> post_node_keylist = cluster_architect->getCluster().getNodeMap().getKeyList();
+		std::list<boost::uuids::uuid> post_conn_keylist =
+				cluster_architect->getCluster().getConnectionMap().getKeyList();
+
+		// check nodes created and killed
+		{
+			const std::list<boost::uuids::uuid> nodelist_diff = common::Containers::getDifference(pre_node_keylist,
+					post_node_keylist);
+			const std::list<boost::uuids::uuid> nodelist_intersection = common::Containers::getIntersection(
+					pre_node_keylist, post_node_keylist);
+			ASSERT_EQUAL(nodes_created + nodes_killed, nodelist_diff.size());
+			ASSERT_EQUAL(cluster_pre_node_count - nodes_killed, nodelist_intersection.size());
+			ASSERT_EQUAL(cluster_pre_node_count + nodes_created - nodes_killed, cluster_post_node_count);
+		}
+
+		// check conns created and killed
+		{
+			std::list<boost::uuids::uuid> connlist_diff = common::Containers::getDifference(pre_conn_keylist,
+					post_conn_keylist);
+			std::list<boost::uuids::uuid> connlist_intersection = common::Containers::getIntersection(pre_conn_keylist,
+					post_conn_keylist);
+			ASSERT_EQUAL(conns_created + conns_killed, connlist_diff.size());
+			ASSERT_EQUAL(cluster_pre_conn_count - conns_killed, connlist_intersection.size());
+			ASSERT_EQUAL(cluster_pre_conn_count + conns_created - conns_killed, cluster_post_conn_count);
+		}
 	}
 
-	// check conns created and killed
+	// Kill some nodes too
 	{
-		std::list<boost::uuids::uuid> connlist_diff = common::Containers::getDifference(pre_conn_keylist,
-				post_conn_keylist);
-		ASSERT_EQUAL(conns_created + conns_killed, connlist_diff.size());
+		common::TimeKeeper::getTimeKeeper().update();
+		const double FORCED_ENERGY = -0.5;
+		//	const double DELTA = 0.0000001;
+		structures::Cluster cluster(100, 10);
+		cluster.setEnergy(FORCED_ENERGY);
+		boost::shared_ptr<ClusterArchitect> cluster_architect = ClusterArchitectTest::createTestClusterArchitect2(
+				cluster);
+
+		const int cluster_pre_node_count = cluster_architect->getCluster().getNodeMap().getSize();
+	//	const int cluster_pre_conn_count = cluster_architect->getCluster().getConnectionMap().getSize();
+		std::list<boost::uuids::uuid> pre_node_keylist = cluster_architect->getCluster().getNodeMap().getKeyList();
+		std::list<boost::uuids::uuid> pre_conn_keylist =
+				cluster_architect->getCluster().getConnectionMap().getKeyList();
+
+		cluster_architect->runAnalysis();
+
+		const ClusterAnalysisData & cad = cluster_architect->getCurrentClusterAnalysisData();
+		const int nodes_created = cad.getNodesToCreate();
+		const int nodes_killed = cad.getNodesToDestroy();
+		//const int conns_created = cad.getConnectionsToCreate();
+		//	const int conns_killed = cad.getConnectionsToDestroy();
+		const int cluster_post_node_count = cluster_architect->getCluster().getNodeMap().getSize();
+		//const int cluster_post_conn_count = cluster_architect->getCluster().getConnectionMap().getSize();
+		std::list<boost::uuids::uuid> post_node_keylist = cluster_architect->getCluster().getNodeMap().getKeyList();
+		std::list<boost::uuids::uuid> post_conn_keylist =
+				cluster_architect->getCluster().getConnectionMap().getKeyList();
+
+		// check nodes created and killed
+		{
+			const std::list<boost::uuids::uuid> nodelist_diff = common::Containers::getDifference(pre_node_keylist,
+					post_node_keylist);
+			const std::list<boost::uuids::uuid> nodelist_intersection = common::Containers::getIntersection(
+					pre_node_keylist, post_node_keylist);
+			ASSERT_EQUAL(nodes_created + nodes_killed, nodelist_diff.size());
+			ASSERT_EQUAL(cluster_pre_node_count - nodes_killed, nodelist_intersection.size());
+			ASSERT_EQUAL(cluster_pre_node_count + nodes_created - nodes_killed, cluster_post_node_count);
+		}
+
+		// check conns created and killed
+		{
+			//conns will also be created and destroyed by node creation/destruction
+		}
 	}
 
-	ASSERT(false);
 }
 
 void ClusterArchitectTest::testCreateRandomNodes() {
@@ -569,5 +629,64 @@ boost::shared_ptr<ClusterArchitect> ClusterArchitectTest::createTestClusterArchi
 
 	return cluster_architect;
 }
+
+boost::shared_ptr<ClusterArchitect> ClusterArchitectTest::createTestClusterArchitect2(structures::Cluster & clus) {
+	const int history_sz = 2;
+	const int step_factor = 3;
+	// set up 3 length history
+	boost::shared_ptr<ClusterArchitect> cluster_architect(new ClusterArchitect(clus, history_sz, step_factor));
+
+	// need 3 current,
+	{
+		ClusterAnalysisData data1(-0.01);
+		ClusterAnalysisData data2(-0.02);
+		ClusterAnalysisData data3(-0.03);
+
+		std::list<ClusterAnalysisData> temp_current_history;
+		temp_current_history.push_back(data1);
+		temp_current_history.push_back(data2);
+		temp_current_history.push_back(data3);
+		cluster_architect->setCurrentHistory(temp_current_history);
+	}
+	// and in histories,3 short, 3 medium, 3 long
+	{
+		ClusterAnalysisData data11(-0.311);
+		ClusterAnalysisData data12(-0.312);
+		ClusterAnalysisData data13(-0.313);
+
+		std::list<ClusterAnalysisData> temp_history1;
+		temp_history1.push_back(data11);
+		temp_history1.push_back(data12);
+		temp_history1.push_back(data13);
+
+		ClusterAnalysisData data21(0.221);
+		ClusterAnalysisData data22(0.222);
+		ClusterAnalysisData data23(0.223);
+
+		std::list<ClusterAnalysisData> temp_history2;
+		temp_history2.push_back(data21);
+		temp_history2.push_back(data22);
+		temp_history2.push_back(data23);
+
+		ClusterAnalysisData data31(0.831);
+		ClusterAnalysisData data32(0.832);
+		ClusterAnalysisData data33(0.833);
+
+		std::list<ClusterAnalysisData> temp_history3;
+		temp_history3.push_back(data31);
+		temp_history3.push_back(data32);
+		temp_history3.push_back(data33);
+
+		std::map<int, std::list<ClusterAnalysisData> > histories_map;
+		histories_map[3] = temp_history1;
+		histories_map[6] = temp_history2;
+		histories_map[12] = temp_history3;
+
+		cluster_architect->setHistories(histories_map);
+	}
+
+	return cluster_architect;
+}
+
 } /* namespace manipulators */
 } /* namespace cryomesh */

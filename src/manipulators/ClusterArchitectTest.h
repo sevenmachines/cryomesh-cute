@@ -29,6 +29,7 @@ public:
 	static void testAddHistoryEntry();
 	static void testRunAnalysis();
 	static boost::shared_ptr<ClusterArchitect> createTestClusterArchitect(structures::Cluster & clus);
+	static boost::shared_ptr<ClusterArchitect> createTestClusterArchitect2(structures::Cluster & clus);
 
 };
 
