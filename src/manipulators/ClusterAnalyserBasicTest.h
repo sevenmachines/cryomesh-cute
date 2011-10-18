@@ -9,6 +9,9 @@
 #define CLUSTERANALYSERBASICTEST_H_
 
 #include "ICuteSuite.h"
+#include <boost/shared_ptr.hpp>
+#include "manipulators/ClusterArchitect.h"
+#include "structures/Cluster.h"
 
 namespace cryomesh {
 namespace manipulators {
@@ -21,6 +24,8 @@ public:
 	static void runSuite();
 	static void analyseCluster();
 	static void calculateRangeEnergies();
+
+	static boost::shared_ptr< ClusterArchitect > createTestClusterArchitect(structures::Cluster & clus);
 };
 
 } /* namespace manipulators */

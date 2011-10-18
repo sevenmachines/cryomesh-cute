@@ -6,10 +6,10 @@
  */
 
 //#define CLUSTERARCHITECTTEST_DEBUG
-
 #include "ClusterArchitectTest.h"
 #include "manipulators/ClusterArchitect.h"
 #include "structures/Cluster.h"
+#include <algorithm>
 
 using namespace cryomesh::structures;
 
@@ -25,9 +25,52 @@ void ClusterArchitectTest::runSuite() {
 	s.push_back(CUTE(ClusterArchitectTest::testDestroyRandomNodes));
 	s.push_back(CUTE(ClusterArchitectTest::testDestroyRandomConnections));
 	s.push_back(CUTE(ClusterArchitectTest::testAddHistoryEntry));
+	s.push_back(CUTE(ClusterArchitectTest::testRunAnalysis));
 
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "ClusterArchitectTest");
+}
+
+void ClusterArchitectTest::testRunAnalysis() {
+	common::TimeKeeper::getTimeKeeper().update();
+	const double FORCED_ENERGY = 0.5;
+	//	const double DELTA = 0.0000001;
+	structures::Cluster cluster(1000, 10);
+	cluster.setEnergy(FORCED_ENERGY);
+	boost::shared_ptr<ClusterArchitect> cluster_architect = ClusterArchitectTest::createTestClusterArchitect(cluster);
+
+	//const int cluster_pre_node_count = cluster_architect->getCluster().getNodeMap().getSize();
+//	const int cluster_pre_conn_count = cluster_architect->getCluster().getConnectionMap().getSize();
+	std::list<boost::uuids::uuid> pre_node_keylist = cluster_architect->getCluster().getNodeMap().getKeyList();
+	std::list<boost::uuids::uuid> pre_conn_keylist = cluster_architect->getCluster().getConnectionMap().getKeyList();
+
+	cluster_architect->runAnalysis();
+
+	const ClusterAnalysisData & cad = cluster_architect->getCurrentClusterAnalysisData();
+	const int nodes_created = cad.getNodesToCreate();
+	const int nodes_killed = cad.getNodesToDestroy();
+	const int conns_created = cad.getConnectionsToCreate();
+	const int conns_killed = cad.getConnectionsToDestroy();
+	//const int cluster_post_node_count = cluster_architect->getCluster().getNodeMap().getSize();
+	//const int cluster_post_conn_count = cluster_architect->getCluster().getConnectionMap().getSize();
+	std::list<boost::uuids::uuid> post_node_keylist = cluster_architect->getCluster().getNodeMap().getKeyList();
+	std::list<boost::uuids::uuid> post_conn_keylist = cluster_architect->getCluster().getConnectionMap().getKeyList();
+
+	// check nodes created and killed
+	{
+		const std::list<boost::uuids::uuid> nodelist_diff = common::Containers::getDifference(pre_node_keylist,
+				post_node_keylist);
+		ASSERT_EQUAL(nodes_created + nodes_killed, nodelist_diff.size());
+	}
+
+	// check conns created and killed
+	{
+		std::list<boost::uuids::uuid> connlist_diff = common::Containers::getDifference(pre_conn_keylist,
+				post_conn_keylist);
+		ASSERT_EQUAL(conns_created + conns_killed, connlist_diff.size());
+	}
+
+	ASSERT(false);
 }
 
 void ClusterArchitectTest::testCreateRandomNodes() {
@@ -59,7 +102,7 @@ void ClusterArchitectTest::testCreateRandomNodes() {
 				const int outsz = (*it_new_nodes)->getConnector().getOutputs().size();
 #ifdef CLUSTERARCHITECTTEST_DEBUG
 				std::cout << "ClusterArchitectTest::testCreateRandomNodes: " << "insz: " << insz << " outsz: " << outsz
-						<< std::endl;
+				<< std::endl;
 #endif
 				ASSERT( insz >=(0.5*NEW_CONNECTIVITY));
 				ASSERT( insz <= (2*NEW_CONNECTIVITY));
@@ -79,8 +122,8 @@ void ClusterArchitectTest::testCreateRandomNodes() {
 
 #ifdef CLUSTERARCHITECTTEST_DEBUG
 				std::cout << "ClusterArchitectTest::testCreateRandomNodes: " << "insz: " << insz << " outsz: " << outsz
-						<< " variation_insz: " << variation_low_insz << "/" << variation_high_insz
-						<< " variation_outsz: " << variation_low_outsz << "/" << variation_high_outsz << std::endl;
+				<< " variation_insz: " << variation_low_insz << "/" << variation_high_insz
+				<< " variation_outsz: " << variation_low_outsz << "/" << variation_high_outsz << std::endl;
 #endif
 
 				// Run check on all inputs
@@ -123,8 +166,8 @@ void ClusterArchitectTest::testCreateRandomNodes() {
 
 #ifdef CLUSTERARCHITECTTEST_DEBUG
 					std::cout << "ClusterArchitectTest::testCreateRandomNodes: Check inputs... " << "self_connects: "
-							<< self_connects << " multiple_connects: " << multiple_connects << " max_multiple_connect: "
-							<< max_multiple_connect << std::endl;
+					<< self_connects << " multiple_connects: " << multiple_connects << " max_multiple_connect: "
+					<< max_multiple_connect << std::endl;
 #endif
 				}
 
@@ -165,8 +208,8 @@ void ClusterArchitectTest::testCreateRandomNodes() {
 
 #ifdef CLUSTERARCHITECTTEST_DEBUG
 					std::cout << "ClusterArchitectTest::testCreateRandomNodes: Check outputs... " << "self_connects: "
-							<< self_connects << " multiple_connects: " << multiple_connects << " max_multiple_connect: "
-							<< max_multiple_connect << std::endl;
+					<< self_connects << " multiple_connects: " << multiple_connects << " max_multiple_connect: "
+					<< max_multiple_connect << std::endl;
 #endif
 				}
 
@@ -353,30 +396,30 @@ void ClusterArchitectTest::testAddHistoryEntry() {
 
 	// almost fill up current history the first time
 	for (int i = 0; i < MAX_ENTRIES - 1; i++) {
-		cluster.setEnergy(i);
+		cluster.setEnergy(0.01 * i);
 		cluster_architect.runAnalysis();
 		const int histories_sz = histories.size();
 		const int current_history_sz = current_history.size();
 #ifdef CLUSTERARCHITECTTEST_DEBUG
-std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count << " current_history_sz: "
-				<< current_history_sz << " histories_sz: " << histories_sz << std::endl;
+		std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count << " current_history_sz: "
+		<< current_history_sz << " histories_sz: " << histories_sz << std::endl;
 #endif
 		ASSERT_EQUAL(0, histories_sz);
 		ASSERT_EQUAL(i+1, current_history_sz);
 		++count;
 		common::TimeKeeper::getTimeKeeper().update();
-}
+	}
 
 	// fill up the current history the first time
 
 	for (int i = 0; i < 1; i++) {
-		cluster.setEnergy(i);
+		cluster.setEnergy(0.01 * i);
 		cluster_architect.runAnalysis();
 		const int histories_sz = histories.size();
 		const int current_history_sz = current_history.size();
 #ifdef CLUSTERARCHITECTTEST_DEBUG
-	std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count << " current_history_sz: "
-				<< current_history_sz << " histories_sz: " << histories_sz << std::endl;
+		std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count << " current_history_sz: "
+		<< current_history_sz << " histories_sz: " << histories_sz << std::endl;
 #endif
 		ASSERT_EQUAL(1, histories_sz);
 		ASSERT_EQUAL(MAX_ENTRIES, current_history_sz);
@@ -384,20 +427,20 @@ std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count
 		common::TimeKeeper::getTimeKeeper().update();
 	}
 
-	std::map<int,  std::list<ClusterAnalysisData> >::const_iterator it_step1_history = histories.find(MAX_ENTRIES);
+	std::map<int, std::list<ClusterAnalysisData> >::const_iterator it_step1_history = histories.find(MAX_ENTRIES);
 	ASSERT(it_step1_history != histories.end());
 
 	// almost fill up step1 history the first time
-	for (int i = 0; i < MAX_ENTRIES -1 ; i++) {
-		cluster.setEnergy(i);
+	for (int i = 0; i < MAX_ENTRIES - 1; i++) {
+		cluster.setEnergy(0.01 * i);
 		cluster_architect.runAnalysis();
 		const int histories_sz = histories.size();
 		const int current_history_sz = current_history.size();
 		const int step1_history_sz = it_step1_history->second.size();
 #ifdef CLUSTERARCHITECTTEST_DEBUG
-std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count << " current_history_sz: "
-				<< current_history_sz << " histories_sz: " << histories_sz << " step1_history_sz: " << step1_history_sz
-				<< std::endl;
+		std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count << " current_history_sz: "
+		<< current_history_sz << " histories_sz: " << histories_sz << " step1_history_sz: " << step1_history_sz
+		<< std::endl;
 #endif
 		ASSERT_EQUAL(1, histories_sz);
 		ASSERT_EQUAL(MAX_ENTRIES, current_history_sz);
@@ -408,15 +451,15 @@ std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count
 
 	//  fill up step1 history the first time
 	for (int i = 0; i < 1; i++) {
-		cluster.setEnergy(i);
+		cluster.setEnergy(0.01 * i);
 		cluster_architect.runAnalysis();
 		const int histories_sz = histories.size();
 		const int current_history_sz = current_history.size();
 		const int step1_history_sz = it_step1_history->second.size();
 #ifdef CLUSTERARCHITECTTEST_DEBUG
-	std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count << " current_history_sz: "
-				<< current_history_sz << " histories_sz: " << histories_sz << " step1_history_sz: " << step1_history_sz
-				<< std::endl;
+		std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count << " current_history_sz: "
+		<< current_history_sz << " histories_sz: " << histories_sz << " step1_history_sz: " << step1_history_sz
+		<< std::endl;
 #endif
 		ASSERT_EQUAL(2, histories_sz);
 		ASSERT_EQUAL(MAX_ENTRIES, current_history_sz);
@@ -425,48 +468,106 @@ std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count
 		common::TimeKeeper::getTimeKeeper().update();
 	}
 
-	const int STEP2_KEY =MAX_ENTRIES*STEPPING;
-	std::map<int,  std::list<ClusterAnalysisData> >::const_iterator it_step2_history = histories.find(STEP2_KEY);
-		ASSERT(it_step2_history != histories.end());
+	const int STEP2_KEY = MAX_ENTRIES * STEPPING;
+	std::map<int, std::list<ClusterAnalysisData> >::const_iterator it_step2_history = histories.find(STEP2_KEY);
+	ASSERT(it_step2_history != histories.end());
 
-		// almost fill up step2 history the first time
-		for (int i = 0; i < MAX_ENTRIES -1 ; i++) {
-			cluster.setEnergy(i);
-			cluster_architect.runAnalysis();
-			const int histories_sz = histories.size();
-			const int current_history_sz = current_history.size();
-			const int step2_history_sz = it_step2_history->second.size();
+	// almost fill up step2 history the first time
+	for (int i = 0; i < MAX_ENTRIES - 1; i++) {
+		cluster.setEnergy(0.01 * i);
+		cluster_architect.runAnalysis();
+		const int histories_sz = histories.size();
+		const int current_history_sz = current_history.size();
+		const int step2_history_sz = it_step2_history->second.size();
 #ifdef CLUSTERARCHITECTTEST_DEBUG
-			std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count << " current_history_sz: "
-					<< current_history_sz << " histories_sz: " << histories_sz << " step2_history_sz: " << step2_history_sz
-					<< std::endl;
+		std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count << " current_history_sz: "
+		<< current_history_sz << " histories_sz: " << histories_sz << " step2_history_sz: " << step2_history_sz
+		<< std::endl;
 #endif
-			ASSERT_EQUAL(2, histories_sz);
-			ASSERT_EQUAL(MAX_ENTRIES, current_history_sz);
-			ASSERT_EQUAL(1, step2_history_sz);
-			++count;
-			common::TimeKeeper::getTimeKeeper().update();
-		}
+		ASSERT_EQUAL(2, histories_sz);
+		ASSERT_EQUAL(MAX_ENTRIES, current_history_sz);
+		ASSERT_EQUAL(1, step2_history_sz);
+		++count;
+		common::TimeKeeper::getTimeKeeper().update();
+	}
 
-		//  fill up step2 history the first time
-		for (int i = 0; i < 1; i++) {
-			cluster.setEnergy(i);
-			cluster_architect.runAnalysis();
-			const int histories_sz = histories.size();
-			const int current_history_sz = current_history.size();
-			const int step2_history_sz = it_step2_history->second.size();
+	//  fill up step2 history the first time
+	for (int i = 0; i < 1; i++) {
+		cluster.setEnergy(0.01 * i);
+		cluster_architect.runAnalysis();
+		const int histories_sz = histories.size();
+		const int current_history_sz = current_history.size();
+		const int step2_history_sz = it_step2_history->second.size();
 #ifdef CLUSTERARCHITECTTEST_DEBUG
-	std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count << " current_history_sz: "
-					<< current_history_sz << " histories_sz: " << histories_sz << " step2_history_sz: " << step2_history_sz
-					<< std::endl;
+		std::cout << "ClusterArchitectTest::testAddHistoryEntry: " << "count: " << count << " current_history_sz: "
+		<< current_history_sz << " histories_sz: " << histories_sz << " step2_history_sz: " << step2_history_sz
+		<< std::endl;
 #endif
-			ASSERT_EQUAL(3, histories_sz);
-			ASSERT_EQUAL(MAX_ENTRIES, current_history_sz);
-			ASSERT_EQUAL(2, step2_history_sz);
-			++count;
-			common::TimeKeeper::getTimeKeeper().update();
-		}
+		ASSERT_EQUAL(3, histories_sz);
+		ASSERT_EQUAL(MAX_ENTRIES, current_history_sz);
+		ASSERT_EQUAL(2, step2_history_sz);
+		++count;
+		common::TimeKeeper::getTimeKeeper().update();
+	}
 
+}
+
+boost::shared_ptr<ClusterArchitect> ClusterArchitectTest::createTestClusterArchitect(structures::Cluster & clus) {
+	const int history_sz = 2;
+	const int step_factor = 3;
+	// set up 3 length history
+	boost::shared_ptr<ClusterArchitect> cluster_architect(new ClusterArchitect(clus, history_sz, step_factor));
+
+	// need 3 current,
+	{
+		ClusterAnalysisData data1(0.01);
+		ClusterAnalysisData data2(0.02);
+		ClusterAnalysisData data3(0.03);
+
+		std::list<ClusterAnalysisData> temp_current_history;
+		temp_current_history.push_back(data1);
+		temp_current_history.push_back(data2);
+		temp_current_history.push_back(data3);
+		cluster_architect->setCurrentHistory(temp_current_history);
+	}
+	// and in histories,3 short, 3 medium, 3 long
+	{
+		ClusterAnalysisData data11(0.011);
+		ClusterAnalysisData data12(0.012);
+		ClusterAnalysisData data13(0.013);
+
+		std::list<ClusterAnalysisData> temp_history1;
+		temp_history1.push_back(data11);
+		temp_history1.push_back(data12);
+		temp_history1.push_back(data13);
+
+		ClusterAnalysisData data21(0.021);
+		ClusterAnalysisData data22(0.022);
+		ClusterAnalysisData data23(0.023);
+
+		std::list<ClusterAnalysisData> temp_history2;
+		temp_history2.push_back(data21);
+		temp_history2.push_back(data22);
+		temp_history2.push_back(data23);
+
+		ClusterAnalysisData data31(0.031);
+		ClusterAnalysisData data32(0.032);
+		ClusterAnalysisData data33(0.033);
+
+		std::list<ClusterAnalysisData> temp_history3;
+		temp_history3.push_back(data31);
+		temp_history3.push_back(data32);
+		temp_history3.push_back(data33);
+
+		std::map<int, std::list<ClusterAnalysisData> > histories_map;
+		histories_map[3] = temp_history1;
+		histories_map[6] = temp_history2;
+		histories_map[12] = temp_history3;
+
+		cluster_architect->setHistories(histories_map);
+	}
+
+	return cluster_architect;
 }
 } /* namespace manipulators */
 } /* namespace cryomesh */

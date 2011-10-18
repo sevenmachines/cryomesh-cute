@@ -21,16 +21,16 @@ void ClusterAnalyserBasicTest::runSuite() {
 }
 
 void ClusterAnalyserBasicTest::analyseCluster() {
-	common::TimeKeeper::getTimeKeeper().update();
-	const double FORCED_ENERGY = 0.5;
-	const double DELTA = 0.0000001;
-	structures::Cluster cluster;
-	cluster.setEnergy(FORCED_ENERGY);
-	ClusterArchitect cluster_architect(cluster);
-	cluster_architect.runAnalysis();
 
 	// Check current ClusterAnalysisData
 	{
+		common::TimeKeeper::getTimeKeeper().update();
+		const double FORCED_ENERGY = 0.5;
+		const double DELTA = 0.0000001;
+		structures::Cluster cluster;
+		cluster.setEnergy(FORCED_ENERGY);
+		ClusterArchitect cluster_architect(cluster);
+		cluster_architect.runAnalysis();
 		const ClusterAnalysisData & cad = cluster_architect.getCurrentClusterAnalysisData();
 		const double energy = cad.getClusterRangeEnergy().energy;
 		const common::Cycle start_cyc = cad.getClusterRangeEnergy().startCycle;
@@ -41,7 +41,6 @@ void ClusterAnalyserBasicTest::analyseCluster() {
 		ASSERT(end_cyc>=start_cyc);
 
 	}
-	ASSERTM("TODO", false);
 }
 
 void ClusterAnalyserBasicTest::calculateRangeEnergies() {
@@ -103,6 +102,64 @@ void ClusterAnalyserBasicTest::calculateRangeEnergies() {
 		ASSERT_EQUAL(con_des_exp, cad_final.getConnectionsToDestroy());
 
 	}
+}
+
+boost::shared_ptr<ClusterArchitect> ClusterAnalyserBasicTest::createTestClusterArchitect(structures::Cluster & clus) {
+	const int history_sz = 2;
+	const int step_factor = 3;
+	// set up 3 length history
+	boost::shared_ptr<ClusterArchitect> cluster_architect(new ClusterArchitect(clus, history_sz, step_factor));
+
+	// need 3 current,
+	{
+		ClusterAnalysisData data1(0.01);
+		ClusterAnalysisData data2(0.02);
+		ClusterAnalysisData data3(0.03);
+
+		std::list<ClusterAnalysisData> temp_current_history;
+		temp_current_history.push_back(data1);
+		temp_current_history.push_back(data2);
+		temp_current_history.push_back(data3);
+		cluster_architect->setCurrentHistory(temp_current_history);
+	}
+	// and in histories,3 short, 3 medium, 3 long
+	{
+		ClusterAnalysisData data11(0.011);
+		ClusterAnalysisData data12(0.012);
+		ClusterAnalysisData data13(0.013);
+
+		std::list<ClusterAnalysisData> temp_history1;
+		temp_history1.push_back(data11);
+		temp_history1.push_back(data12);
+		temp_history1.push_back(data13);
+
+		ClusterAnalysisData data21(0.021);
+		ClusterAnalysisData data22(0.022);
+		ClusterAnalysisData data23(0.023);
+
+		std::list<ClusterAnalysisData> temp_history2;
+		temp_history2.push_back(data21);
+		temp_history2.push_back(data22);
+		temp_history2.push_back(data23);
+
+		ClusterAnalysisData data31(0.031);
+		ClusterAnalysisData data32(0.032);
+		ClusterAnalysisData data33(0.033);
+
+		std::list<ClusterAnalysisData> temp_history3;
+		temp_history3.push_back(data31);
+		temp_history3.push_back(data32);
+		temp_history3.push_back(data33);
+
+		std::map<int, std::list<ClusterAnalysisData> > histories_map;
+		histories_map[3] = temp_history1;
+		histories_map[6] = temp_history2;
+		histories_map[12] = temp_history3;
+
+		cluster_architect->setHistories(histories_map);
+	}
+
+	return cluster_architect;
 }
 
 } /* namespace manipulators */

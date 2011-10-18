@@ -8,6 +8,9 @@
 #ifndef CLUSTERARCHITECTTEST_H_
 #define CLUSTERARCHITECTTEST_H_
 #include "ICuteSuite.h"
+#include <boost/shared_ptr.hpp>
+#include "structures/Cluster.h"
+#include "manipulators/ClusterArchitect.h"
 
 namespace cryomesh {
 namespace manipulators {
@@ -24,6 +27,9 @@ public:
 	static void testGetRandomNodes();
 	static void testGetRandomConnections();
 	static void testAddHistoryEntry();
+	static void testRunAnalysis();
+	static boost::shared_ptr<ClusterArchitect> createTestClusterArchitect(structures::Cluster & clus);
+
 };
 
 } /* namespace manipulators */
