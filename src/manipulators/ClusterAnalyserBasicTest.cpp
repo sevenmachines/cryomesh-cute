@@ -14,13 +14,75 @@ namespace cryomesh {
 namespace manipulators {
 void ClusterAnalyserBasicTest::runSuite() {
 	cute::suite s;
-	s.push_back(CUTE(ClusterAnalyserBasicTest::analyseCluster));
-	s.push_back(CUTE(ClusterAnalyserBasicTest::calculateRangeEnergies));
+	s.push_back(CUTE(ClusterAnalyserBasicTest::testAnalyseCluster));
+	s.push_back(CUTE(ClusterAnalyserBasicTest::testCalculateRangeEnergies));
+	s.push_back(CUTE(ClusterAnalyserBasicTest::testRestructuringEnabling));
 	cute::ide_listener lis;
 	cute::makeRunner(lis)(s, "ClusterAnalyserBasicTest");
 }
 
-void ClusterAnalyserBasicTest::analyseCluster() {
+void ClusterAnalyserBasicTest::testRestructuringEnabling() {
+	common::TimeKeeper::getTimeKeeper().update();
+	const double FORCED_ENERGY = 0.5;
+	//const double DELTA = 0.0000001;
+	structures::Cluster cluster(100, 3);
+	cluster.setEnergy(FORCED_ENERGY);
+	const int HISTORY_SZ = 3;
+	const int STEP_SZ = 2;
+	const int CURRENT_FULL = HISTORY_SZ;
+	const int SHORT_FULL = HISTORY_SZ * STEP_SZ;
+	const int MEDIUM_FULL = SHORT_FULL * STEP_SZ;
+	const int LONG_FULL = MEDIUM_FULL * STEP_SZ;
+	ClusterArchitect cluster_architect(cluster, HISTORY_SZ, STEP_SZ);
+
+	// pre-filling
+	{
+		int count = 1;
+		for (; count <= LONG_FULL; count++) {
+			common::TimeKeeper::getTimeKeeper().update();
+			cluster_architect.runAnalysis();
+			//const ClusterAnalysisData & cad = cluster_architect.getCurrentClusterAnalysisData();
+
+			//const int remainder_current_mod = (count % CURRENT_FULL);
+			//const int remainder_short_mod = (count % SHORT_FULL);
+			//const int remainder_medium_mod = (count % MEDIUM_FULL);
+			//const int remainder_long_mod = (count % LONG_FULL);
+			std::cout << "ClusterAnalyserBasicTest::testRestructuringEnabling: " << "count:" << count << std::endl;
+
+			if (count < SHORT_FULL) {
+				if (count < CURRENT_FULL) {
+					ASSERT(
+							ClusterAnalyserBasicTest::assertHistoriesStructure(cluster_architect.getHistories(), HISTORY_SZ, STEP_SZ, 0, 0, 0, 0));
+				} else {
+					ASSERT(
+							ClusterAnalyserBasicTest::assertHistoriesStructure(cluster_architect.getHistories(), HISTORY_SZ, STEP_SZ, 1, 1, 0, 0));
+				}
+			}
+
+			if ((count >= SHORT_FULL) && (count < MEDIUM_FULL)) {
+				ASSERT(
+						ClusterAnalyserBasicTest::assertHistoriesStructure(cluster_architect.getHistories(), HISTORY_SZ, STEP_SZ, 2, 2, 1, 0));
+			}
+
+			if ((count >= MEDIUM_FULL) && (count < LONG_FULL)) {
+				ASSERT(
+						ClusterAnalyserBasicTest::assertHistoriesStructure(cluster_architect.getHistories(), HISTORY_SZ, STEP_SZ, 3, 2, 2, 1));
+			}
+			if ((count >= LONG_FULL)) {
+				ASSERT(
+						cluster_architect.getClusterAnalyser()->getNodeRestructuring().isAllMediumRestructuringEnabled() == false);
+				ASSERT(
+						cluster_architect.getClusterAnalyser()->getNodeRestructuring().isAllLongRestructuringEnabled() == false);
+				ASSERT(
+						ClusterAnalyserBasicTest::assertHistoriesStructure(cluster_architect.getHistories(), HISTORY_SZ, STEP_SZ, 4, 2, 2, 2));
+			}
+		}
+
+	}
+
+}
+
+void ClusterAnalyserBasicTest::testAnalyseCluster() {
 
 	// Check current ClusterAnalysisData
 	{
@@ -43,9 +105,11 @@ void ClusterAnalyserBasicTest::analyseCluster() {
 	}
 }
 
-void ClusterAnalyserBasicTest::calculateRangeEnergies() {
+void ClusterAnalyserBasicTest::testCalculateRangeEnergies() {
 
-	ClusterAnalyserBasic cab;
+	structures::Cluster cluster;
+	ClusterArchitect clusterArchitect(cluster);
+	ClusterAnalyserBasic cab(clusterArchitect);
 	std::list<ClusterAnalysisData> history;
 	const double DELTA = 0.000001;
 	// ClusterAnalysisData(RangeEnergy clusterRangeEnergy, double node_creation_weight, double node_destruction_weight,
@@ -162,5 +226,63 @@ boost::shared_ptr<ClusterArchitect> ClusterAnalyserBasicTest::createTestClusterA
 	return cluster_architect;
 }
 
+bool ClusterAnalyserBasicTest::assertStructuring(const ClusterAnalysisData & cad, const int node_creates,
+		const int node_destroys, const int conn_creates, const int conn_destroys) {
+	bool passes = ((cad.getNodesToCreate() >= node_creates) && (cad.getNodesToDestroy() >= node_destroys)
+			&& (cad.getConnectionsToCreate() >= conn_creates) && (cad.getConnectionsToDestroy() >= conn_destroys));
+	if (passes == false) {
+		std::cout << "ClusterAnalyserBasicTest::assertStructuring: " << cad << std::endl;
+	}
+	return passes;
+
+}
+
+bool ClusterAnalyserBasicTest::assertHistoriesStructure(const std::map<int, std::list<ClusterAnalysisData> > & hist
+		, const unsigned int hist_sz, const unsigned int step_sz , const unsigned int total_sz
+		, const unsigned int short_sz, const unsigned int medium_sz , const unsigned int long_sz) {
+
+	bool bailed_out = false;
+
+	unsigned int actual_total_sz = hist.size();
+	unsigned int actual_short_sz = 0;
+	unsigned int actual_medium_sz = 0;
+	unsigned int actual_long_sz = 0;
+
+	const std::map<int, std::list<ClusterAnalysisData> >::const_iterator it_found_short = hist.find(hist_sz);
+	const std::map<int, std::list<ClusterAnalysisData> >::const_iterator it_found_medium = hist.find(hist_sz * step_sz);
+	const std::map<int, std::list<ClusterAnalysisData> >::const_iterator it_found_long = hist.find(
+			hist_sz * step_sz * step_sz);
+
+	if (it_found_short != hist.end()) {
+		actual_short_sz = it_found_short->second.size();
+	} else if (short_sz > 0) {
+		std::cout << "ClusterAnalyserBasicTest::assertHistoriesStructure: " << "Short Size -> " << "Not found" << " != "
+				<< short_sz << " (exp)" << std::endl;
+		bailed_out = true;
+	}
+
+	if (it_found_medium != hist.end()) {
+		actual_medium_sz = it_found_medium->second.size();
+	} else if (medium_sz > 0) {
+		std::cout << "ClusterAnalyserBasicTest::assertHistoriesStructure: " << "Medium Size -> " << "Not found"
+				<< " != " << medium_sz << " (exp)" << std::endl;
+		bailed_out = true;
+	}
+
+	if (it_found_long != hist.end()) {
+		actual_long_sz = it_found_long->second.size();
+	} else if (long_sz > 0) {
+		std::cout << "ClusterAnalyserBasicTest::assertHistoriesStructure: " << "Long Size -> " << "Not found" << " != "
+				<< long_sz << " (exp)" << std::endl;
+		bailed_out = true;
+	}
+	std::cout << "ClusterAnalyserBasicTest::assertHistoriesStructure: " << "exp: { " << total_sz << ", " << short_sz
+			<< ", " << medium_sz << ", " << long_sz << " }";
+	std::cout << " found: { " << actual_total_sz << ", " << actual_short_sz << ", " << actual_medium_sz << ", "
+			<< actual_long_sz << " }" << std::endl;
+	bool passed = ((bailed_out == false) && (actual_total_sz == total_sz) && (actual_short_sz == short_sz)
+			&& (actual_medium_sz == medium_sz) && (actual_long_sz == long_sz));
+	return passed;
+}
 } /* namespace manipulators */
 } /* namespace cryomesh */
