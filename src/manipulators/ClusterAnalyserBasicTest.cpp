@@ -47,8 +47,9 @@ void ClusterAnalyserBasicTest::testRestructuringEnabling() {
 			//const int remainder_short_mod = (count % SHORT_FULL);
 			//const int remainder_medium_mod = (count % MEDIUM_FULL);
 			//const int remainder_long_mod = (count % LONG_FULL);
-			std::cout << "ClusterAnalyserBasicTest::testRestructuringEnabling: " << "count:" << count << std::endl;
-
+#ifdef CLUSTERANALYSERBASICTEST_DEBUG
+	std::cout << "ClusterAnalyserBasicTest::testRestructuringEnabling: " << "count:" << count << std::endl;
+#endif
 			if (count < SHORT_FULL) {
 				if (count < CURRENT_FULL) {
 					ASSERT(
@@ -67,6 +68,25 @@ void ClusterAnalyserBasicTest::testRestructuringEnabling() {
 			if ((count >= MEDIUM_FULL) && (count < LONG_FULL)) {
 				ASSERT(
 						ClusterAnalyserBasicTest::assertHistoriesStructure(cluster_architect.getHistories(), HISTORY_SZ, STEP_SZ, 3, 2, 2, 1));
+#ifdef CLUSTERANALYSERBASICTEST_DEBUG
+				// test countdowns
+				{
+					const ClusterAnalyserBasic::RestructuringCountdown & node_rc =
+					cluster_architect.getClusterAnalyser()->getNodeRestructuring();
+					const ClusterAnalyserBasic::RestructuringCountdown & conn_rc =
+					cluster_architect.getClusterAnalyser()->getConnectionRestructuring();
+					std::cout << "ClusterAnalyserBasicTest::testRestructuringEnabling: " << "node: " << "( "
+					<< node_rc.shortCreation << ", " << node_rc.shortDestruction << " )";
+					std::cout << "  " << "( " << node_rc.mediumCreation << ", " << node_rc.mediumDestruction << " )";
+					std::cout << "  " << "( " << node_rc.longCreation << ", " << node_rc.longDestruction << " )";
+					std::cout << " " << "conn: " << "( " << conn_rc.shortCreation << ", " << conn_rc.shortDestruction
+					<< " )";
+					std::cout << "  " << "( " << conn_rc.mediumCreation << ", " << conn_rc.mediumDestruction << " )";
+					std::cout << "  " << "( " << conn_rc.longCreation << ", " << conn_rc.longDestruction << " )"
+					<< std::endl;
+				}
+#endif
+
 			}
 			if ((count >= LONG_FULL)) {
 				ASSERT(
@@ -75,6 +95,30 @@ void ClusterAnalyserBasicTest::testRestructuringEnabling() {
 						cluster_architect.getClusterAnalyser()->getNodeRestructuring().isAllLongRestructuringEnabled() == false);
 				ASSERT(
 						ClusterAnalyserBasicTest::assertHistoriesStructure(cluster_architect.getHistories(), HISTORY_SZ, STEP_SZ, 4, 2, 2, 2));
+			}
+			if ((cluster_architect.getCurrentClusterAnalysisData().getNodesToCreate()
+					+ cluster_architect.getCurrentClusterAnalysisData().getNodesToDestroy()
+					+ cluster_architect.getCurrentClusterAnalysisData().getConnectionsToCreate()
+					+ cluster_architect.getCurrentClusterAnalysisData().getConnectionsToDestroy()) > 0) {
+				bool med_restructure_done =
+						(HISTORY_SZ * STEP_SZ
+								== cluster_architect.getClusterAnalyser()->getNodeRestructuring().mediumCreation)
+								|| (HISTORY_SZ * STEP_SZ
+										== cluster_architect.getClusterAnalyser()->getNodeRestructuring().mediumDestruction)
+								|| (HISTORY_SZ * STEP_SZ
+										== cluster_architect.getClusterAnalyser()->getConnectionRestructuring().mediumCreation)
+								|| (HISTORY_SZ * STEP_SZ
+										== cluster_architect.getClusterAnalyser()->getConnectionRestructuring().mediumDestruction);
+				bool long_restructure_done =
+						(HISTORY_SZ * STEP_SZ * STEP_SZ
+								== cluster_architect.getClusterAnalyser()->getNodeRestructuring().longCreation)
+								|| (HISTORY_SZ * STEP_SZ * STEP_SZ
+										== cluster_architect.getClusterAnalyser()->getNodeRestructuring().longDestruction)
+								|| (HISTORY_SZ * STEP_SZ * STEP_SZ
+										== cluster_architect.getClusterAnalyser()->getConnectionRestructuring().longCreation)
+								|| (HISTORY_SZ * STEP_SZ * STEP_SZ
+										== cluster_architect.getClusterAnalyser()->getConnectionRestructuring().longDestruction);
+				ASSERT(med_restructure_done || long_restructure_done);
 			}
 		}
 
@@ -230,16 +274,18 @@ bool ClusterAnalyserBasicTest::assertStructuring(const ClusterAnalysisData & cad
 		const int node_destroys, const int conn_creates, const int conn_destroys) {
 	bool passes = ((cad.getNodesToCreate() >= node_creates) && (cad.getNodesToDestroy() >= node_destroys)
 			&& (cad.getConnectionsToCreate() >= conn_creates) && (cad.getConnectionsToDestroy() >= conn_destroys));
-	if (passes == false) {
+#ifdef CLUSTERANALYSERBASICTEST_DEBUG
+if (passes == false) {
 		std::cout << "ClusterAnalyserBasicTest::assertStructuring: " << cad << std::endl;
 	}
+#endif
 	return passes;
 
 }
 
 bool ClusterAnalyserBasicTest::assertHistoriesStructure(const std::map<int, std::list<ClusterAnalysisData> > & hist
-		, const unsigned int hist_sz, const unsigned int step_sz , const unsigned int total_sz
-		, const unsigned int short_sz, const unsigned int medium_sz , const unsigned int long_sz) {
+		, const unsigned int hist_sz , const unsigned int step_sz , const unsigned int total_sz
+		, const unsigned int short_sz , const unsigned int medium_sz , const unsigned int long_sz) {
 
 	bool bailed_out = false;
 
@@ -256,30 +302,38 @@ bool ClusterAnalyserBasicTest::assertHistoriesStructure(const std::map<int, std:
 	if (it_found_short != hist.end()) {
 		actual_short_sz = it_found_short->second.size();
 	} else if (short_sz > 0) {
-		std::cout << "ClusterAnalyserBasicTest::assertHistoriesStructure: " << "Short Size -> " << "Not found" << " != "
+#ifdef CLUSTERANALYSERBASICTEST_DEBUG
+	std::cout << "ClusterAnalyserBasicTest::assertHistoriesStructure: " << "Short Size -> " << "Not found" << " != "
 				<< short_sz << " (exp)" << std::endl;
+#endif
 		bailed_out = true;
 	}
 
 	if (it_found_medium != hist.end()) {
 		actual_medium_sz = it_found_medium->second.size();
 	} else if (medium_sz > 0) {
-		std::cout << "ClusterAnalyserBasicTest::assertHistoriesStructure: " << "Medium Size -> " << "Not found"
+#ifdef CLUSTERANALYSERBASICTEST_DEBUG
+std::cout << "ClusterAnalyserBasicTest::assertHistoriesStructure: " << "Medium Size -> " << "Not found"
 				<< " != " << medium_sz << " (exp)" << std::endl;
+#endif
 		bailed_out = true;
 	}
 
 	if (it_found_long != hist.end()) {
 		actual_long_sz = it_found_long->second.size();
 	} else if (long_sz > 0) {
-		std::cout << "ClusterAnalyserBasicTest::assertHistoriesStructure: " << "Long Size -> " << "Not found" << " != "
+#ifdef CLUSTERANALYSERBASICTEST_DEBUG
+	std::cout << "ClusterAnalyserBasicTest::assertHistoriesStructure: " << "Long Size -> " << "Not found" << " != "
 				<< long_sz << " (exp)" << std::endl;
+#endif
 		bailed_out = true;
 	}
+#ifdef CLUSTERANALYSERBASICTEST_DEBUG
 	std::cout << "ClusterAnalyserBasicTest::assertHistoriesStructure: " << "exp: { " << total_sz << ", " << short_sz
 			<< ", " << medium_sz << ", " << long_sz << " }";
 	std::cout << " found: { " << actual_total_sz << ", " << actual_short_sz << ", " << actual_medium_sz << ", "
 			<< actual_long_sz << " }" << std::endl;
+#endif
 	bool passed = ((bailed_out == false) && (actual_total_sz == total_sz) && (actual_short_sz == short_sz)
 			&& (actual_medium_sz == medium_sz) && (actual_long_sz == long_sz));
 	return passed;

@@ -1,3 +1,7 @@
+2011-10-20  SevenMachines  <SevenMachines@yahoo.co.uk>
+
+	* src/manipulators/ClusterArchitectTest.cpp (ClusterArchitectTest::testAddHistoryEntry): Import complete test from ClusterAnalyserBasicTest
+
 2011-05-11  SevenMachines  <SevenMachines@yahoo.co.uk>
 
 	* src/structures/BundleTest.cpp (BundleTest::testPatternChannelsSetup): test setup of a bundles pattern channels and fibres
